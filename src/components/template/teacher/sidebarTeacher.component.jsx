@@ -14,7 +14,7 @@ const SidebarTeacher = () => {
           <ItemName>Schedule</ItemName>
         </Item>
       </FlexNavLink>
-      <FlexNavLink to='/'>
+      <FlexNavLink to='/teacher/listClasses'>
         <Item>
           <FaRegClipboard size="20px" />
           <ItemName>Class manager</ItemName>

@@ -24,6 +24,8 @@ import LeaderHistoryNotifications from "./pages/leadership/notifications/history
 //teacher
 import TemplateTeacher from "./components/template/teacher/teacher.component";
 import TeacherSchedule from "./pages/teacher/schedule/schedule.component";
+import ListClass from "./pages/teacher/classManager/allClass.component";
+import ClassDetail from "./pages/teacher/classManager/classDetail/classDetail.component";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +85,14 @@ const router = createBrowserRouter([
       {
         path: "/teacher/schedule",
         element: <TeacherSchedule />,
+      },
+      {
+        path: "/teacher/listClasses",
+        element: <ListClass />,
+      },
+      {
+        path: "/teacher/listClasses/classDetail",
+        element: <ClassDetail />,
       }
     ]
   }
