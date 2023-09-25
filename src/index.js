@@ -26,6 +26,14 @@ import TemplateTeacher from "./components/template/teacher/teacher.component";
 import TeacherSchedule from "./pages/teacher/schedule/schedule.component";
 import ListClass from "./pages/teacher/classManager/allClass.component";
 import ClassDetail from "./pages/teacher/classManager/classDetail/classDetail.component";
+import Class from "./pages/teacher/classManager/classDetail/class/class.component";
+import Students from "./pages/teacher/classManager/classDetail/students/students.component";
+import ListLesson from "./pages/teacher/classManager/classDetail/class/listLesson/listLesson.component";
+import OneLesson from "./pages/teacher/classManager/classDetail/class/oneLesson/onLesson.component";
+import Attendance from "./pages/teacher/classManager/classDetail/class/oneLesson/attendance/attendance.component";
+import LessonContent from "./pages/teacher/classManager/classDetail/class/oneLesson/lessonContent/lessonContent.component";
+import Reschedule from "./pages/teacher/classManager/classDetail/class/oneLesson/reschedule/reschedule.component";
+
 
 const router = createBrowserRouter([
   {
@@ -93,6 +101,45 @@ const router = createBrowserRouter([
       {
         path: "/teacher/listClasses/classDetail",
         element: <ClassDetail />,
+        children: [
+          {
+            element: <Class />,
+            children: [
+              {
+                path: "listLesson",
+                element: <ListLesson />,
+              },
+              {
+                path: "listLesson/lesson",
+                element: <OneLesson />,
+                children: [
+                  {
+                    path: "attendance",
+                    element: <Attendance />,
+                  },
+                  {
+                    path: "lessonContent",
+                    element: <LessonContent />,
+                  },
+                  {
+                    path: "reschedule",
+                    element: <Reschedule />,
+                  },
+                ]
+              }
+            ]
+          },
+          {
+            path: "student",
+            element: <Students />,
+            // children: [
+            //   {
+            //     path: "student",
+            //     element: <AllStudent />,
+            //   }
+            // ]
+          },
+        ]
       }
     ]
   }
