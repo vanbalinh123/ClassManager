@@ -13,7 +13,7 @@ const ClassDetail = () => {
         if (choose === 'class') {
           navigate('listLesson')
         } else if (choose === 'students'){
-            navigate('student')
+            navigate('listStudents')
         }
       }, [choose]);
 

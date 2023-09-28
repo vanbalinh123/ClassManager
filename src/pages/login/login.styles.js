@@ -32,7 +32,11 @@ export const Form = styled.form`
   width: 350px;
 `;
 
-export const Logo = styled.img``;
+export const Logo = styled.img`
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+`;
 
 export const Content = styled.div`
   display: flex;

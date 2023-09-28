@@ -14,7 +14,7 @@ const TemplateLeader = () => {
     <Page>
       <Left>
         <DivLogo>
-          <Logo src="/imgs/logo-login.png" alt="logo" />
+          <Logo src="/imgs/logo-template.png" alt="logo" />
         </DivLogo>
         <SidebarLeader />
       </Left>

@@ -33,7 +33,9 @@ import OneLesson from "./pages/teacher/classManager/classDetail/class/oneLesson/
 import Attendance from "./pages/teacher/classManager/classDetail/class/oneLesson/attendance/attendance.component";
 import LessonContent from "./pages/teacher/classManager/classDetail/class/oneLesson/lessonContent/lessonContent.component";
 import Reschedule from "./pages/teacher/classManager/classDetail/class/oneLesson/reschedule/reschedule.component";
-
+import ListAssignment from "./pages/teacher/classManager/classDetail/students/score/listAssignments.component";
+import ListStudents from "./pages/teacher/classManager/classDetail/students/listStudents/listStudents.component";
+import QuizDetail from "./pages/teacher/classManager/classDetail/students/score/quizDetail/quizDetail.component";
 
 const router = createBrowserRouter([
   {
@@ -130,14 +132,22 @@ const router = createBrowserRouter([
             ]
           },
           {
-            path: "student",
+            // path: "student",
             element: <Students />,
-            // children: [
-            //   {
-            //     path: "student",
-            //     element: <AllStudent />,
-            //   }
-            // ]
+            children: [
+              {
+                path: "listStudents",
+                element: <ListStudents />,
+              },
+              {
+                path: "listAssignments",
+                element: <ListAssignment />,
+              },
+              {
+                path: "listAssignments/detail",
+                element: <QuizDetail />,
+              },
+            ]
           },
         ]
       }

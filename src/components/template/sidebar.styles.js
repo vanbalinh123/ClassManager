@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import generalStyles from "../../generalCss/general.styles";
 
 export const Sidebar = styled.ul`
-  margin-top: 50px;
+  margin-top: 70px;
   display: flex;
   flex-direction: column;
   width: 95%;
