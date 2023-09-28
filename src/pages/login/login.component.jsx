@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../redux/api/login-api.slice";
+import { useUserQuery } from "../../redux/api/user.slice";
 
 import {
   Left,
@@ -35,9 +37,35 @@ const Login = () => {
     const password = data.password;
 
     // navigate('/leader/dashboard')
-    navigate('/teacher/schedule')
+    // navigate('/teacher/schedule')
   };
-  
+
+  const [login] = useLoginMutation();
+  const username = "tedasdsadxt2312312";
+  const password = "testasdda23141241123123"
+
+  const handleClick = async () => {
+    const data = {
+      username: username,
+      password: password
+    }
+
+    try {
+      await login(data).unwrap;
+      alert('oke')
+      navigate('/teacher/schedule')
+    } catch (error) {
+      if (error.data) {
+        alert(error.data.message)
+    } else {
+        alert('Errors')
+    }
+    }
+  }
+
+  const { data: user} = useUserQuery();
+  console.log(user)
+
   
   return (
     <Page>
@@ -84,6 +112,11 @@ const Login = () => {
             <ForgetPass>Forgot your password ?</ForgetPass>
           </Content>
         </Form>
+        <button style={{width: '300px', backgroundColor: 'red'}}
+          onClick={() => handleClick()}
+        >
+          Oke
+        </button>
       </Left>
       <Right>
         <Img src="/imgs/banner-login.png" />
