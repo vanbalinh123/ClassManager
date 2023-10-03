@@ -1,8 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/api/login-api.slice";
-import { useUserQuery } from "../../redux/api/user.slice";
 
 import {
   Left,
@@ -41,8 +39,8 @@ const Login = () => {
   };
 
   const [login] = useLoginMutation();
-  const username = "tedasdsadxt2312312";
-  const password = "testasdda23141241123123"
+  const username = "test";
+  const password = "test23141241"
 
   const handleClick = async () => {
     const data = {
@@ -51,20 +49,22 @@ const Login = () => {
     }
 
     try {
-      await login(data).unwrap;
-      alert('oke')
-      navigate('/teacher/schedule')
+      const response = await login({ username, password });
+
+      if (response.data && response.data.token) {
+        // Lưu token vào localStorage hoặc trạng thái Redux
+        localStorage.setItem('accessToken', response.data.token);
+
+        // Điều hướng đến trang sau khi đăng nhập thành công
+        navigate('/leader/dashboard')
+      } else {
+        alert('Đăng nhập không thành công');
+      }
     } catch (error) {
-      if (error.data) {
-        alert(error.data.message)
-    } else {
-        alert('Errors')
-    }
+      alert('Đăng nhập không thành công');
     }
   }
 
-  const { data: user} = useUserQuery();
-  console.log(user)
 
   
   return (

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { RiProfileLine } from "react-icons/ri";
 import { BiLogOut } from "react-icons/bi";
 
+import {useUserQuery} from '../../redux/api/user.slice'
+
 import {
   Right,
   Header,
@@ -17,6 +19,7 @@ import {
   Other,
   Span,
 } from "./rightLayout.styles";
+
 
 const RightLayout = () => {
   const [check, setCheck] = useState(false);
@@ -31,6 +34,9 @@ const RightLayout = () => {
     // navigate("/leader/profile");
     navigate("/teacher/profile");
   };
+
+  const {data: user} = useUserQuery();
+  console.log(user)
 
   return (
     <Right>
