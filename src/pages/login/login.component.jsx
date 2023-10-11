@@ -53,7 +53,7 @@ const Login = () => {
 
       if (response.data && response.data.token) {
         // Lưu token vào localStorage hoặc trạng thái Redux
-        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('accessToken', JSON.stringify(response.data.token));
 
         // Điều hướng đến trang sau khi đăng nhập thành công
         navigate('/leader/dashboard')

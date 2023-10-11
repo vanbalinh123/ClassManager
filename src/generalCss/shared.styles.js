@@ -22,6 +22,7 @@ export const Filter = styled.div`
   justify-content: center;
   gap: 20px;
   align-items: center;
+  position: relative;
 `;
 
 export const ItemSearch = styled.div`
@@ -109,6 +110,7 @@ export const DivItem = styled.div`
   border-radius: 5px;
   display: flex;
   align-items: center;
+  justify-content: center;
   height: ${(props) => (props.expanded ? "100%" : "40px")};
   background-color: ${(props) => (props.expanded ? `${generalStyles.bgc}` : `${generalStyles.border}`)};
   transition: all 0.3s;
@@ -124,6 +126,6 @@ export const Item = styled.span`
   padding: ${(props) => (props.expanded ? "20px 0px 20px 0px" : "none")};
   white-space: ${(props) => (props.expanded ? "normal" : "nowrap")};
   overflow: ${(props) => (props.expanded ? "visible" : "hidden")};
-  text-overflow: ${(props) => (props.expanded ? "initial" : "ellipsis")};
+  /* text-overflow: ${(props) => (props.expanded ? "initial" : "ellipsis")}; */
   transition: all 0.3s;
 `;

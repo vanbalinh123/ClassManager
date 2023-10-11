@@ -8,19 +8,19 @@ const SidebarTeacher = () => {
 
   return (
     <Sidebar>
-      <FlexNavLink to='/teacher/schedule'>
+      <FlexNavLink to='schedule'>
         <Item>
           <AiOutlineSchedule size="20px" />
           <ItemName>Schedule</ItemName>
         </Item>
       </FlexNavLink>
-      <FlexNavLink to='/teacher/listClasses'>
+      <FlexNavLink to='listClasses'>
         <Item>
           <FaRegClipboard size="20px" />
           <ItemName>Class manager</ItemName>
         </Item>
       </FlexNavLink>
-      <FlexNavLink to='/'>
+      <FlexNavLink to='/teacher/historyNotifications'>
         <Item>
           <LuBell size="20px" />
           <ItemName>Notifications</ItemName>

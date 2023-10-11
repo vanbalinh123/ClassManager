@@ -19,23 +19,20 @@ export const Left = styled.div`
 `;
 
 export const DivLogo = styled.div`
-  /* border-bottom: 1px solid ${generalStyles.border}; */
+  border-bottom: 1px solid ${generalStyles.border};
   width: 100%;
   height: 70px;
   display: flex;
   align-items: center;
   /* background-color: blue; */
-  position: relative;
   
 `;
 
 export const Logo = styled.img`
-bottom: -20px;
-position: absolute;
-  width: 180px;
+  width: 200px;
+  height: 95%;
+  object-fit: contain;
   /* border: 1px solid red; */
-  height: 90px;
-  object-fit: fill;
 `;
 
 

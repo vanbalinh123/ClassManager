@@ -37,6 +37,8 @@ import Reschedule from "./pages/teacher/classManager/classDetail/class/oneLesson
 import ListAssignment from "./pages/teacher/classManager/classDetail/students/score/listAssignments.component";
 import ListStudents from "./pages/teacher/classManager/classDetail/students/listStudents/listStudents.component";
 import QuizDetail from "./pages/teacher/classManager/classDetail/students/score/quizDetail/quizDetail.component";
+import CreateNotificationTeacher from "./pages/teacher/notification/createNotification/createNotification.component";
+import HistoryNotificationTeacher from "./pages/teacher/notification/historyNotifications/historyNotifications.componet";
 
 const router = createBrowserRouter([
   {
@@ -68,8 +70,8 @@ const router = createBrowserRouter([
         element: <UsersManager />,
       },
       {
-          path: "/leader/listUsers/userDetail",
-          element: <UserDetail />,
+        path: "/leader/listUsers/userDetail",
+        element: <UserDetail />,
       },
       {
         path: "/leader/createNotification",
@@ -86,7 +88,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/teacher',
+    path: "/teacher",
     element: <TemplateTeacher />,
     children: [
       {
@@ -128,9 +130,9 @@ const router = createBrowserRouter([
                     path: "reschedule",
                     element: <Reschedule />,
                   },
-                ]
-              }
-            ]
+                ],
+              },
+            ],
           },
           {
             // path: "student",
@@ -148,12 +150,20 @@ const router = createBrowserRouter([
                 path: "listAssignments/detail",
                 element: <QuizDetail />,
               },
-            ]
+            ],
           },
-        ]
-      }
-    ]
-  }
+        ],
+      },
+      {
+        path: "/teacher/createNotification",
+        element: <CreateNotificationTeacher />,
+      },
+      {
+        path: "/teacher/historyNotifications",
+        element: <HistoryNotificationTeacher />,
+      },
+    ],
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

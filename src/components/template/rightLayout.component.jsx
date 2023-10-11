@@ -37,6 +37,12 @@ const RightLayout = () => {
 
   const {data: user} = useUserQuery();
   console.log(user)
+  const token = JSON.parse(localStorage.getItem('accessToken'));
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    navigate('/')
+  }
 
   return (
     <Right>
@@ -53,7 +59,7 @@ const RightLayout = () => {
                 <RiProfileLine size="15px" />
                 Your Profile
               </Span>
-              <Span onClick={() => navigate("/")}>
+              <Span onClick={() => handleLogout()}>
                 <BiLogOut size="15px" />
                 Logout
               </Span>
