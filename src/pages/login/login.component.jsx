@@ -39,23 +39,27 @@ const Login = () => {
   };
 
   const [login] = useLoginMutation();
-  const username = "test";
-  const password = "test23141241"
+  // const username = "test";
+  // const password = "test23141241"
+  const email = "test@gmail.com";
+  const password = "123456"
 
   const handleClick = async () => {
     const data = {
-      username: username,
+      email: email,
       password: password
     }
 
     try {
-      const response = await login({ username, password });
+      const response = await login(data);
+      console.log(response.data)
 
       if (response.data && response.data.token) {
         // Lưu token vào localStorage hoặc trạng thái Redux
         localStorage.setItem('accessToken', JSON.stringify(response.data.token));
 
         // Điều hướng đến trang sau khi đăng nhập thành công
+        alert("Oke lun")
         navigate('/leader/dashboard')
       } else {
         alert('Đăng nhập không thành công');

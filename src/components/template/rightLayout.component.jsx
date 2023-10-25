@@ -32,7 +32,8 @@ const RightLayout = () => {
   const handleToProfile = () => {
     setCheck(false);
     // navigate("/leader/profile");
-    navigate("/teacher/profile");
+    // navigate("/teacher/profile");
+    navigate("/student/profile");
   };
 
   const {data: user} = useUserQuery();

@@ -40,7 +40,14 @@ import QuizDetail from "./pages/teacher/classManager/classDetail/students/score/
 import CreateNotificationTeacher from "./pages/teacher/notification/createNotification/createNotification.component";
 import HistoryNotificationTeacher from "./pages/teacher/notification/historyNotifications/historyNotifications.componet";
 
-const router = createBrowserRouter([
+
+//student
+import TemplateStudent from "./components/template/student/student.component";
+import StudentSchedule from "./pages/student/scheduleStudent/scheduleStudent.component";
+import ListClassesStudent from "./pages/student/ClassManagerStudent/ListClassesOfStudent/allClassesOfStudent.component";
+
+
+const routerAdmin = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
@@ -87,6 +94,9 @@ const router = createBrowserRouter([
       },
     ],
   },
+]);
+
+const routerTeacher = createBrowserRouter([
   {
     path: "/teacher",
     element: <TemplateTeacher />,
@@ -164,11 +174,34 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+])
+
+const routerStudent = createBrowserRouter([
+  {
+    path: "/student",
+    element: <TemplateStudent />,
+    children: [
+      {
+        path: "/student/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/student/schedule",
+        element: <StudentSchedule />,
+      },
+      {
+        path: "/student/listClassesOfStudent",
+        element: <ListClassesStudent />,
+      },
+    ]
+  }
+])
+
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <RouterProvider router={routerStudent} />
   </Provider>
 );
