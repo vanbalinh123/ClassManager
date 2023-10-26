@@ -25,7 +25,7 @@ import LeaderHistoryNotifications from "./pages/leadership/notifications/history
 //teacher
 import TemplateTeacher from "./components/template/teacher/teacher.component";
 import TeacherSchedule from "./pages/teacher/schedule/schedule.component";
-import ListClass from "./pages/teacher/classManager/allClass.component";
+import ListClass from "./pages/teacher/classManager/componentAllClass/allClass.component";
 import ClassDetail from "./pages/teacher/classManager/classDetail/classDetail.component";
 import Class from "./pages/teacher/classManager/classDetail/class/class.component";
 import Students from "./pages/teacher/classManager/classDetail/students/students.component";
@@ -40,14 +40,14 @@ import QuizDetail from "./pages/teacher/classManager/classDetail/students/score/
 import CreateNotificationTeacher from "./pages/teacher/notification/createNotification/createNotification.component";
 import HistoryNotificationTeacher from "./pages/teacher/notification/historyNotifications/historyNotifications.componet";
 
-
 //student
 import TemplateStudent from "./components/template/student/student.component";
 import StudentSchedule from "./pages/student/scheduleStudent/scheduleStudent.component";
 import ListClassesStudent from "./pages/student/ClassManagerStudent/ListClassesOfStudent/allClassesOfStudent.component";
+import ClassDetailOfStudent from "./pages/student/ClassManagerStudent/classDetailOfStudent/classDetailOfStudent.component";
+import HistoryNotificationStudent from "./pages/student/NotificationsOfStudent/HistoryNotificationsOfStudent/historyNotificationsOfStudent.component";
 
-
-const routerAdmin = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
@@ -55,67 +55,62 @@ const routerAdmin = createBrowserRouter([
   {
     path: "/leader",
     element: <TemplateLeader />,
+    // Các routes cho Leader
     children: [
       {
         path: "/leader/dashboard",
         element: <DashBoard />,
       },
       {
-        path: "/leader/createAccount",
+        path: "/createAccount",
         element: <CreateAccount />,
       },
       {
-        path: "/leader/createSchedule",
+        path: "/createSchedule",
         element: <CreateSchedule />,
       },
       {
-        path: "/leader/createClasses",
+        path: "/createClasses",
         element: <CreateClasses />,
       },
       {
-        path: "/leader/listUsers",
+        path: "/listUsers",
         element: <UsersManager />,
       },
       {
-        path: "/leader/listUsers/userDetail",
+        path: "/listUsers/userDetail",
         element: <UserDetail />,
       },
       {
-        path: "/leader/createNotification",
+        path: "/createNotification",
         element: <CreateNotification />,
       },
       {
-        path: "/leader/historyNotifications",
+        path: "/historyNotifications",
         element: <LeaderHistoryNotifications />,
       },
       {
-        path: "/leader/profile",
+        path: "/profile",
         element: <Profile />,
       },
     ],
   },
-]);
-
-const routerTeacher = createBrowserRouter([
   {
     path: "/teacher",
     element: <TemplateTeacher />,
+    // Các routes cho Teacher
     children: [
       {
-        path: "/teacher/profile",
+        path: "/profile",
         element: <Profile />,
       },
       {
-        path: "/teacher/schedule",
+        path: "/schedule",
         element: <TeacherSchedule />,
       },
       {
-        path: "/teacher/listClasses",
+        path: "/listClasses",
         element: <ListClass />,
-      },
-      {
-        path: "/teacher/listClasses/classDetail",
-        element: <ClassDetail />,
         children: [
           {
             element: <Class />,
@@ -145,7 +140,6 @@ const routerTeacher = createBrowserRouter([
             ],
           },
           {
-            // path: "student",
             element: <Students />,
             children: [
               {
@@ -165,43 +159,62 @@ const routerTeacher = createBrowserRouter([
         ],
       },
       {
-        path: "/teacher/createNotification",
+        path: "/createNotification",
         element: <CreateNotificationTeacher />,
       },
       {
-        path: "/teacher/historyNotifications",
+        path: "/historyNotifications",
         element: <HistoryNotificationTeacher />,
       },
     ],
   },
-])
-
-const routerStudent = createBrowserRouter([
   {
     path: "/student",
     element: <TemplateStudent />,
+    // Các routes cho Student
     children: [
       {
-        path: "/student/profile",
+        path: "/profile",
         element: <Profile />,
       },
       {
-        path: "/student/schedule",
+        path: "/schedule",
         element: <StudentSchedule />,
       },
       {
-        path: "/student/listClassesOfStudent",
+        path: "/listClassesOfStudent",
         element: <ListClassesStudent />,
       },
-    ]
-  }
-])
+      {
+        path: "/listClassesOfStudent/classDetail",
+        element: <ClassDetailOfStudent />,
+      },
+      {
+        path: "/historyNotifications",
+        element: <HistoryNotificationStudent />,
+      },
+    ],
+  },
+]);
 
-
+const userRole = localStorage.getItem("userRole");
+const isUserLoggedIn = userRole !== null;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <RouterProvider router={routerStudent} />
+    <RouterProvider
+      router={
+        isUserLoggedIn
+          ? userRole === "Admin"
+            ? router.find((route) => route.path.startsWith("/leader"))
+            : userRole === "Teacher"
+            ? router.find((route) => route.path.startsWith("/teacher"))
+            : userRole === "Student"
+            ? router.find((route) => route.path.startsWith("/student"))
+            : null
+          : router.find((route) => route.path === "/")
+      }
+    />
   </Provider>
 );

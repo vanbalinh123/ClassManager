@@ -1,10 +1,10 @@
 import apiSlice from "./api.slice";
 
-const loginApi = apiSlice.injectEndpoints({
+const createAccountApi = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        login: builder.mutation({
+        creatAccount: builder.mutation({
             query: (data) => ({
-                url: 'api/login',
+                url: 'api/admin/',
                 method: 'POST',
                 body: data
             })
@@ -13,5 +13,5 @@ const loginApi = apiSlice.injectEndpoints({
 })
 
 export const {
-    useLoginMutation
-} = loginApi
+    useCreatAccountMutation
+} = createAccountApi

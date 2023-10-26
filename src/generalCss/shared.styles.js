@@ -126,6 +126,6 @@ export const Item = styled.span`
   padding: ${(props) => (props.expanded ? "20px 0px 20px 0px" : "none")};
   white-space: ${(props) => (props.expanded ? "normal" : "nowrap")};
   overflow: ${(props) => (props.expanded ? "visible" : "hidden")};
-  /* text-overflow: ${(props) => (props.expanded ? "initial" : "ellipsis")}; */
+  text-overflow: ${(props) => (props.expanded ? "initial" : "ellipsis")};
   transition: all 0.3s;
 `;

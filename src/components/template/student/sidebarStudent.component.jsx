@@ -19,6 +19,12 @@ const SidebarStudent = () => {
           <ItemName>Class manager</ItemName>
         </Item>
       </FlexNavLink>
+      <FlexNavLink to='historyNotifications'>
+        <Item>
+          <LuBell size="20px" />
+          <ItemName>Notifications</ItemName>
+        </Item>
+      </FlexNavLink>
     </Sidebar>
   );
 };

@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../redux/api/login-api.slice";
+
+import { useLoginTeacherMutation } from "../../redux/api/login/teacher-login-api.slice";
+import { useLoginAdminMutation } from "../../redux/api/login/teacher-login-api.slice";
 
 import {
   Left,
@@ -20,6 +22,9 @@ import {
   DivInput2,
   Input2,
   MessageErorrs,
+  Select,
+  DivSelect,
+  Option,
 } from "./login.styles";
 
 const Login = () => {
@@ -30,47 +35,47 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const [loginTeacher] = useLoginTeacherMutation();
+  const [loginAdmin] = useLoginAdminMutation();
+
   const onSubmit = async (data) => {
     const email = data.email;
     const password = data.password;
+    const userRole = data.userRole;
 
-    // navigate('/leader/dashboard')
-    // navigate('/teacher/schedule')
-  };
-
-  const [login] = useLoginMutation();
-  // const username = "test";
-  // const password = "test23141241"
-  const email = "test@gmail.com";
-  const password = "123456"
-
-  const handleClick = async () => {
-    const data = {
+    const dataLogin = {
       email: email,
-      password: password
+      password: password,
+    };
+
+    console.log(data);
+
+    let response = null;
+
+    if (userRole === "Admin") {
+      response = await loginAdmin(dataLogin);
+    } else if (userRole === "Teacher") {
+      response = await loginTeacher(dataLogin);
     }
 
     try {
-      const response = await login(data);
-      console.log(response.data)
+      if (response.data.bool === true) {
+        localStorage.setItem("userRole", JSON.stringify(userRole));
 
-      if (response.data && response.data.token) {
-        // Lưu token vào localStorage hoặc trạng thái Redux
-        localStorage.setItem('accessToken', JSON.stringify(response.data.token));
-
-        // Điều hướng đến trang sau khi đăng nhập thành công
-        alert("Oke lun")
-        navigate('/leader/dashboard')
+        alert("Login Successfull");
+        if (userRole === "Admin") {
+          navigate('/leader');
+        } else if (userRole === "Teacher") {
+          navigate('/teacher'); 
+        }
       } else {
-        alert('Đăng nhập không thành công');
+        alert("Đăng nhập không thành công");
       }
     } catch (error) {
-      alert('Đăng nhập không thành công');
+      alert("Đăng nhập không thành công");
     }
-  }
+  };
 
-
-  
   return (
     <Page>
       <Left>
@@ -110,17 +115,24 @@ const Login = () => {
                 <MessageErorrs>{errors.password.message}</MessageErorrs>
               )}
             </DivInputs>
+            <DivSelect>
+              <Select
+                {...register("userRole", {
+                  required: "UserRole is required",
+                })}
+              >
+                <Option>Admin</Option>
+                <Option>Teacher</Option>
+                <Option>Student</Option>
+                <Option>Parents</Option>
+              </Select>
+            </DivSelect>
             <DivBtn>
               <Btn>Login</Btn>
             </DivBtn>
             <ForgetPass>Forgot your password ?</ForgetPass>
           </Content>
         </Form>
-        <button style={{width: '300px', backgroundColor: 'red'}}
-          onClick={() => handleClick()}
-        >
-          Oke
-        </button>
       </Left>
       <Right>
         <Img src="/imgs/banner-login.png" />

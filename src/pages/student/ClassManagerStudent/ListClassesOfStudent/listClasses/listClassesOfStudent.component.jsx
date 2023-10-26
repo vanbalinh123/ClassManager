@@ -13,7 +13,7 @@ const ListClassOfStudent = () => {
     const navigate = useNavigate();
   
     const handleItemClick = () => {
-      navigate('/teacher/listClasses/classDetail')
+      navigate('/student/listClassesOfStudent/classDetail')
     }
   
     return (

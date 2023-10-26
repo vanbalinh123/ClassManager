@@ -13,6 +13,8 @@ import {
   MessageErorrs,
 } from "./infomations.styles";
 
+import { useCreatAccountMutation } from "../../../../redux/api/createAccount.slice";
+
 const Infomations = () => {
   const {
     register,
@@ -20,8 +22,32 @@ const Infomations = () => {
     formState: { errors },
   } = useForm();
 
+  const [createAccount] = useCreatAccountMutation();
+
   const onSubmit = async (data) => {
-    console.log(data);
+    const full_name = "vanbalinh";
+    const email = "vanbalinh@gmail.com";
+    const password = "vanbalinh";
+    const qualification = "vanbalinh";
+    const mobile = "123124421";
+    const skills = "vanbalinh";
+
+    const dulieu = {
+      full_name: full_name,
+      email: email,
+      password: password,
+      // qualification: qualification,
+      mobile: mobile,
+      // skills: skills,
+    }
+
+    try {
+      const response = await createAccount(dulieu)
+    console.log(response.data)
+
+    } catch(erorr) {
+      console.log('error')
+    }
   };
   
   return (
