@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useLoginTeacherMutation } from "../../redux/api/login/teacher-login-api.slice";
 import { useLoginAdminMutation } from "../../redux/api/login/teacher-login-api.slice";
+import { useLoginStudentMutation } from "../../redux/api/login/teacher-login-api.slice";
 
 import {
   Left,
@@ -28,6 +29,8 @@ import {
 } from "./login.styles";
 
 const Login = () => {
+  const userRole = JSON.parse(localStorage.getItem("userRole"));
+console.log(userRole)
   const navigate = useNavigate();
   const {
     register,
@@ -37,6 +40,7 @@ const Login = () => {
 
   const [loginTeacher] = useLoginTeacherMutation();
   const [loginAdmin] = useLoginAdminMutation();
+  const [loginStudent] = useLoginStudentMutation();
 
   const onSubmit = async (data) => {
     const email = data.email;
@@ -56,6 +60,8 @@ const Login = () => {
       response = await loginAdmin(dataLogin);
     } else if (userRole === "Teacher") {
       response = await loginTeacher(dataLogin);
+    } else if (userRole === "Student") {
+      response = await loginStudent(dataLogin);
     }
 
     try {
@@ -64,15 +70,21 @@ const Login = () => {
 
         alert("Login Successfull");
         if (userRole === "Admin") {
+          localStorage.setItem("id_user", JSON.stringify(response.data.admin_id));
           navigate('/leader');
         } else if (userRole === "Teacher") {
+          localStorage.setItem("id_user", JSON.stringify(response.data.teacher_id));
           navigate('/teacher'); 
+        } else if (userRole === "Student") {
+          localStorage.setItem("id_user", JSON.stringify(response.data.student_id));
+          navigate('/student')
         }
+
       } else {
         alert("Đăng nhập không thành công");
       }
     } catch (error) {
-      alert("Đăng nhập không thành công");
+      alert("Error Server");
     }
   };
 

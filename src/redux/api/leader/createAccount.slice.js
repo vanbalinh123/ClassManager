@@ -1,24 +1,24 @@
 import apiSlice from "../api.slice";
 
-const loginApi = apiSlice.injectEndpoints({
+const createAccountApi = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        loginTeacher: builder.mutation({
+        createAdmin: builder.mutation({
             query: (data) => ({
-                url: 'api/teacher-login',
+                url: 'api/admin/',
                 method: 'POST',
                 body: data
             })
         }),
-        loginAdmin: builder.mutation({
+        createTeacher: builder.mutation({
             query: (data) => ({
-                url: 'api/admin-login',
+                url: 'api/teacher/',
                 method: 'POST',
                 body: data
             })
         }),
-        loginStudent: builder.mutation({
+        createStudent: builder.mutation({
             query: (data) => ({
-                url: 'api/student-login',
+                url: 'api/student/',
                 method: 'POST',
                 body: data
             })
@@ -27,7 +27,7 @@ const loginApi = apiSlice.injectEndpoints({
 })
 
 export const {
-    useLoginTeacherMutation,
-    useLoginAdminMutation,
-    useLoginStudentMutation
-} = loginApi
+    useCreateAdminMutation,
+    useCreateTeacherMutation,
+    useCreateStudentMutation
+} = createAccountApi

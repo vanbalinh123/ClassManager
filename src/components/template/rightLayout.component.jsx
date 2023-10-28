@@ -1,11 +1,14 @@
-import { Outlet, Navlink } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { RiProfileLine } from "react-icons/ri";
 import { BiLogOut } from "react-icons/bi";
 
-import {useUserQuery} from '../../redux/api/user.slice'
+import { useListAdminsQuery } from "../../redux/api/leader/list-users-api.slice";
+import { useListTeachersQuery } from "../../redux/api/teacher/list-teachers-api.slice";
+import { useListStudentsQuery } from "../../redux/api/student/list-students-api.slice";
+
 
 import {
   Right,
@@ -25,23 +28,44 @@ const RightLayout = () => {
   const [check, setCheck] = useState(false);
   const navigate = useNavigate();
 
+  const userRole = JSON.parse(localStorage.getItem("userRole"));
+  const userID = JSON.parse(localStorage.getItem("id_user"));
+
+  const {data: listAdmins} = useListAdminsQuery();
+  const {data: listTeachers} = useListTeachersQuery();
+  const {data: listStudents} = useListStudentsQuery();
+
+ 
+  const usersData = {
+    Admin: listAdmins,
+    Teacher: listTeachers,
+    Student: listStudents,
+  };
+  
+  const currentUser = usersData[userRole]?.find((item) => item.id === Number(userID));
+
   const handleImgClick = () => {
     return setCheck(!check);
   };
 
   const handleToProfile = () => {
     setCheck(false);
-    // navigate("/leader/profile");
-    // navigate("/teacher/profile");
-    navigate("/student/profile");
+
+    if(userRole === "Admin") {
+      navigate("/leader/profile");
+    } else if (userRole === "Teacher") {
+      navigate("/teacher/profile");
+    } else if (userRole === "Student") {
+      navigate("/student/profile");
+    }
   };
 
-  const {data: user} = useUserQuery();
-  console.log(user)
+
   const token = JSON.parse(localStorage.getItem('accessToken'));
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("id_user");
     navigate('/')
   }
 
@@ -50,7 +74,7 @@ const RightLayout = () => {
       <Header>
         <Name>Class Management</Name>
         <DivUser>
-          <NameUser>Leadership</NameUser>
+          <NameUser>{currentUser?.full_name}</NameUser>
           <DivImg onClick={() => handleImgClick()}>
             <ImgUser src="/imgs/user-img.jpg" alt="avatar" />
           </DivImg>

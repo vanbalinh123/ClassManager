@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import store from "./redux/store";
 
 import Login from "./pages/login/login.component";
@@ -47,6 +48,192 @@ import ListClassesStudent from "./pages/student/ClassManagerStudent/ListClassesO
 import ClassDetailOfStudent from "./pages/student/ClassManagerStudent/classDetailOfStudent/classDetailOfStudent.component";
 import HistoryNotificationStudent from "./pages/student/NotificationsOfStudent/HistoryNotificationsOfStudent/historyNotificationsOfStudent.component";
 
+// const routerAdmin = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Login />,
+//   },
+//   {
+//     path: "/leader",
+//     element: <TemplateLeader />,
+//     children: [
+//       {
+//         path: "/leader/dashboard",
+//         element: <DashBoard />,
+//       },
+//       {
+//         path: "/leader/createAccount",
+//         element: <CreateAccount />,
+//       },
+//       {
+//         path: "/leader/createSchedule",
+//         element: <CreateSchedule />,
+//       },
+//       {
+//         path: "/leader/createClasses",
+//         element: <CreateClasses />,
+//       },
+//       {
+//         path: "/leader/listUsers",
+//         element: <UsersManager />,
+//       },
+//       {
+//         path: "/leader/listUsers/userDetail",
+//         element: <UserDetail />,
+//       },
+//       {
+//         path: "/leader/createNotification",
+//         element: <CreateNotification />,
+//       },
+//       {
+//         path: "/leader/historyNotifications",
+//         element: <LeaderHistoryNotifications />,
+//       },
+//       {
+//         path: "/leader/profile",
+//         element: <Profile />,
+//       },
+//     ],
+//   },
+// ]);
+
+// const routerTeacher = createBrowserRouter([
+//   // {
+//   //   path: "/",
+//   //   element: <Login />,
+//   // },
+//   {
+//     path: "/teacher",
+//     element: <TemplateTeacher />,
+//     children: [
+//       {
+//         path: "/teacher/profile",
+//         element: <Profile />,
+//       },
+//       {
+//         path: "/teacher/schedule",
+//         element: <TeacherSchedule />,
+//       },
+//       {
+//         path: "/teacher/listClasses",
+//         element: <ListClass />,
+//       },
+//       {
+//         path: "/teacher/listClasses/classDetail",
+//         element: <ClassDetail />,
+//         children: [
+//           {
+//             element: <Class />,
+//             children: [
+//               {
+//                 path: "listLesson",
+//                 element: <ListLesson />,
+//               },
+//               {
+//                 path: "listLesson/lesson",
+//                 element: <OneLesson />,
+//                 children: [
+//                   {
+//                     path: "attendance",
+//                     element: <Attendance />,
+//                   },
+//                   {
+//                     path: "lessonContent",
+//                     element: <LessonContent />,
+//                   },
+//                   {
+//                     path: "reschedule",
+//                     element: <Reschedule />,
+//                   },
+//                 ],
+//               },
+//             ],
+//           },
+//           {
+//             // path: "student",
+//             element: <Students />,
+//             children: [
+//               {
+//                 path: "listStudents",
+//                 element: <ListStudents />,
+//               },
+//               {
+//                 path: "listAssignments",
+//                 element: <ListAssignment />,
+//               },
+//               {
+//                 path: "listAssignments/detail",
+//                 element: <QuizDetail />,
+//               },
+//             ],
+//           },
+//         ],
+//       },
+//       {
+//         path: "/teacher/createNotification",
+//         element: <CreateNotificationTeacher />,
+//       },
+//       {
+//         path: "/teacher/historyNotifications",
+//         element: <HistoryNotificationTeacher />,
+//       },
+//     ],
+//   },
+// ]);
+
+
+
+// const routerStudent = createBrowserRouter([
+//   // {
+//   //   path: "/",
+//   //   element: <Login />,
+//   // },
+//   {
+//     path: "/student",
+//     element: <TemplateStudent />,
+//     children: [
+//       {
+//         path: "/student/profile",
+//         element: <Profile />,
+//       },
+//       {
+//         path: "/student/schedule",
+//         element: <StudentSchedule />,
+//       },
+//       {
+//         path: "/student/listClassesOfStudent",
+//         element: <ListClassesStudent />,
+//       },
+//       {
+//         path: "/student/listClassesOfStudent/classDetail",
+//         element: <ClassDetailOfStudent />,
+//       },
+//       {
+//         path: "/student/historyNotifications",
+//         element: <HistoryNotificationStudent />,
+//       },
+//     ],
+//   },
+// ]);
+
+// const routerLogin = createBrowserRouter([
+//   {
+//     path: "/login",
+//     element: <Login />,
+//   },
+// ])
+
+
+const userRole = JSON.parse(localStorage.getItem("userRole"));
+
+const leaderElement = userRole === 'Admin' ? <TemplateLeader /> : <Login />;
+const teacherElement = userRole === 'Teacher' ? <TemplateTeacher /> : <Login />;
+const studentElement = userRole === 'Student' ? <TemplateStudent /> : <Login />;
+
+
+
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -54,43 +241,42 @@ const router = createBrowserRouter([
   },
   {
     path: "/leader",
-    element: <TemplateLeader />,
-    // Các routes cho Leader
+    element: leaderElement,
     children: [
       {
         path: "/leader/dashboard",
         element: <DashBoard />,
       },
       {
-        path: "/createAccount",
+        path: "/leader/createAccount",
         element: <CreateAccount />,
       },
       {
-        path: "/createSchedule",
+        path: "/leader/createSchedule",
         element: <CreateSchedule />,
       },
       {
-        path: "/createClasses",
+        path: "/leader/createClasses",
         element: <CreateClasses />,
       },
       {
-        path: "/listUsers",
+        path: "/leader/listUsers",
         element: <UsersManager />,
       },
       {
-        path: "/listUsers/userDetail",
+        path: "/leader/listUsers/userDetail",
         element: <UserDetail />,
       },
       {
-        path: "/createNotification",
+        path: "/leader/createNotification",
         element: <CreateNotification />,
       },
       {
-        path: "/historyNotifications",
+        path: "/leader/historyNotifications",
         element: <LeaderHistoryNotifications />,
       },
       {
-        path: "/profile",
+        path: "/leader/profile",
         element: <Profile />,
       },
     ],
@@ -98,19 +284,22 @@ const router = createBrowserRouter([
   {
     path: "/teacher",
     element: <TemplateTeacher />,
-    // Các routes cho Teacher
     children: [
       {
-        path: "/profile",
+        path: "/teacher/profile",
         element: <Profile />,
       },
       {
-        path: "/schedule",
+        path: "/teacher/schedule",
         element: <TeacherSchedule />,
       },
       {
-        path: "/listClasses",
+        path: "/teacher/listClasses",
         element: <ListClass />,
+      },
+      {
+        path: "/teacher/listClasses/classDetail",
+        element: <ClassDetail />,
         children: [
           {
             element: <Class />,
@@ -140,6 +329,7 @@ const router = createBrowserRouter([
             ],
           },
           {
+            // path: "student",
             element: <Students />,
             children: [
               {
@@ -159,62 +349,46 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/createNotification",
+        path: "/teacher/createNotification",
         element: <CreateNotificationTeacher />,
       },
       {
-        path: "/historyNotifications",
+        path: "/teacher/historyNotifications",
         element: <HistoryNotificationTeacher />,
       },
     ],
   },
   {
     path: "/student",
-    element: <TemplateStudent />,
-    // Các routes cho Student
+    element: studentElement,
     children: [
       {
-        path: "/profile",
+        path: "/student/profile",
         element: <Profile />,
       },
       {
-        path: "/schedule",
+        path: "/student/schedule",
         element: <StudentSchedule />,
       },
       {
-        path: "/listClassesOfStudent",
+        path: "/student/listClassesOfStudent",
         element: <ListClassesStudent />,
       },
       {
-        path: "/listClassesOfStudent/classDetail",
+        path: "/student/listClassesOfStudent/classDetail",
         element: <ClassDetailOfStudent />,
       },
       {
-        path: "/historyNotifications",
+        path: "/student/historyNotifications",
         element: <HistoryNotificationStudent />,
       },
     ],
   },
 ]);
 
-const userRole = localStorage.getItem("userRole");
-const isUserLoggedIn = userRole !== null;
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <RouterProvider
-      router={
-        isUserLoggedIn
-          ? userRole === "Admin"
-            ? router.find((route) => route.path.startsWith("/leader"))
-            : userRole === "Teacher"
-            ? router.find((route) => route.path.startsWith("/teacher"))
-            : userRole === "Student"
-            ? router.find((route) => route.path.startsWith("/student"))
-            : null
-          : router.find((route) => route.path === "/")
-      }
-    />
+    <RouterProvider router={router} />
   </Provider>
 );

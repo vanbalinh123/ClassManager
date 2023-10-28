@@ -9,8 +9,9 @@ import {
   Item
 } from "../../../../generalCss/shared.styles";
 
-const ListClasses = () => {
+const ListClasses = ({listClasses}) => {
   const navigate = useNavigate();
+  console.log(listClasses)
 
   const handleClick = () => {
     navigate('/leader/createSchedule')
@@ -25,38 +26,16 @@ const ListClasses = () => {
         <TitleList>Course</TitleList>
       </Header>
       <Section>
-        <DivItem
+        {listClasses?.map(item => (
+          <DivItem
           onClick={() => handleClick()}
         >
-          <Item>TI123</Item>
-          <Item>Toiec Basic</Item>
+          <Item>{item.class_code}</Item>
+          <Item>{item.class_name}</Item>
           <Item>Van Ba Linh</Item>
-          <Item>27</Item>
+          <Item>{item.course}</Item>
         </DivItem>
-        <DivItem>
-          <Item>TI123</Item>
-          <Item>Toiec Basic</Item>
-          <Item>Van Ba Linh</Item>
-          <Item>27</Item>
-        </DivItem>
-        <DivItem>
-          <Item>TI123</Item>
-          <Item>Toiec Basic</Item>
-          <Item>Van Ba Linh</Item>
-          <Item>27</Item>
-        </DivItem>
-        <DivItem>
-          <Item>TI123</Item>
-          <Item>Toiec Basic</Item>
-          <Item>Van Ba Linh</Item>
-          <Item>27</Item>
-        </DivItem>
-        <DivItem>
-          <Item>TI123</Item>
-          <Item>Toiec Basic</Item>
-          <Item>Van Ba Linh</Item>
-          <Item>27</Item>
-        </DivItem>
+        ))}
       </Section>
     </ListClass>
   );

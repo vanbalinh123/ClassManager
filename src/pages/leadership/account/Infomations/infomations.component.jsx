@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
+import { useCreateAdminMutation } from "../../../../redux/api/leader/createAccount.slice";
+import { useCreateTeacherMutation } from "../../../../redux/api/leader/createAccount.slice";
+import { useCreateStudentMutation } from "../../../../redux/api/leader/createAccount.slice";
+
 import {
   Form,
   Item,
@@ -13,40 +17,51 @@ import {
   MessageErorrs,
 } from "./infomations.styles";
 
-import { useCreatAccountMutation } from "../../../../redux/api/createAccount.slice";
 
-const Infomations = () => {
+
+const Infomations = ({selectedValue}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const [createAccount] = useCreatAccountMutation();
+  const [createAdmin] = useCreateAdminMutation();
+  const [createTeacher] = useCreateTeacherMutation();
+  const [createStudent] = useCreateStudentMutation();
 
   const onSubmit = async (data) => {
-    const full_name = "vanbalinh";
-    const email = "vanbalinh@gmail.com";
-    const password = "vanbalinh";
-    const qualification = "vanbalinh";
-    const mobile = "123124421";
-    const skills = "vanbalinh";
+    console.log(data)
 
     const dulieu = {
-      full_name: full_name,
-      email: email,
-      password: password,
-      // qualification: qualification,
-      mobile: mobile,
-      // skills: skills,
+      full_name: data.name,
+      email: data.email,
+      password: data.password,
+      mobile: data.phone,
+    }
+
+    let response = null;
+    console.log(selectedValue)
+
+    if (selectedValue === "Admin") {
+      response = await createAdmin(dulieu)
+    } else if (selectedValue === "Teacher") {
+      response = await createTeacher(dulieu)
+    } else if (selectedValue === "Student") {
+      response = await createStudent(dulieu)
     }
 
     try {
-      const response = await createAccount(dulieu)
-    console.log(response.data)
+      if(response.data !== undefined) {
+        console.log(response.data)
+        alert('Successful')
+
+      } else {
+        console.log('Erorr rooi')
+      }
 
     } catch(erorr) {
-      console.log('error')
+      console.log('Error Server')
     }
   };
   
@@ -67,7 +82,7 @@ const Infomations = () => {
           </DivInput>
         </Item>
         {errors.name && <MessageErorrs>{errors.name.message}</MessageErorrs>}
-        <Item>
+        {/* <Item>
           <Key>User Code</Key>
           <DivInput>
             <Input
@@ -79,7 +94,7 @@ const Infomations = () => {
               })}
             />
           </DivInput>
-        </Item>
+        </Item> */}
         {errors.code && <MessageErorrs>{errors.code.message}</MessageErorrs>}
         <Item>
           <Key>Email</Key>

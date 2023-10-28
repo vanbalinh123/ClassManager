@@ -1,3 +1,5 @@
+import { useCreateClassMutation } from "../../../../redux/api/leader/class-api.slice";
+
 import { useForm } from "react-hook-form";
 import { IoAdd } from "react-icons/io5";
 
@@ -20,8 +22,25 @@ const AddNewClass = () => {
     formState: { errors },
   } = useForm();
 
+  const [creatClass] = useCreateClassMutation();
+
   const onSubmit = async (data) => {
-    console.log(data);
+    const class_code = data.classCode;
+    const class_name = data.className;
+    const course = data.course;
+
+    const newClass = {
+      class_code: class_code,
+      class_name: class_name,
+      course: course
+    }
+
+    try {
+      const response = await creatClass(newClass);
+      console.log(response)
+    } catch (error) {
+      alert("Đăng nhập không thành công");
+    }
   };
 
   return (
