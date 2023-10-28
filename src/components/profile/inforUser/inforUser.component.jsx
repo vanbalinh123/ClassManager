@@ -17,8 +17,9 @@ import {
   ToChangePass,
 } from "./inforUser.styles";
 
-const InforUser = ({setChangePass}) => {
+const InforUser = ({setChangePass, currentUser, userRole}) => {
   const [update, setUpdate] = useState(false);
+  console.log(currentUser)
 
   const handleToUpdate = () => {
     setUpdate(true);
@@ -36,7 +37,7 @@ const InforUser = ({setChangePass}) => {
       <DivInfors>
         <Child>
           <Key>User's Name: </Key>
-          {(update === false && <Result>Van Ba linh</Result>) || (
+          {(update === false && <Result>{currentUser.full_name}</Result>) || (
             <DivInput>
               <Input />
             </DivInput>
@@ -44,15 +45,15 @@ const InforUser = ({setChangePass}) => {
         </Child>
         <Child>
           <Key>User's Code: </Key>
-          <Result>HS123</Result>
+          <Result>{currentUser.usercode}</Result>
         </Child>
         <Child>
           <Key>Role: </Key>
-          <Result>Student</Result>
+          <Result>{userRole}</Result>
         </Child>
         <Child>
           <Key>Email: </Key>
-          {(update === false && <Result>Vanbalinh123@gmail.com</Result>) || (
+          {(update === false && <Result>{currentUser.email}</Result>) || (
             <DivInput>
               <Input />
             </DivInput>
@@ -60,7 +61,7 @@ const InforUser = ({setChangePass}) => {
         </Child>
         <Child>
           <Key>Phone: </Key>
-          {(update === false && <Result>0123456789</Result>) || (
+          {(update === false && <Result>{currentUser.mobile}</Result>) || (
             <DivInput>
               <Input />
             </DivInput>
