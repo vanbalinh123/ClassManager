@@ -48,6 +48,14 @@ import ListClassesStudent from "./pages/student/ClassManagerStudent/ListClassesO
 import ClassDetailOfStudent from "./pages/student/ClassManagerStudent/classDetailOfStudent/classDetailOfStudent.component";
 import HistoryNotificationStudent from "./pages/student/NotificationsOfStudent/HistoryNotificationsOfStudent/historyNotificationsOfStudent.component";
 
+
+//parents
+import TemplateParents from "./components/template/parents/parents.component";
+import ParentsSchedule from './pages/parents/scheduleParents/scheduleParents.component'
+import HistoryNotificationParents from "./pages/parents/NotificationsOfParents/HistoryNotificationsOfParents/historyNotificationsOfParents.component";
+import ListClassesChild from "./pages/parents/ClassManagerParents/ListClassesOfChild/allClassesOfChild.component";
+import ClassDetailOfChild from "./pages/parents/ClassManagerParents/classDetailOfChild/classDetailOfChild.component";
+
 // const routerAdmin = createBrowserRouter([
 //   {
 //     path: "/",
@@ -181,8 +189,6 @@ import HistoryNotificationStudent from "./pages/student/NotificationsOfStudent/H
 //   },
 // ]);
 
-
-
 // const routerStudent = createBrowserRouter([
 //   // {
 //   //   path: "/",
@@ -223,16 +229,34 @@ import HistoryNotificationStudent from "./pages/student/NotificationsOfStudent/H
 //   },
 // ])
 
+// const userRole = JSON.parse(localStorage.getItem("userRole"));
 
-const userRole = JSON.parse(localStorage.getItem("userRole"));
+// const ErrorPage = () => {
+//   const naviage = useNavigate();
 
-const leaderElement = userRole === 'Admin' ? <TemplateLeader /> : <Login />;
-const teacherElement = userRole === 'Teacher' ? <TemplateTeacher /> : <Login />;
-const studentElement = userRole === 'Student' ? <TemplateStudent /> : <Login />;
+//   const backToLogin = () => {
+//     naviage("/");
+//   };
+//   return (
+//     <>
+//       {userRole !== null && (
+//         <div>
+//           <h1>May khong co quyen vao day</h1>
+//           <div onClick={() => backToLogin()}>Click here to login again</div>
+//         </div>
+//       )|| (
+//         <div>Loading</div>
+//       )}
+      
+//     </>
+//   );
+// };
 
-
-
-
+// const leaderElement = userRole === "Admin" ? <TemplateLeader /> : <ErrorPage />;
+// const teacherElement =
+//   userRole === "Teacher" ? <TemplateTeacher /> : <ErrorPage />;
+// const studentElement =
+//   userRole === "Student" ? <TemplateStudent /> : <ErrorPage />;
 
 const router = createBrowserRouter([
   {
@@ -241,7 +265,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/leader",
-    element: leaderElement,
+    element: <TemplateLeader />,
     children: [
       {
         path: "/leader/dashboard",
@@ -360,7 +384,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/student",
-    element: studentElement,
+    element: <TemplateStudent />,
     children: [
       {
         path: "/student/profile",
@@ -384,6 +408,32 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/parents',
+    element: <TemplateParents />,
+    children: [
+      {
+        path: "/parents/profile",
+        element: <Profile />
+      },
+      {
+        path: '/parents/schedule',
+        element: <ParentsSchedule />
+      },
+      {
+        path: '/parents/listClassesOfChild',
+        element: <ListClassesChild />
+      },
+      {
+        path: '/parents/listClassesOfChild/classDetail',
+        element: <ClassDetailOfChild />
+      },
+      {
+        path: '/parents/historyNotifications',
+        element: <HistoryNotificationParents />
+      }
+    ]
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

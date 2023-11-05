@@ -80,6 +80,8 @@ console.log(userRole)
           navigate('/student')
         }
 
+        window.location.reload();
+
       } else {
         alert("Đăng nhập không thành công");
       }
