@@ -14,7 +14,7 @@ const Profile = () => {
   const [changePass, setChangePass] = useState(false);
 
   const userRole = JSON.parse(localStorage.getItem("userRole"));
-  const userID = JSON.parse(localStorage.getItem("id_user"));
+  const userCode = JSON.parse(localStorage.getItem("user_code"));
 
   const {data: listAdmins} = useListAdminsQuery();
   const {data: listTeachers} = useListTeachersQuery();
@@ -26,7 +26,7 @@ const Profile = () => {
     Student: listStudents,
   };
 
-  const currentUser = usersData[userRole]?.find((item) => item.id === Number(userID));
+  const currentUser = usersData[userRole]?.find((item) => item.usercode === userCode);
 
 
   return (

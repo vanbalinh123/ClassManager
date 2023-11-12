@@ -29,7 +29,7 @@ const RightLayout = () => {
   const navigate = useNavigate();
 
   const userRole = JSON.parse(localStorage.getItem("userRole"));
-  const userID = JSON.parse(localStorage.getItem("id_user"));
+  const userCode = JSON.parse(localStorage.getItem("user_code"));
 
   const {data: listAdmins} = useListAdminsQuery();
   const {data: listTeachers} = useListTeachersQuery();
@@ -42,7 +42,7 @@ const RightLayout = () => {
     Student: listStudents,
   };
   
-  const currentUser = usersData[userRole]?.find((item) => item.id === Number(userID));
+  const currentUser = usersData[userRole]?.find((item) => item.usercode === userCode);
 
   const handleImgClick = () => {
     return setCheck(!check);
@@ -58,6 +58,7 @@ const RightLayout = () => {
     } else if (userRole === "Student") {
       navigate("/student/profile");
     }
+
   };
 
 

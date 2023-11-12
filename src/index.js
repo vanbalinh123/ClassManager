@@ -288,7 +288,7 @@ const router = createBrowserRouter([
         element: <UsersManager />,
       },
       {
-        path: "/leader/listUsers/userDetail",
+        path: "/leader/listUsers/userDetail/:role/:usercode",
         element: <UserDetail />,
       },
       {

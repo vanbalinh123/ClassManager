@@ -31,25 +31,29 @@ const Infomations = ({selectedValue}) => {
   const [createStudent] = useCreateStudentMutation();
 
   const onSubmit = async (data) => {
-    console.log(data)
-
+    console.log(selectedValue)
     const dulieu = {
       full_name: data.name,
       email: data.email,
       password: data.password,
       mobile: data.phone,
+      classes: [],
+      role: selectedValue.toLowerCase(),
     }
 
     let response = null;
-    console.log(selectedValue)
+    console.log(dulieu)
 
     if (selectedValue === "Admin") {
+      console.log('ccc')
       response = await createAdmin(dulieu)
     } else if (selectedValue === "Teacher") {
       response = await createTeacher(dulieu)
     } else if (selectedValue === "Student") {
       response = await createStudent(dulieu)
     }
+
+    console.log(response)
 
     try {
       if(response.data !== undefined) {

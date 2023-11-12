@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useListClassQuery } from "../../../redux/api/leader/class-api.slice";
 
 import { Page, Title } from "../../../generalCss/shared.styles";
@@ -8,12 +9,23 @@ import AddNewClass from "./addNewClass/addNewClass.component";
 import { Content } from "./classes.styles";
 
 const CreateClasses = () => {
-    const {data: listClasses} = useListClassQuery()
+    const [classCode, setClassCode] = useState('');
+    const [className, setClassName] = useState(''); 
+    const [course, setCourse] = useState('');
+    
+    const {data: listClasses} = useListClassQuery({
+        search: `${classCode} ${className} ${course}`
+    });
+   
 
     return (
         <Page>
             <Title>Class Manager</Title>
-            <FilterClasses />
+            <FilterClasses 
+                setClassCode={setClassCode}
+                setClassName={setClassName}
+                setCourse={setCourse}
+            />
             <Content>
                 <ListClasses
                     listClasses={listClasses}

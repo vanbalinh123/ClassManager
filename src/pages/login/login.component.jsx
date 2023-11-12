@@ -64,19 +64,21 @@ console.log(userRole)
       response = await loginStudent(dataLogin);
     }
 
+    console.log(response)
+
     try {
       if (response.data.bool === true) {
         localStorage.setItem("userRole", JSON.stringify(userRole));
 
         alert("Login Successfull");
         if (userRole === "Admin") {
-          localStorage.setItem("id_user", JSON.stringify(response.data.admin_id));
+          localStorage.setItem("user_code", JSON.stringify(response.data.admin_usercode));
           navigate('/leader');
         } else if (userRole === "Teacher") {
-          localStorage.setItem("id_user", JSON.stringify(response.data.teacher_id));
+          localStorage.setItem("user_code", JSON.stringify(response.data.teacher_usercode));
           navigate('/teacher'); 
         } else if (userRole === "Student") {
-          localStorage.setItem("id_user", JSON.stringify(response.data.student_id));
+          localStorage.setItem("user_code", JSON.stringify(response.data.student_usercode));
           navigate('/student')
         }
 

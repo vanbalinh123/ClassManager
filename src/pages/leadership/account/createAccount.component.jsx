@@ -13,7 +13,6 @@ const CreateAccount = () => {
     setSelectedValue(newValue);
   };
 
-  console.log(selectedValue)
 
   return (
     <Page>

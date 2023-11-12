@@ -1,6 +1,7 @@
 function calculateClassSchedule(startDate, totalSessions, sessionsPerWeek, daysOfWeek, startTime, endTime) {
     const classSchedule = [];
     const currentDate = new Date(startDate);
+    
   
     // Tạo một mảng với tất cả các ngày trong tuần (0 là Chủ Nhật, 1 là Thứ Hai, v.v.)
     const allDaysOfWeek = [0, 1, 2, 3, 4, 5, 6];
@@ -30,7 +31,7 @@ function calculateClassSchedule(startDate, totalSessions, sessionsPerWeek, daysO
     }
   
     return classSchedule;
-  }
+}
   
   // Sử dụng ví dụ
   const startDate = new Date("2023-09-18"); // Ngày bắt đầu

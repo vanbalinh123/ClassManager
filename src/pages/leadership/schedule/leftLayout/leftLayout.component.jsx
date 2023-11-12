@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useListSchedulesQuery } from "../../../../redux/api/leader/schedule-api.slice";
+import { useListClassQuery } from "../../../../redux/api/leader/class-api.slice";
 import {
   Left,
   DivInputs,
@@ -5,14 +8,29 @@ import {
   Key,
   DivInput,
   Input,
+  Select,
+  Option,
   MessageErorrs,
 } from "./leftLayout.styles";
 
 const LeftLayout = ({ register, errors }) => {
+  const {data: listSchedules} = useListSchedulesQuery();
+  const {data: listClasses} = useListClassQuery();
+
+  const uniqueClassCodes = [];
+
+  listSchedules?.forEach(itemSche => {
+    if (!uniqueClassCodes.includes(itemSche.class_code)) {
+      uniqueClassCodes.push(itemSche.class_code);
+    }
+  });
+  
+  const result = listClasses?.filter(item => !uniqueClassCodes.includes(item.class_code));
+
   return (
     <Left>
       <DivInputs>
-        <Item>
+        {/* <Item>
           <Key>Teacher's Name</Key>
           <DivInput>
             <Input
@@ -25,7 +43,7 @@ const LeftLayout = ({ register, errors }) => {
             />
           </DivInput>
         </Item>
-        {errors.name && <MessageErorrs>{errors.name.message}</MessageErorrs>}
+        {errors.name && <MessageErorrs>{errors.name.message}</MessageErorrs>} */}
         <Item>
           <Key>Teacher code</Key>
           <DivInput>
@@ -45,14 +63,23 @@ const LeftLayout = ({ register, errors }) => {
         <Item>
           <Key>Class code</Key>
           <DivInput>
-            <Input
+            {/* <Input
               type="text"
               placeholder="Class code..."
               hasError={!!errors.classCode}
               {...register("classCode", {
                 required: "Class Code is required!",
               })}
-            />
+            /> */}
+            <Select
+              {...register("classCode", {
+                required: "Class Code is required",
+              })}
+            >
+              {result?.map(item => (
+                <Option>{item.class_code}</Option>
+              ))}
+            </Select>
           </DivInput>
         </Item>
         {errors.classCode && (

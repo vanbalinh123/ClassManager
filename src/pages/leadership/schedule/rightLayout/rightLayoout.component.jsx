@@ -13,18 +13,17 @@ const RightLayout = ({ sessionsPerWeek, register, errors }) => {
 
   for (let i = 0; i < sessionsPerWeek; i++) {
     const date = `date[${i}]`;
-    console.log(errors?.date?.startTime);
     items.push(
       <Item2 key={i}>
         <Key2>Day {i + 1}</Key2>
         <Date {...register(`${date}.day`)}>
-          <Option>Monday</Option>
-          <Option>Tuesday</Option>
-          <Option>Wednesday</Option>
-          <Option>Thursday</Option>
-          <Option>Friday</Option>
-          <Option>Saturday</Option>
-          <Option>Sunday</Option>
+          <Option value={1}>Monday</Option>
+          <Option value={2}>Tuesday</Option>
+          <Option value={3}>Wednesday</Option>
+          <Option value={4}>Thursday</Option>
+          <Option value={5}>Friday</Option>
+          <Option value={6}>Saturday</Option>
+          <Option value={0}>Sunday</Option>
         </Date>
         <DivTime>
           <InputTime

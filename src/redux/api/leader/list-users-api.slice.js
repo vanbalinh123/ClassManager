@@ -11,9 +11,29 @@ const listAdminsApi = apiSlice.injectEndpoints({
                 params: data
             }),
         }),
+        listTeachers: builder.query({
+            serializeQueryArgs: () => {
+                return undefined;
+            },
+            query: (data) => ({
+                url: '/api/teacher/',
+                params: data
+            }),
+        }),
+        listStudents: builder.query({
+            serializeQueryArgs: () => {
+                return undefined;
+            },
+            query: (data) => ({
+                url: '/api/student/',
+                params: data
+            }),
+        }),
     })
 })
 
 export const {
-    useListAdminsQuery
+    useListAdminsQuery,
+    useListTeachersQuery,
+    useListStudentsQuery
 } = listAdminsApi

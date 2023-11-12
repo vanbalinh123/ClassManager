@@ -1,4 +1,9 @@
 import { useState } from "react";
+import { useEffect } from "react";
+
+import { useUpdateAdminMutation } from "../../../redux/api/leader/update-user.slice";
+import { useUpdateTeacherMutation } from "../../../redux/api/leader/update-user.slice";
+import { useUpdateStudentMutation } from "../../../redux/api/leader/update-user.slice";
 
 import {
   Infors,
@@ -17,18 +22,56 @@ import {
   ToChangePass,
 } from "./inforUser.styles";
 
-const InforUser = ({setChangePass, currentUser, userRole}) => {
+const InforUser = ({ setChangePass, currentUser, userRole }) => {
   const [update, setUpdate] = useState(false);
-  console.log(currentUser)
+  const [updateUserName, setUpdateUserName] = useState(currentUser?.full_name);
+  const [updateEmail, setUpdateEmail] = useState(currentUser?.email);
+  const [updatePhone, setUpdatePhone] = useState(currentUser?.mobile);
+
+  const [updateAdmin] = useUpdateAdminMutation();
+  const [updateTeacher] = useUpdateTeacherMutation();
+  const [updateStudent] = useUpdateStudentMutation();
 
   const handleToUpdate = () => {
     setUpdate(true);
   };
 
-  const handleUpdate = () => {
-    setUpdate(false);
+  const handleUpdate = async () => {
+    const dataUpdate = {
+      full_name: updateUserName,
+      email: updateEmail,
+      password: currentUser?.password,
+      mobile: updatePhone,
+      role: userRole.toLowerCase(),
+      usercode: currentUser?.usercode
+    }
+
+    let response = null;
+
+    if(userRole === 'Admin') {
+      response = await updateAdmin(dataUpdate);
+    } else if (userRole === 'Teacher') {
+      response = await updateTeacher(dataUpdate);
+    } else if (userRole === 'Student') {
+      response = await updateStudent(dataUpdate);
+    }
+    
+    console.log(response)
+    
+    if(response.data) {
+      alert('Change successfull');
+      handleCancel();
+    } else {
+      alert('Error')
+      return;
+    }
+
   };
-  
+
+  const handleCancel = () => {
+    setUpdate(false);
+  }
+
   return (
     <Infors>
       <DivImg>
@@ -37,15 +80,19 @@ const InforUser = ({setChangePass, currentUser, userRole}) => {
       <DivInfors>
         <Child>
           <Key>User's Name: </Key>
-          {(update === false && <Result>{currentUser.full_name}</Result>) || (
+          {(update === false && <Result>{currentUser?.full_name}</Result>) || (
             <DivInput>
-              <Input />
+              <Input 
+                type="text" 
+                value={updateUserName} 
+                onChange={(e) => setUpdateUserName(e.target.value)}
+              />
             </DivInput>
           )}
         </Child>
         <Child>
           <Key>User's Code: </Key>
-          <Result>{currentUser.usercode}</Result>
+          <Result>{currentUser?.usercode}</Result>
         </Child>
         <Child>
           <Key>Role: </Key>
@@ -53,26 +100,39 @@ const InforUser = ({setChangePass, currentUser, userRole}) => {
         </Child>
         <Child>
           <Key>Email: </Key>
-          {(update === false && <Result>{currentUser.email}</Result>) || (
+          {(update === false && <Result>{currentUser?.email}</Result>) || (
             <DivInput>
-              <Input />
+              <Input 
+                type="text" 
+                value={updateEmail} 
+                onChange={(e) => setUpdateEmail(e.target.value)}
+              />
             </DivInput>
           )}
         </Child>
         <Child>
           <Key>Phone: </Key>
-          {(update === false && <Result>{currentUser.mobile}</Result>) || (
+          {(update === false && <Result>{currentUser?.mobile}</Result>) || (
             <DivInput>
-              <Input />
+              <Input 
+                type="text" 
+                value={updatePhone}
+                onChange={(e) => setUpdatePhone(e.target.value)} 
+              />
             </DivInput>
           )}
         </Child>
       </DivInfors>
-      <DivBtn>
-        {(update === false && (
+      {(update === false && (
+        <DivBtn>
           <Btn onClick={() => handleToUpdate()}>Update</Btn>
-        )) || <Btn onClick={() => handleUpdate()}>Oke</Btn>}
-      </DivBtn>
+        </DivBtn>
+      )) || (
+        <DivBtn>
+          <Btn onClick={() => handleCancel()}>Cancel</Btn>
+          <Btn onClick={() => handleUpdate()}>Send</Btn>
+        </DivBtn>
+      )}
       <DivChangePass>
         <Span>You want to change your password?</Span>
         <ToChangePass onClick={() => setChangePass(true)}>

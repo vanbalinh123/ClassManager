@@ -1,21 +1,50 @@
 import { useNavigate } from "react-router-dom";
+import { useListSchedulesQuery } from "../../../../redux/api/leader/schedule-api.slice";
+import { useListTeachersQuery } from "../../../../redux/api/leader/list-users-api.slice";
 
 import { ListClass } from "./listClasses.styles";
-import { 
+import {
   Header,
   TitleList,
   Section,
   DivItem,
-  Item
+  Item,
 } from "../../../../generalCss/shared.styles";
 
-const ListClasses = ({listClasses}) => {
+const ListClasses = ({ listClasses }) => {
   const navigate = useNavigate();
-  console.log(listClasses)
+  const { data: listTeachers } = useListTeachersQuery();
+  const { data: listSchedules } = useListSchedulesQuery();
 
-  const handleClick = () => {
-    navigate('/leader/createSchedule')
-  }
+  const uniqueClassCodes = [];
+
+  listSchedules?.forEach((itemSche) => {
+    if (!uniqueClassCodes.includes(itemSche.class_code)) {
+      uniqueClassCodes.push(itemSche.class_code);
+    }
+  });
+
+  const classNoSchedule = listClasses?.filter(
+    (item) => !uniqueClassCodes.includes(item.class_code)
+  );
+
+  const teacherMap = {}; 
+
+  listSchedules?.forEach((item) => {
+    teacherMap[item.class_code] = item.teacher_code;
+  });
+
+
+  const findTeacherName = (userCode) => {
+    const foundTeacher = listTeachers.find((teacher) => teacher.usercode === userCode);
+  
+    return foundTeacher ? foundTeacher.full_name : null;
+  };
+
+  const handleClick = (classCode) => {
+    console.log(classCode)
+    navigate("/leader/createSchedule");
+  };
 
   return (
     <ListClass>
@@ -26,15 +55,19 @@ const ListClasses = ({listClasses}) => {
         <TitleList>Course</TitleList>
       </Header>
       <Section>
-        {listClasses?.map(item => (
-          <DivItem
-          onClick={() => handleClick()}
-        >
-          <Item>{item.class_code}</Item>
-          <Item>{item.class_name}</Item>
-          <Item>Van Ba Linh</Item>
-          <Item>{item.course}</Item>
-        </DivItem>
+        {listClasses?.map((item, index) => (
+          <DivItem 
+            onClick={() => handleClick(item.class_code)} 
+            key={index}
+          >
+            <Item>{item.class_code}</Item>
+            <Item>{item.class_name}</Item>
+            {classNoSchedule?.find((item2) => item2.class_code === item.class_code) 
+                && <Item  style={{color: 'red'}}>Chua co lich day</Item> 
+                || <Item>{findTeacherName(teacherMap[item.class_code])}</Item>
+            }
+            <Item>{item.course}</Item>
+          </DivItem>
         ))}
       </Section>
     </ListClass>
