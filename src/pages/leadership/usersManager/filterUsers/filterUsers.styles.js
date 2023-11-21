@@ -2,6 +2,15 @@ import { styled, css } from "styled-components";
 
 import generalStyles from "../../../../generalCss/general.styles";
 
+// export const ItemSearch = styled.div`
+//   display: flex;
+//   height: 100%;
+//   align-items: center;
+//   gap: 10px;
+//   width: 200px;
+//   position: relative;
+// `;
+
 export const DivSelect = styled.div`
   display: flex;
   height: 100%;

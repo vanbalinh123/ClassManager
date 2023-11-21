@@ -8,11 +8,20 @@ import {
   MessageErorrs,
 } from "./rightLayout.styles";
 
-const RightLayout = ({ sessionsPerWeek, register, errors }) => {
+const RightLayout = ({
+  sessionsPerWeek,
+  register,
+  errors,
+  classCodeParam,
+  findSchedule,
+}) => {
   const items = [];
+
+  console.log(sessionsPerWeek);
 
   for (let i = 0; i < sessionsPerWeek; i++) {
     const date = `date[${i}]`;
+    console.log(date);
     items.push(
       <Item2 key={i}>
         <Key2>Day {i + 1}</Key2>

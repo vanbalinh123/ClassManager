@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { useLoginTeacherMutation } from "../../redux/api/login/teacher-login-api.slice";
 import { useLoginAdminMutation } from "../../redux/api/login/teacher-login-api.slice";
@@ -30,7 +32,7 @@ import {
 
 const Login = () => {
   const userRole = JSON.parse(localStorage.getItem("userRole"));
-console.log(userRole)
+  console.log(userRole);
   const navigate = useNavigate();
   const {
     register,
@@ -41,6 +43,19 @@ console.log(userRole)
   const [loginTeacher] = useLoginTeacherMutation();
   const [loginAdmin] = useLoginAdminMutation();
   const [loginStudent] = useLoginStudentMutation();
+
+  const notify = () => {
+    toast.success("Login successfull!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const onSubmit = async (data) => {
     const email = data.email;
@@ -64,26 +79,33 @@ console.log(userRole)
       response = await loginStudent(dataLogin);
     }
 
-    console.log(response)
-
     try {
       if (response.data.bool === true) {
         localStorage.setItem("userRole", JSON.stringify(userRole));
 
-        alert("Login Successfull");
+        // alert("Login Successfull");
+         notify();
         if (userRole === "Admin") {
-          localStorage.setItem("user_code", JSON.stringify(response.data.admin_usercode));
-          navigate('/leader');
+          localStorage.setItem(
+            "user_code",
+            JSON.stringify(response.data.admin_usercode)
+          );
+          navigate("/leader");
         } else if (userRole === "Teacher") {
-          localStorage.setItem("user_code", JSON.stringify(response.data.teacher_usercode));
-          navigate('/teacher'); 
+          localStorage.setItem(
+            "user_code",
+            JSON.stringify(response.data.teacher_usercode)
+          );
+          navigate("/teacher");
         } else if (userRole === "Student") {
-          localStorage.setItem("user_code", JSON.stringify(response.data.student_usercode));
-          navigate('/student')
+          localStorage.setItem(
+            "user_code",
+            JSON.stringify(response.data.student_usercode)
+          );
+          navigate("/student");
         }
 
-        window.location.reload();
-
+        // window.location.reload();
       } else {
         alert("Đăng nhập không thành công");
       }
@@ -153,6 +175,18 @@ console.log(userRole)
       <Right>
         <Img src="/imgs/banner-login.png" />
       </Right>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Page>
   );
 };

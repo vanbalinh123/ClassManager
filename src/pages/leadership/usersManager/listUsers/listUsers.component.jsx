@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useListAdminsQuery } from "../../../../redux/api/leader/list-users-api.slice";
 import { useListTeachersQuery } from "../../../../redux/api/leader/list-users-api.slice";
 import { useListStudentsQuery } from "../../../../redux/api/leader/list-users-api.slice";
+import Pagination from "../../../../components/paginate/paginate";
+
 
 import { List } from "./listUsers.styles";
 import {
@@ -14,14 +17,12 @@ import {
 
 const ListUsers = ({ 
   selectedValue,
-  userCode,
-  userName,
-  userEmail
+  valueSearch
 }) => {
   const navigate = useNavigate();
-  const { data: listAdmins } = useListAdminsQuery({search: `${userCode} ${userName} ${userEmail}`});
-  const { data: listTeachers } = useListTeachersQuery({search: `${userCode} ${userName} ${userEmail}`});
-  const { data: listStudents } = useListStudentsQuery({search: `${userCode} ${userName} ${userEmail}`});
+  const { data: listAdmins } = useListAdminsQuery({search: `${valueSearch}`});
+  const { data: listTeachers } = useListTeachersQuery({search: `${valueSearch}`});
+  const { data: listStudents } = useListStudentsQuery({search: `${valueSearch}`});
 
   let listUsers = [];
   if (selectedValue === "Admin") {
@@ -37,6 +38,23 @@ const ListUsers = ({
     console.log(id)
     console.log(selectedValue)
   };
+
+    //paginate
+    const itemsPerPage = 10;
+    const totalItems = listUsers?.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const [currentPage, setCurrentPage] = useState(0);
+  
+    const handlePageClick = (data) => {
+      setCurrentPage(data.selected);
+    };
+  
+  
+    const customListUsers = listUsers?.slice(
+      currentPage * itemsPerPage,
+      (currentPage + 1) * itemsPerPage
+    );
+    //paginate
   
 
   return (
@@ -49,7 +67,7 @@ const ListUsers = ({
         <TitleList>Role</TitleList>
       </Header>
       <Section>
-        {listUsers?.map((item, index) => (
+        {customListUsers?.map((item, index) => (
           <DivItem
             key={index} 
             onClick={() => handleClickUserDetail(item.usercode)}
@@ -62,6 +80,10 @@ const ListUsers = ({
           </DivItem>
         ))}
       </Section>
+      <Pagination
+        totalPages={totalPages}
+        handlePageClick={handlePageClick}
+      />
     </List>
   );
 };

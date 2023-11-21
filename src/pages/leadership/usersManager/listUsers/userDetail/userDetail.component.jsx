@@ -40,8 +40,7 @@ import {
 
 const UserDetail = () => {
   const { role, usercode } = useParams();
-  console.log(role)
-  console.log(usercode)
+
   const navigate = useNavigate();
 
   const { data: listAdmins } = useListAdminsQuery();

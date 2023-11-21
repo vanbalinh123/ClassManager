@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useListSchedulesQuery } from "../../../../redux/api/leader/schedule-api.slice";
 import { useListClassQuery } from "../../../../redux/api/leader/class-api.slice";
+import { useParams } from "react-router-dom";
 import {
   Left,
   DivInputs,
@@ -13,19 +14,21 @@ import {
   MessageErorrs,
 } from "./leftLayout.styles";
 
-const LeftLayout = ({ register, errors }) => {
-  const {data: listSchedules} = useListSchedulesQuery();
-  const {data: listClasses} = useListClassQuery();
+const LeftLayout = ({ register, errors, findSchedule, classCodeParam }) => {
+  const { data: listSchedules } = useListSchedulesQuery();
+  const { data: listClasses } = useListClassQuery();
 
   const uniqueClassCodes = [];
 
-  listSchedules?.forEach(itemSche => {
+  listSchedules?.forEach((itemSche) => {
     if (!uniqueClassCodes.includes(itemSche.class_code)) {
       uniqueClassCodes.push(itemSche.class_code);
     }
   });
-  
-  const result = listClasses?.filter(item => !uniqueClassCodes.includes(item.class_code));
+
+  const result = listClasses?.filter(
+    (item) => !uniqueClassCodes.includes(item.class_code)
+  );
 
   return (
     <Left>
@@ -76,9 +79,11 @@ const LeftLayout = ({ register, errors }) => {
                 required: "Class Code is required",
               })}
             >
-              {result?.map(item => (
-                <Option>{item.class_code}</Option>
-              ))}
+              {classCodeParam === 'new' 
+                && result?.map((item, index) => (
+                  <Option key={index}>{item.class_code}</Option>
+                )) || <Option>{findSchedule?.class_code}</Option>
+              }
             </Select>
           </DivInput>
         </Item>

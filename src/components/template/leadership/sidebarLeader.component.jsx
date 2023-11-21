@@ -23,7 +23,7 @@ const SidebarLeader = () => {
           <ItemName>Create Account</ItemName>
         </Item>
       </FlexNavLink>
-      <FlexNavLink to="/leader/createSchedule">
+      <FlexNavLink to="/leader/createSchedule/new">
         <Item >
           <BsCalendar3 size="20px" />
           <ItemName>Create a teaching schedule</ItemName>

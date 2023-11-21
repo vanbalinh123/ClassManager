@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
+import { toastSuccess } from "../../../../components/toast/toast";
+import { toastError } from "../../../../components/toast/toast";
+import { ToastCtn } from "../../../../components/toast/toast";
+
 import { useCreateAdminMutation } from "../../../../redux/api/leader/createAccount.slice";
 import { useCreateTeacherMutation } from "../../../../redux/api/leader/createAccount.slice";
 import { useCreateStudentMutation } from "../../../../redux/api/leader/createAccount.slice";
@@ -17,13 +21,12 @@ import {
   MessageErorrs,
 } from "./infomations.styles";
 
-
-
 const Infomations = ({selectedValue}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm();
 
   const [createAdmin] = useCreateAdminMutation();
@@ -58,13 +61,18 @@ const Infomations = ({selectedValue}) => {
     try {
       if(response.data !== undefined) {
         console.log(response.data)
-        alert('Successful')
+        // alert('Successful')
+        toastSuccess("Create Account Successfull");
+        setValue('name', '');
+        setValue('email', '');
+        setValue('password', '');
+        setValue('phone', '');
 
       } else {
-        console.log('Erorr rooi')
+        toastError("Create Account Fail")
       }
 
-    } catch(erorr) {
+    } catch(error) {
       console.log('Error Server')
     }
   };
@@ -155,6 +163,7 @@ const Infomations = ({selectedValue}) => {
           Create
         </Btn>
       </DivBtn>
+      <ToastCtn />
     </Form>
   );
 };

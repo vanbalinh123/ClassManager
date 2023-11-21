@@ -77,7 +77,11 @@ const RightLayout = () => {
         <DivUser>
           <NameUser>{currentUser?.full_name}</NameUser>
           <DivImg onClick={() => handleImgClick()}>
-            <ImgUser src="/imgs/user-img.jpg" alt="avatar" />
+            {currentUser?.avatar === null
+              && <ImgUser src="/imgs/user-img.jpg" alt="avatar" />
+              || <ImgUser src={currentUser?.avatar} alt="avatar"/>
+            }
+            
           </DivImg>
           {check === true && (
             <Other>

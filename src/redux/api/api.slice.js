@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const baseQuery = fetchBaseQuery({
+const baseQuerys = fetchBaseQuery({
     baseUrl: 'http://localhost:8000/',
     prepareHeaders: (headers) => {
         // const token = JSON.parse(localStorage.getItem('accessToken'));
@@ -9,7 +9,7 @@ const baseQuery = fetchBaseQuery({
         //     headers.set('Authorization', `Bearer ${token}`);
         //     headers.set('Content-Type', 'application/json');
         // }
-        headers.set('Content-Type', 'application/json');
+        // headers.set('Content-Type', 'application/json');
         return headers;
     }
 });
@@ -18,7 +18,7 @@ const baseQuery = fetchBaseQuery({
 
 const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: baseQuery,
+    baseQuery: baseQuerys,
     // baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/' }),
     refetchOnMountOrArgChange: true,
     endpoints: () => ({})

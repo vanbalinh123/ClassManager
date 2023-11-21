@@ -13,14 +13,31 @@ export const Infors = styled.div`
 
 export const DivImg = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  object-fit: cover;
 `;
 
-export const Img = styled.img`
+export const Div = styled.div`
+  border: 1px solid red;
   width: 200px;
   height: 200px;
   border-radius: 200px;
   border: 1px solid ${generalStyles.border};
-  box-shadow: 0px 0px 5px ${generalStyles.border};
+  box-shadow: 0px 0px 5px ${generalStyles.border}; 
+`;
+
+export const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 200px;
+  border: 1px solid ${generalStyles.border};
+`;
+
+export const InputImg = styled.input`
+  
 `;
 
 export const DivInfors = styled.div`

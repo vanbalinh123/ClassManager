@@ -8,9 +8,7 @@ import { Content, DivOutlet } from "./usersManager.styles";
 
 const UsersManager = () => {
   const [selectedValue, setSelectedValue] = useState("Admin");
-  const [userCode, setUserCode] = useState('');
-  const [userName, setUserName] = useState(''); 
-  const [userEmail, setUserEmail] = useState('');
+  const [valueSearch, setValueSearch] = useState("");
 
   return (
     <Page>
@@ -18,16 +16,12 @@ const UsersManager = () => {
       <FilterUsers 
         selectedValue={selectedValue}
         setSelectedValue={setSelectedValue}
-        setUserCode={setUserCode}
-        setUserName={setUserName}
-        setUserEmail={setUserEmail}
+        setValueSearch={setValueSearch}
       />
       <Content>
         <ListUsers 
           selectedValue={selectedValue}
-          userCode={userCode}
-          userName={userName}
-          userEmail={userEmail}
+          valueSearch={valueSearch}
         />
       </Content>
     </Page>

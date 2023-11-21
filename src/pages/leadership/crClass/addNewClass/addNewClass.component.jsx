@@ -1,5 +1,9 @@
 import { useCreateClassMutation } from "../../../../redux/api/leader/class-api.slice";
 
+import { toastSuccess } from "../../../../components/toast/toast";
+import { toastError } from "../../../../components/toast/toast";
+import { ToastCtn } from "../../../../components/toast/toast";
+
 import { useForm } from "react-hook-form";
 import { IoAdd } from "react-icons/io5";
 
@@ -20,6 +24,7 @@ const AddNewClass = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm();
 
   const [creatClass] = useCreateClassMutation();
@@ -35,12 +40,17 @@ const AddNewClass = () => {
       course: course
     }
 
-    try {
-      const response = await creatClass(newClass);
-      console.log(response)
-    } catch (error) {
-      alert("Đăng nhập không thành công");
+    const response = await creatClass(newClass);
+
+    if(response.data) {
+      toastSuccess(`Create class ${class_code} successful`)
+      setValue('classCode', '');
+      setValue('className', '');
+      setValue('course', '');
+    } else {
+      toastError(`Create class fail, try again!!`);
     }
+
   };
 
   return (
@@ -95,6 +105,7 @@ const AddNewClass = () => {
           Create
           </Btn>
       </DivBtn>
+      <ToastCtn />
     </Form>
   );
 };

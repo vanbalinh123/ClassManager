@@ -17,13 +17,10 @@ import {
 const FilterUsers = ({
   selectedValue, 
   setSelectedValue,
-  setUserCode,
-  setUserName,
-  setUserEmail
+  setValueSearch
 }) => {
-  const [checkUserCode, setCheckUserCode] = useState('');
-  const [checkUserName, setCheckUserName] = useState('');
-  const [checkUserEmail, setCheckUserEmail] = useState('');
+  const [checkValueSearch, setCheckValueSearch] = useState('');
+
 
   const handleSelectChange = (event) => {
     const newValue = event.target.value;
@@ -31,18 +28,12 @@ const FilterUsers = ({
   };
 
   const handleSearch = () => {
-    setUserCode(checkUserCode);
-    setUserName(checkUserName);
-    setUserEmail(checkUserEmail)
+    setValueSearch(checkValueSearch)
   }
 
   const handleClear = () => {
-    setCheckUserCode('');
-    setCheckUserName('');
-    setCheckUserEmail('')
-    setUserCode('');
-    setUserName('');
-    setUserEmail('');
+   setValueSearch('')
+   setCheckValueSearch('')
   }
 
   return (
@@ -50,12 +41,12 @@ const FilterUsers = ({
       <ItemSearch>
         <Input 
           type="text" 
-          placeholder="User Code..."
-          value={checkUserCode} 
-          onChange={(e) => setCheckUserCode(e.target.value)}
+          placeholder="User Code, User Name, User Email..."
+          value={checkValueSearch} 
+          onChange={(e) => setCheckValueSearch(e.target.value)}
         />
       </ItemSearch>
-      <ItemSearch>
+      {/* <ItemSearch>
         <Input 
           type="text" 
           placeholder="User Name..." 
@@ -70,7 +61,7 @@ const FilterUsers = ({
           value={checkUserEmail}
           onChange={(e) => setCheckUserEmail(e.target.value)}
         />
-      </ItemSearch>
+      </ItemSearch> */}
       <DivSelect>
         <Select value={selectedValue} onChange={handleSelectChange}>
           <Option value="Admin">Admin</Option>

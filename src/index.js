@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import store from "./redux/store";
+
 
 import Login from "./pages/login/login.component";
 
@@ -276,7 +278,7 @@ const router = createBrowserRouter([
         element: <CreateAccount />,
       },
       {
-        path: "/leader/createSchedule",
+        path: "/leader/createSchedule/:classCode",
         element: <CreateSchedule />,
       },
       {

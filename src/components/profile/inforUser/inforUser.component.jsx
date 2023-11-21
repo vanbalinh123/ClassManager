@@ -2,13 +2,19 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 import { useUpdateAdminMutation } from "../../../redux/api/leader/update-user.slice";
-import { useUpdateTeacherMutation } from "../../../redux/api/leader/update-user.slice";
+import { useUpdateTeacherMutation } from "../../../redux/api/teacher/list-teachers-api.slice";
 import { useUpdateStudentMutation } from "../../../redux/api/leader/update-user.slice";
+
+import { ToastCtn } from "../../toast/toast";
+import { toastSuccess } from "../../toast/toast";
+import { toastError } from "../../toast/toast";
 
 import {
   Infors,
   DivImg,
+  Div,
   Img,
+  InputImg,
   DivInfors,
   Child,
   Key,
@@ -24,67 +30,95 @@ import {
 
 const InforUser = ({ setChangePass, currentUser, userRole }) => {
   const [update, setUpdate] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(currentUser?.avatar);
   const [updateUserName, setUpdateUserName] = useState(currentUser?.full_name);
   const [updateEmail, setUpdateEmail] = useState(currentUser?.email);
   const [updatePhone, setUpdatePhone] = useState(currentUser?.mobile);
+  const [avatar, setAvatar] = useState(currentUser?.avatar)
 
   const [updateAdmin] = useUpdateAdminMutation();
   const [updateTeacher] = useUpdateTeacherMutation();
   const [updateStudent] = useUpdateStudentMutation();
+  
 
   const handleToUpdate = () => {
     setUpdate(true);
   };
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  console.log(currentUser)
+
+  useEffect(() => {
+    setUpdateUserName(currentUser?.full_name)
+    setUpdateEmail(currentUser?.email)
+    setUpdatePhone(currentUser?.mobile)
+    setAvatar(currentUser?.avatar)
+  }, [currentUser])
+
+  console.log(selectedFile)
+
   const handleUpdate = async () => {
-    const dataUpdate = {
-      full_name: updateUserName,
-      email: updateEmail,
-      password: currentUser?.password,
-      mobile: updatePhone,
-      role: userRole.toLowerCase(),
-      usercode: currentUser?.usercode
+    const dataUpdate = new FormData();
+    dataUpdate.append("full_name", updateUserName);
+    dataUpdate.append("email", updateEmail);
+    dataUpdate.append("password", currentUser.password);
+    dataUpdate.append("mobile", updatePhone);
+    dataUpdate.append("usercode", currentUser?.usercode);
+    dataUpdate.append("role", userRole.toLowerCase());
+
+    if (selectedFile) {
+      dataUpdate.append("avatar", selectedFile, selectedFile.name);
     }
 
     let response = null;
 
-    if(userRole === 'Admin') {
+    if (userRole === "Admin") {
       response = await updateAdmin(dataUpdate);
-    } else if (userRole === 'Teacher') {
+    } else if (userRole === "Teacher") {
       response = await updateTeacher(dataUpdate);
-    } else if (userRole === 'Student') {
+    } else if (userRole === "Student") {
       response = await updateStudent(dataUpdate);
     }
-    
-    console.log(response)
-    
-    if(response.data) {
-      alert('Change successfull');
+
+    if (response.data) {
+
+      toastSuccess('Update Successful!!!');
+      // window.location.reload();
       handleCancel();
     } else {
-      alert('Error')
+      toastError('Update fail!!!')
       return;
     }
-
   };
 
   const handleCancel = () => {
     setUpdate(false);
-  }
+  };
 
   return (
     <Infors>
       <DivImg>
-        <Img src="/imgs/user-img.jpg" />
+        <Div>
+          {(currentUser?.avatar === null && (
+            <Img src="/imgs/user-img.jpg" />
+          )) || <Img src={avatar} />}
+        </Div>
+        {update === true && (
+          <InputImg type="file" onChange={handleFileChange} />
+        )}
       </DivImg>
       <DivInfors>
         <Child>
           <Key>User's Name: </Key>
           {(update === false && <Result>{currentUser?.full_name}</Result>) || (
             <DivInput>
-              <Input 
-                type="text" 
-                value={updateUserName} 
+              <Input
+                type="text"
+                value={updateUserName}
                 onChange={(e) => setUpdateUserName(e.target.value)}
               />
             </DivInput>
@@ -102,9 +136,9 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
           <Key>Email: </Key>
           {(update === false && <Result>{currentUser?.email}</Result>) || (
             <DivInput>
-              <Input 
-                type="text" 
-                value={updateEmail} 
+              <Input
+                type="text"
+                value={updateEmail}
                 onChange={(e) => setUpdateEmail(e.target.value)}
               />
             </DivInput>
@@ -114,10 +148,10 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
           <Key>Phone: </Key>
           {(update === false && <Result>{currentUser?.mobile}</Result>) || (
             <DivInput>
-              <Input 
-                type="text" 
+              <Input
+                type="text"
                 value={updatePhone}
-                onChange={(e) => setUpdatePhone(e.target.value)} 
+                onChange={(e) => setUpdatePhone(e.target.value)}
               />
             </DivInput>
           )}
@@ -139,6 +173,7 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
           Click here
         </ToChangePass>
       </DivChangePass>
+      <ToastCtn />
     </Infors>
   );
 };

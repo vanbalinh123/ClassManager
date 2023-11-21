@@ -30,7 +30,7 @@ export const ItemSearch = styled.div`
   height: 100%;
   align-items: center;
   gap: 10px;
-  width: 200px;
+  width: 400px;
   position: relative;
 `;
 
@@ -90,7 +90,7 @@ export const Header = styled.header`
 `;
 
 export const TitleList = styled.span`
-  flex: 1;
+  flex: ${(props) => props.content ? 3 : 1};
   text-align: center;
   font-weight: bold;
 `;
@@ -121,7 +121,8 @@ export const DivItem = styled.div`
 `;
 
 export const Item = styled.span`
-  flex: 1;
+  /* flex: 1; */
+  flex: ${(props) => props.content ? 3 : 1};
   text-align: ${(props) => (props.expanded ? "none" : "center")};
   padding: ${(props) => (props.expanded ? "20px 0px 20px 0px" : "none")};
   white-space: ${(props) => (props.expanded ? "normal" : "nowrap")};
