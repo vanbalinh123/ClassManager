@@ -16,9 +16,6 @@ const CreateClasses = () => {
     search: `${valueSearch}`,
   });
 
-  //pagination
-  
-
   return (
     <Page>
       <Title>Class Manager</Title>

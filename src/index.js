@@ -324,7 +324,7 @@ const router = createBrowserRouter([
         element: <ListClass />,
       },
       {
-        path: "/teacher/listClasses/classDetail",
+        path: "/teacher/listClasses/classDetail/:classCode",
         element: <ClassDetail />,
         children: [
           {
@@ -339,15 +339,15 @@ const router = createBrowserRouter([
                 element: <OneLesson />,
                 children: [
                   {
-                    path: "attendance",
+                    path: "attendance/:idSession",
                     element: <Attendance />,
                   },
                   {
-                    path: "lessonContent",
+                    path: "lessonContent/:idSession",
                     element: <LessonContent />,
                   },
                   {
-                    path: "reschedule",
+                    path: "reschedule/:idSession",
                     element: <Reschedule />,
                   },
                 ],
@@ -401,7 +401,7 @@ const router = createBrowserRouter([
         element: <ListClassesStudent />,
       },
       {
-        path: "/student/listClassesOfStudent/classDetail",
+        path: "/student/listClassesOfStudent/:classCode",
         element: <ClassDetailOfStudent />,
       },
       {

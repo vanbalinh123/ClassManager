@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import {IoAddSharp} from "react-icons/io5"
-
+import { useState, useEffect } from "react";
+import {IoAddSharp} from "react-icons/io5";
+import { useListNotiTeacherQuery } from "../../../../redux/api/teacher/teacher-notifications-api.slice";
+import { useListSchedulesQuery } from "../../../../redux/api/leader/schedule-api.slice";
+import { useListNotiAdminQuery } from "../../../../redux/api/leader/admin-notifications.slice";
 
 import FilterNotifications from "./filterNotifications/filterNotifications.component";
 import ListNotifications from "./listNotifications/listNotifications.comonent";
@@ -11,6 +14,27 @@ import { DivBtn, Btn } from "./historyNotifications.styles";
 
 const HistoryNotificationTeacher = () => {
   const navigate = useNavigate();
+  const [selectedValue, setSelectedValue] = useState("sent");
+  const [valueSearch, setValueSearch] = useState("");
+  const userCode = JSON.parse(localStorage.getItem("user_code"));
+  const { data: listNotiTeacher } = useListNotiTeacherQuery({search: `${valueSearch}`});
+  const { data: listNotiAdmin } = useListNotiAdminQuery({search: `${valueSearch}`})
+  const { data: listSchedule } = useListSchedulesQuery();
+
+  let listTeacherSchedules = listSchedule?.filter(
+    (item) => item.teacher_code === userCode
+  );
+  
+  // Lọc danh sách thông báo theo lớp học của giáo viên
+  let listTeacherNotifications = listNotiTeacher?.filter((notification) =>
+    listTeacherSchedules?.some((schedule) =>
+      schedule.class_code.includes(notification.class_code[0])
+    )
+  );
+
+  let listAdminNotifications = listNotiAdmin?.filter(item => item.role === 'teacher');
+  
+  
 
   return (
     <Page>
@@ -23,8 +47,17 @@ const HistoryNotificationTeacher = () => {
             Create
         </Btn>
       </DivBtn>
-      <FilterNotifications />
-      <ListNotifications />
+      <FilterNotifications 
+        selectedValue={selectedValue}
+        setSelectedValue={setSelectedValue}
+        setValueSearch={setValueSearch}
+      />
+      <ListNotifications 
+        listTeacherNotifications={listTeacherNotifications}
+        listAdminNotifications={listAdminNotifications}
+        selectedValue={selectedValue}
+        valueSearch={valueSearch}
+      />
     </Page>
   );
 };

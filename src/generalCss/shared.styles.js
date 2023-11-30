@@ -87,12 +87,15 @@ export const Header = styled.header`
   background-color: ${generalStyles.active};
   color: ${generalStyles.textWhite};
   border-radius: 5px;
+  gap: 2%;
 `;
 
 export const TitleList = styled.span`
   flex: ${(props) => props.content ? 3 : 1};
   text-align: center;
   font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 export const Section = styled.section`
@@ -113,6 +116,7 @@ export const DivItem = styled.div`
   justify-content: center;
   height: ${(props) => (props.expanded ? "100%" : "40px")};
   background-color: ${(props) => (props.expanded ? `${generalStyles.bgc}` : `${generalStyles.border}`)};
+  gap: 2%;
   transition: all 0.3s;
 
   &:hover {
@@ -122,11 +126,12 @@ export const DivItem = styled.div`
 
 export const Item = styled.span`
   /* flex: 1; */
-  flex: ${(props) => props.content ? 3 : 1};
-  text-align: ${(props) => (props.expanded ? "none" : "center")};
-  padding: ${(props) => (props.expanded ? "20px 0px 20px 0px" : "none")};
-  white-space: ${(props) => (props.expanded ? "normal" : "nowrap")};
-  overflow: ${(props) => (props.expanded ? "visible" : "hidden")};
-  text-overflow: ${(props) => (props.expanded ? "initial" : "ellipsis")};
+  padding-left: 10px;
+  padding-right: 10px;
+  flex: ${(props) => props.content ? 5 : 1};
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: all 0.3s;
 `;

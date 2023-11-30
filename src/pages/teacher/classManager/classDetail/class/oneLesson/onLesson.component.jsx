@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
+import { useParams } from "react-router-dom";
+
 import { 
   Header,
   TitleList,
@@ -12,16 +14,18 @@ import {
 
 const OneLesson = () => {
   const navigate = useNavigate();
+  const { idSession, classCode } = useParams();
+
   return (
     <Page>
       <Header>
-        <FlexNavLink to='attendance'>
+        <FlexNavLink to={`attendance/${idSession}`}>
           <TitleList>Attendance</TitleList>
         </FlexNavLink>
-        <FlexNavLink to='lessonContent'>
+        <FlexNavLink to={`lessonContent/${idSession}`}>
           <TitleList>Lesson content</TitleList>
         </FlexNavLink>
-        <FlexNavLink to='reschedule'>
+        <FlexNavLink to={`reschedule/${idSession}`}>
           <TitleList>Reschedule</TitleList>
         </FlexNavLink>
       </Header>
@@ -29,7 +33,7 @@ const OneLesson = () => {
         <Outlet />
       </Section>
       <BtnBack
-        onClick={() => navigate("/teacher/listClasses/classDetail/listLesson")}
+        onClick={() => navigate(`/teacher/listClasses/classDetail/${classCode}/listLesson`)}
       >
         <IoMdArrowBack size="15px" />
         Back

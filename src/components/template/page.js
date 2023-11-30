@@ -15,7 +15,10 @@ export const Left = styled.div`
   top: 0;
   bottom: 0;
   left: 0;
-  border-right: 1px solid ${generalStyles.border};
+  /* background-color: ${generalStyles.hover}; */
+  background-color: ${generalStyles.border};
+  /* border-right: 1px solid ${generalStyles.border}; */
+  /* box-shadow: ${generalStyles.border} 0px 2px 8px 0px; */
 `;
 
 export const DivLogo = styled.div`
@@ -23,8 +26,9 @@ export const DivLogo = styled.div`
   width: 100%;
   height: 70px;
   display: flex;
+  /* box-shadow: ${generalStyles.border} 0px 2px 8px 0px; */
   align-items: center;
-  /* background-color: blue; */
+  background-color: #ffffff;
   
 `;
 

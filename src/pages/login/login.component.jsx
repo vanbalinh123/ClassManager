@@ -1,7 +1,7 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import Select from 'react-select'
 
 import { useLoginTeacherMutation } from "../../redux/api/login/teacher-login-api.slice";
 import { useLoginAdminMutation } from "../../redux/api/login/teacher-login-api.slice";
@@ -25,42 +25,59 @@ import {
   DivInput2,
   Input2,
   MessageErorrs,
-  Select,
+  // Select,
+  // DivSelect,
+  // Option,
   DivSelect,
+  Value,
+  SelectButton,
+  OptionsContainer,
   Option,
+  ArrowIcon,
 } from "./login.styles";
 
 const Login = () => {
-  const userRole = JSON.parse(localStorage.getItem("userRole"));
-  console.log(userRole);
+  // const userRole = JSON.parse(localStorage.getItem("userRole"));
+  // console.log(userRole);
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
+
+  //select option
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("Admin");
+
+  const options = [
+    { value: "Admin", label: "Admin" },
+    { value: "Teacher", label: "Teacher" },
+    { value: "Student", label: "Student" },
+    { value: "Parents", label: "Parents" },
+  ];
+
+  const handleSelectClick = () => {
+    setShowOptions(!showOptions);
+  };
+
+  const handleOptionClick = (value) => {
+    setSelectedOption(value);
+    setShowOptions(false);
+  };
+
+  //select option
 
   const [loginTeacher] = useLoginTeacherMutation();
   const [loginAdmin] = useLoginAdminMutation();
   const [loginStudent] = useLoginStudentMutation();
 
-  const notify = () => {
-    toast.success("Login successfull!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
-
   const onSubmit = async (data) => {
+    console.log(data);
     const email = data.email;
     const password = data.password;
-    const userRole = data.userRole;
+    const userRole = selectedOption;
 
     const dataLogin = {
       email: email,
@@ -84,7 +101,6 @@ const Login = () => {
         localStorage.setItem("userRole", JSON.stringify(userRole));
 
         // alert("Login Successfull");
-         notify();
         if (userRole === "Admin") {
           localStorage.setItem(
             "user_code",
@@ -103,6 +119,13 @@ const Login = () => {
             JSON.stringify(response.data.student_usercode)
           );
           navigate("/student");
+        } else if (userRole === "Parents") {
+          console.log('cc')
+          localStorage.setItem(
+            "user_code",
+            JSON.stringify(response.data.student_usercode)
+          );
+          navigate("/parents");
         }
 
         // window.location.reload();
@@ -154,16 +177,21 @@ const Login = () => {
               )}
             </DivInputs>
             <DivSelect>
-              <Select
-                {...register("userRole", {
-                  required: "UserRole is required",
-                })}
-              >
-                <Option>Admin</Option>
-                <Option>Teacher</Option>
-                <Option>Student</Option>
-                <Option>Parents</Option>
-              </Select>
+              <SelectButton onClick={handleSelectClick}>
+                <Value>{selectedOption}</Value>
+                <ArrowIcon>▼</ArrowIcon>
+              </SelectButton>
+              <OptionsContainer showOptions={showOptions}>
+                {options.map((option, index) => (
+                  <Option
+                    key={index}
+                    value={option.value}
+                    onClick={() => handleOptionClick(option.value)}
+                  >
+                    {option.label}
+                  </Option>
+                ))}
+              </OptionsContainer>
             </DivSelect>
             <DivBtn>
               <Btn>Login</Btn>
@@ -175,18 +203,6 @@ const Login = () => {
       <Right>
         <Img src="/imgs/banner-login.png" />
       </Right>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </Page>
   );
 };

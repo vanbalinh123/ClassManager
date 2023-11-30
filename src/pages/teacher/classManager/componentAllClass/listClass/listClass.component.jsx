@@ -13,8 +13,9 @@ import {
 const ListClassOfTeacher = ({ listClass }) => {
   const navigate = useNavigate();
 
-  const handleItemClick = () => {
-    navigate("/teacher/listClasses/classDetail");
+  const handleItemClick = (item) => {
+    console.log(item)
+    navigate(`/teacher/listClasses/classDetail/${item.class_code}`);
   };
 
     //paginate
@@ -47,7 +48,7 @@ const ListClassOfTeacher = ({ listClass }) => {
       {(customListClasses?.length > 0 && (
         <Section>
           {customListClasses?.map((item, index) => (
-            <DivItem key={index} onClick={() => handleItemClick()}>
+            <DivItem key={index} onClick={() => handleItemClick(item)}>
               <Item>{item.class_code}</Item>
               <Item>{item.class_name}</Item>
               <Item>{item.course}</Item>

@@ -9,7 +9,6 @@ import { useListAdminsQuery } from "../../redux/api/leader/list-users-api.slice"
 import { useListTeachersQuery } from "../../redux/api/teacher/list-teachers-api.slice";
 import { useListStudentsQuery } from "../../redux/api/student/list-students-api.slice";
 
-
 import {
   Right,
   Header,
@@ -21,8 +20,8 @@ import {
   DivImg,
   Other,
   Span,
+  Cover,
 } from "./rightLayout.styles";
-
 
 const RightLayout = () => {
   const [check, setCheck] = useState(false);
@@ -31,18 +30,19 @@ const RightLayout = () => {
   const userRole = JSON.parse(localStorage.getItem("userRole"));
   const userCode = JSON.parse(localStorage.getItem("user_code"));
 
-  const {data: listAdmins} = useListAdminsQuery();
-  const {data: listTeachers} = useListTeachersQuery();
-  const {data: listStudents} = useListStudentsQuery();
+  const { data: listAdmins } = useListAdminsQuery();
+  const { data: listTeachers } = useListTeachersQuery();
+  const { data: listStudents } = useListStudentsQuery();
 
- 
   const usersData = {
     Admin: listAdmins,
     Teacher: listTeachers,
     Student: listStudents,
   };
-  
-  const currentUser = usersData[userRole]?.find((item) => item.usercode === userCode);
+
+  const currentUser = usersData[userRole]?.find(
+    (item) => item.usercode === userCode
+  );
 
   const handleImgClick = () => {
     return setCheck(!check);
@@ -51,37 +51,33 @@ const RightLayout = () => {
   const handleToProfile = () => {
     setCheck(false);
 
-    if(userRole === "Admin") {
+    if (userRole === "Admin") {
       navigate("/leader/profile");
     } else if (userRole === "Teacher") {
       navigate("/teacher/profile");
     } else if (userRole === "Student") {
       navigate("/student/profile");
     }
-
   };
 
-
-  const token = JSON.parse(localStorage.getItem('accessToken'));
+  const token = JSON.parse(localStorage.getItem("accessToken"));
 
   const handleLogout = () => {
     localStorage.removeItem("userRole");
     localStorage.removeItem("id_user");
-    navigate('/')
-  }
+    navigate("/");
+  };
 
   return (
     <Right>
       <Header>
-        <Name>Class Management</Name>
+        <Name>Classroom Management</Name>
         <DivUser>
           <NameUser>{currentUser?.full_name}</NameUser>
           <DivImg onClick={() => handleImgClick()}>
-            {currentUser?.avatar === null
-              && <ImgUser src="/imgs/user-img.jpg" alt="avatar" />
-              || <ImgUser src={currentUser?.avatar} alt="avatar"/>
-            }
-            
+            {(currentUser?.avatar === null && (
+              <ImgUser src="/imgs/user-img.jpg" alt="avatar" />
+            )) || <ImgUser src={currentUser?.avatar} alt="avatar" />}
           </DivImg>
           {check === true && (
             <Other>
@@ -98,7 +94,9 @@ const RightLayout = () => {
         </DivUser>
       </Header>
       <Content>
-        <Outlet />
+        <Cover>
+          <Outlet />
+        </Cover>
       </Content>
     </Right>
   );

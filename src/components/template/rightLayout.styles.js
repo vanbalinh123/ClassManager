@@ -6,6 +6,11 @@ import generalStyles from "../../generalCss/general.styles";
 export const Right = styled.div`
   margin-left: 20%;
   width: 80%;
+  margin-top: 70px;
+  min-height: 100vh;
+  border-left: 1px solid ${generalStyles.border};
+  background-color: ${generalStyles.bgc};
+  /* background-color: #ffffff; */
 `;
 
 //header
@@ -22,6 +27,8 @@ export const Header = styled.div`
   padding: 0 20px;
   z-index: 1;
   background-color: #ffffff;
+  border-left: none;
+  /* box-shadow: ${generalStyles.border} 5px 2px 8px 0px; */
 `;
 
 export const Name = styled.span`
@@ -62,7 +69,21 @@ export const ImgUser = styled.img`
 
 //content
 export const Content = styled.div`
-  margin-top: 70px;
+  height: auto;
+  margin: 15px;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: white;
+  /* background-color: ${generalStyles.active}; */
+  border-radius: 15px;
+  /* border: 1px solid ${generalStyles.border}; */
+`;
+
+export const Cover = styled.div`
+  margin: 0 auto;
+  border-radius: 10px;
+  min-height: 100vh;
+  background-color: white;
 `;
 
 export const Other = styled.div`

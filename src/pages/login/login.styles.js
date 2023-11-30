@@ -1,5 +1,6 @@
 import { styled, css } from "styled-components";
 
+
 import generalStyles from "../../generalCss/general.styles";
 
 export const Page = styled.div`
@@ -33,9 +34,9 @@ export const Form = styled.form`
 `;
 
 export const Logo = styled.img`
-  width: 200px;
-  height: 100px;
-  object-fit: cover;
+  width: 300px;
+  height: 200px;
+  object-fit: contain;
 `;
 
 export const Content = styled.div`
@@ -65,7 +66,6 @@ export const DivInput = styled.div`
   width: 100%;
   height: 40px;
   position: relative;
-  border-radius: 20px;
 `;
 
 export const Input = styled.input`
@@ -114,37 +114,56 @@ export const Input2 = styled.input`
   }
 `;
 
+//select option
 export const DivSelect = styled.div`
   width: 100%;
   height: 40px;
   position: relative;
+  border-radius: 20px;
 `;
 
-export const Select = styled.select`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding-left: 15px;
+export const SelectButton = styled.div`
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
   border-radius: 20px;
-  border: none;
-  border: 1px solid ${(props) => (props.hasError ? "red" : generalStyles.border)};
-  box-shadow: 0px 0px 5px ${(props) => (props.hasError ? "red" : "none")};
-  transition: all 0.3s;
+  position: relative;
+`;
 
-  &:focus {
-    outline: none;
-    border-color: ${(props) => (props.hasError ? "red" : generalStyles.active)};
-    box-shadow: 0px 0px 5px ${(props) => (props.hasError ? "red" : generalStyles.active)};
+export const Value = styled.span`
+  padding-left: 5px;
+`;
+
+export const ArrowIcon = styled.span`
+  position: absolute;
+  right: 15px;
+`;
+
+export const OptionsContainer = styled.div`
+  border-radius: 20px;
+  overflow: hidden;
+  position: absolute;
+  top: 120%;
+  left: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  display: ${(props) => (props.showOptions ? 'block' : 'none')};
+  z-index: 100;
+  background-color: white;
+`;
+
+export const Option = styled.div`
+  padding: 10px;
+  padding-left: 15px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
   }
 `;
 
-export const Option = styled.option`
-  width: 100%;
-  height: 40px;
-  position: relative;
-`;
+
+//select option
 
 export const MessageErorrs = styled.div`
   padding-left: 20px;

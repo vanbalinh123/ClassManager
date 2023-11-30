@@ -33,14 +33,14 @@ const TeacherSchedule = () => {
 
   const events = mySchedule?.reduce((allEvents, schedule) => {
     const classEvents = schedule.class_sessions_set.map(session => ({
-      title: `Room: ${session.room}`,
+      title: `Class Code: ${schedule.class_code} - ${session.room}`,
       start: new Date(session.day + ' ' + session.start_time),
       end: new Date(session.day + ' ' + session.end_time),
     }));
     return [...allEvents, ...classEvents];
   }, []);
 
-  console.log(events)
+  console.log(mySchedule)
 
   const eventStyleGetter = () => {
     return {

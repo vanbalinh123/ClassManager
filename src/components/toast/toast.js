@@ -27,6 +27,21 @@ export const toastError = (text) => {
   });
 };
 
+export const toastWarn = (text) => {
+  toast.warn(`${text}`, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
+
+
+
 export const ToastCtn = () => {
 
     return (

@@ -1,47 +1,98 @@
 import { useState } from "react";
-
-import { List } from './listNotification.styles'
-import { 
-    Header,
-    TitleList,
-    Section,
-    DivItem,
-    Item,
+import Pagination from "../../../../../components/paginate/paginate";
+import { List } from "./listNotification.styles";
+import DetailNotiTC from "./detailNotiTC/detailNotiTC.component";
+import {
+  Header,
+  TitleList,
+  Section,
+  DivItem,
+  Item,
 } from "../../../../../generalCss/shared.styles";
 
-const ListNotifications = () => {
-    const [expanded, setExpanded] = useState(false);
-  
-    const handleItemClick = () => {
-      setExpanded(!expanded);
-    };
-  
-    return (
-      <List>
-        <Header>
-          <TitleList>Title</TitleList>
-          <TitleList>Content</TitleList>
-          <TitleList>Date</TitleList>
-          <TitleList>From</TitleList>
-        </Header>
-        <Section>
-          <DivItem onClick={handleItemClick} expanded={expanded}>
-            <Item>Notice of school leave</Item>
-            <Item expanded={expanded}> 
-              Người tôi gắn bó nhất trong gia đình là anh trai của tôi. Hiện tại,
-              anh trai tôi đang là một sinh viên đại học. Anh tên là Tùng. Anh
-              không chỉ đẹp trai mà còn học rất giỏi. Nếu nói đến học lực thì anh
-              là một tấm gương điểm sáng để cho lũ trẻ em hàng xóm noi theo. Nhưng
-              nhắc đến anh trai, tôi sẽ nghĩ về những trải nghiệm cùng anh thực
-              hiện khi còn nhỏ.
-            </Item>
-            <Item>22/09/2023</Item>
-            <Item>Leader</Item>
-          </DivItem>
-        </Section>
-      </List>
-    );
+const ListNotifications = ({
+  listTeacherNotifications,
+  selectedValue,
+  listAdminNotifications,
+}) => {
+  const [check, setCheck] = useState(false);
+  const [value, setValue] = useState({})
+
+  let listNoti = [];
+  if (selectedValue === "sent") {
+    listNoti = listTeacherNotifications;
+  } else {
+    listNoti = listAdminNotifications;
+  }
+
+  //paginate
+  const itemsPerPage = 10;
+  const totalItems = listNoti?.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
   };
-  
-  export default ListNotifications;
-  
+
+  const customList = listNoti?.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+  //paginate
+
+  const handleItemClick = (item) => {
+    setCheck(true)
+    setValue(item)
+  };
+
+
+
+  return (
+    <List>
+      {check === true 
+        && 
+        <DetailNotiTC 
+          setCheck={setCheck}
+          value={value}
+          setValue={setValue}
+          selectedValue={selectedValue}
+        />
+      }
+      <Header>
+        <TitleList style={{ flex: "0.5" }}>Title</TitleList>
+        <TitleList>Content</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Date</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Time</TitleList>
+        {(selectedValue === "sent" && (
+          <TitleList style={{ flex: "0.5" }}>To</TitleList>
+        )) || <TitleList style={{ flex: "0.5" }}>From</TitleList>}
+      </Header>
+      <Section>
+        {customList?.map((item, index) => (
+          <DivItem 
+            key={index} 
+            onClick={() => handleItemClick(item)}
+          >
+            <Item style={{ flex: "0.5" }}>{item.title}</Item>
+            {(selectedValue === "sent" && <Item>{item.message}</Item>) || (
+              <Item>{item.content}</Item>
+            )}
+
+            <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[0]}</Item>
+            <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[1]}</Item>
+            {(selectedValue === "sent" && (
+              <Item style={{ flex: "0.5" }}>{item.class_code[0]}</Item>
+            )) || <Item style={{ flex: "0.5" }}>{item.usercode}</Item>}
+          </DivItem>
+        ))}
+      </Section>
+      <Pagination
+        totalPages={totalPages}
+        handlePageClick={handlePageClick}
+      />
+    </List>
+  );
+};
+
+export default ListNotifications;

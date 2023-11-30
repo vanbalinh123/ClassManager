@@ -6,7 +6,8 @@ import { Page, Title } from "../../../../generalCss/shared.styles";
 import { Choose, Select, Option, Content } from "./classDetail.styles";
 
 const ClassDetail = () => {
-    const [choose, setChoose] = useState('class')
+    const [choose, setChoose] = useState('class');
+
     const navigate = useNavigate();
 
     useEffect(() => {

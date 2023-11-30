@@ -62,7 +62,7 @@ export const DivBtn = styled.div`
   position: absolute;
   right: 0;
   top: -100px;
-  width: 100px;
+  width: 500px;
   height: 50px;
   display: flex;
   justify-content: flex-end;
@@ -76,7 +76,7 @@ export const Btn = styled.button`
   gap: 5px;
   border-radius: 10px;
   height: 100%;
-  width: 100%;
+  width: 100px;
   border: none;
   color: ${generalStyles.textWhite};
   background-color: ${generalStyles.bgc};
@@ -86,5 +86,30 @@ export const Btn = styled.button`
   &:hover {
     cursor: pointer;
     background-color: ${generalStyles.active};
+  }
+`;
+
+export const DivInput = styled.div`
+  position: relative;
+  width: 300px;
+`;
+
+export const Input = styled.input`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-left: 10px;
+  border-radius: 10px;
+  border: none;
+  border: 1px solid ${generalStyles.border};
+  box-shadow: none;
+  transition: all 0.3s;
+
+  &:focus {
+    outline: none;
+    border-color:  ${generalStyles.active};
+    box-shadow: 0px 0px 5px ${generalStyles.active}
   }
 `;

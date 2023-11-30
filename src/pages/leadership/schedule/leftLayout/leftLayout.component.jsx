@@ -14,7 +14,13 @@ import {
   MessageErorrs,
 } from "./leftLayout.styles";
 
-const LeftLayout = ({ register, errors, findSchedule, classCodeParam }) => {
+const LeftLayout = ({
+  register,
+  errors,
+  findSchedule,
+  classCodeParam,
+  clCodeNew,
+}) => {
   const { data: listSchedules } = useListSchedulesQuery();
   const { data: listClasses } = useListClassQuery();
 
@@ -79,11 +85,18 @@ const LeftLayout = ({ register, errors, findSchedule, classCodeParam }) => {
                 required: "Class Code is required",
               })}
             >
-              {classCodeParam === 'new' 
+              {/* {classCodeParam === 'new' 
                 && result?.map((item, index) => (
                   <Option key={index}>{item.class_code}</Option>
                 )) || <Option>{findSchedule?.class_code}</Option>
-              }
+              } */}
+              {(classCodeParam === "new" &&
+                result?.map((item, index) => (
+                  <Option key={index}>{item.class_code}</Option>
+                ))) ||
+                (clCodeNew === '' && (
+                  <Option>{findSchedule?.class_code}</Option>
+                )) || <Option>{clCodeNew}</Option>}
             </Select>
           </DivInput>
         </Item>

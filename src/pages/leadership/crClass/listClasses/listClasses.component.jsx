@@ -13,8 +13,6 @@ import {
   Item,
 } from "../../../../generalCss/shared.styles";
 
-
-
 const ListClasses = ({ listClasses }) => {
   const navigate = useNavigate();
   const { data: listTeachers } = useListTeachersQuery();
@@ -60,7 +58,6 @@ const ListClasses = ({ listClasses }) => {
     setCurrentPage(data.selected);
   };
 
-
   const customListClasses = listClasses?.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
@@ -89,10 +86,7 @@ const ListClasses = ({ listClasses }) => {
           </DivItem>
         ))}
       </Section>
-      <Pagination
-        totalPages={totalPages}
-        handlePageClick={handlePageClick}
-      />
+      <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
     </ListClass>
   );
 };

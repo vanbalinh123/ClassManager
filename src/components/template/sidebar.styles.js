@@ -4,11 +4,12 @@ import { NavLink } from "react-router-dom";
 import generalStyles from "../../generalCss/general.styles";
 
 export const Sidebar = styled.ul`
-  margin-top: 70px;
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
-  width: 95%;
+  width: 100%;
   border-bottom: none;
+  gap: 3px;
 `;
 
 export const Item = styled.li`
@@ -18,15 +19,22 @@ export const Item = styled.li`
   align-items: center;
   padding: 0 15px;
   gap: 20px;
-
+  
 `;
 
 export const FlexNavLink = styled(NavLink)`
   display: flex;
-  height: 50px;
-  border-bottom: 1px solid ${generalStyles.border};
+  height: 60px;
+  /* border: 1px solid ${generalStyles.border}; */
   color: ${generalStyles.textBlack};
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  /* background-color: #ffffff; */
+  /* background-color: red; */
+  /* border-bottom-right-radius: 5px; */
   border-left: none;
+  padding-left: 0;
+  width: 100%;
   transition: all 0.3s;
 
   &:hover {
@@ -34,10 +42,19 @@ export const FlexNavLink = styled(NavLink)`
   }
 
   &.active {
-    color: ${generalStyles.bgc};
-    border-left: 7px solid ${generalStyles.active};
+    color: ${generalStyles.active};
+    border: none;
+    width: 102%;
+    background-color: #ffffff;
+    font-weight: bold;
     padding-left: 30px;
+      box-shadow: ${generalStyles.bgc} 0px 2px 8px 0px;
+    /* border-left: 10px solid ${generalStyles.bgc}; */
   }
 `;
 
 export const ItemName = styled.span``;
+
+//popup
+
+export const ItesmName = styled.span``;

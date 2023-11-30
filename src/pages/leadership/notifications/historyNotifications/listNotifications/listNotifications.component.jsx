@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import DetailNoti from "./detailNoti/detailNoti.component";
+
 import { List } from "./listNotifications.styles";
 import Pagination from "../../../../../components/paginate/paginate";
 import {
@@ -11,11 +13,12 @@ import {
 } from "../../../../../generalCss/shared.styles";
 
 const ListNotifications = ({ listNotificationsAdmin }) => {
-  const [expanded, setExpanded] = useState(false);
-  let content = "flex2";
+  const [check, setCheck] = useState(false);
+  const [value, setValue] = useState({})
 
-  const handleItemClick = () => {
-    setExpanded(!expanded);
+  const handleItemClick = (item) => {
+    setCheck(true)
+    setValue(item)
   };
 
   const calDate = (value) => {
@@ -58,24 +61,35 @@ const ListNotifications = ({ listNotificationsAdmin }) => {
 
   return (
     <List>
+      {check === true 
+        && 
+        <DetailNoti 
+          setCheck={setCheck}
+          value={value}
+          calDate={calDate}
+          calTime={calTime}
+          setValue={setValue}
+        />
+      }
       <Header>
-        <TitleList>Title</TitleList>
-        <TitleList content={content}>Content</TitleList>
-        <TitleList>Date</TitleList>
-        <TitleList>Time</TitleList>
-        <TitleList>Recipient role</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Title</TitleList>
+        <TitleList >Content</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Date</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Time</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Recipient role</TitleList>
       </Header>
       <Section>
         {customListNoti?.map((item, index) => {
           return (
-            <DivItem onClick={handleItemClick} expanded={expanded} key={index}>
-              <Item>{item.title}</Item>
-              <Item expanded={expanded} content={content}>
-                {item.content}
-              </Item>
-              <Item>{calDate(item.created_at)}</Item>
-              <Item>{calTime(item.created_at)}</Item>
-              <Item>{item.role}</Item>
+            <DivItem 
+              onClick={() => handleItemClick(item)} 
+              key={index}
+            >
+              <Item style={{ flex: "0.5" }}>{item.title}</Item>
+              <Item>{item.content}</Item>
+              <Item style={{ flex: "0.5" }}>{calDate(item.created_at)}</Item>
+              <Item style={{ flex: "0.5" }}>{calTime(item.created_at)}</Item>
+              <Item style={{ flex: "0.5" }}>{item.role}</Item>
             </DivItem>
           );
         })}
