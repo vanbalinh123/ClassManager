@@ -107,7 +107,7 @@ const Infomations = ({selectedValue}) => {
             />
           </DivInput>
         </Item> */}
-        {errors.code && <MessageErorrs>{errors.code.message}</MessageErorrs>}
+        {/* {errors.code && <MessageErorrs>{errors.code.message}</MessageErorrs>} */}
         <Item>
           <Key>Email</Key>
           <DivInput>

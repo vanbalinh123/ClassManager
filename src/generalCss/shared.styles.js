@@ -10,7 +10,7 @@ export const Page = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 16px;
+  font-size: ${generalStyles.sizeTitle};
   font-weight: bold;
   color: ${generalStyles.bgc};
 `;
@@ -81,12 +81,12 @@ export const BtnFilter = styled.button`
 
 //list
 export const Header = styled.header`
-  height: 40px;
+  height: 50px;
   display: flex;
   align-items: center;
   background-color: ${generalStyles.active};
   color: ${generalStyles.textWhite};
-  border-radius: 5px;
+  /* border-radius: 5px; */
   gap: 2%;
 `;
 
@@ -109,12 +109,12 @@ export const Section = styled.section`
 `;
 
 export const DivItem = styled.div`
-  border: 1px solid ${generalStyles.border};
-  border-radius: 5px;
+  /* border: 1px solid ${generalStyles.border}; */
+  /* border-radius: 5px; */
   display: flex;
   align-items: center;
   justify-content: center;
-  height: ${(props) => (props.expanded ? "100%" : "40px")};
+  height: ${(props) => (props.expanded ? "100%" : "45px")};
   background-color: ${(props) => (props.expanded ? `${generalStyles.bgc}` : `${generalStyles.border}`)};
   gap: 2%;
   transition: all 0.3s;
@@ -130,6 +130,41 @@ export const Item = styled.span`
   padding-right: 10px;
   flex: ${(props) => props.content ? 5 : 1};
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s;
+`;
+
+//table
+export const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+// Table Header
+export const TableHeader = styled.thead`
+  background-color: ${generalStyles.active};
+  color: ${generalStyles.textWhite};
+`;
+
+// Table Row
+export const TableRow = styled.tr`
+  &:hover {
+    cursor: pointer;
+    background-color: ${generalStyles.bgc};
+  }
+`;
+
+// Table Header Cell
+export const TableHeaderCell = styled.th`
+  padding: 10px;
+  font-weight: bold;
+`;
+
+// Table Cell
+export const TableCell = styled.td`
+  padding: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

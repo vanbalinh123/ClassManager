@@ -6,10 +6,10 @@ import generalStyles from "../../generalCss/general.styles";
 export const Right = styled.div`
   margin-left: 20%;
   width: 80%;
-  margin-top: 70px;
+  margin-top: 50px;
   min-height: 100vh;
-  border-left: 1px solid ${generalStyles.border};
-  background-color: ${generalStyles.bgc};
+  /* border-left: 1px solid ${generalStyles.border}; */
+  background-color: ${generalStyles.border};
   /* background-color: #ffffff; */
 `;
 
@@ -19,16 +19,19 @@ export const Header = styled.div`
   top: 0;
   left: 20%;
   right: 0;
-  border-bottom: 1px solid ${generalStyles.border};
   height: 70px;
   z-index: 1;
   display: flex;
   align-items: center;
+  /* color: #ffffff; */
   padding: 0 20px;
   z-index: 1;
+  /* background-color: ${generalStyles.bgc}; */
   background-color: #ffffff;
   border-left: none;
-  /* box-shadow: ${generalStyles.border} 5px 2px 8px 0px; */
+  box-shadow: gray 5px 2px 10px 0px;
+  border-left: none;
+
 `;
 
 export const Name = styled.span`
@@ -70,10 +73,8 @@ export const ImgUser = styled.img`
 //content
 export const Content = styled.div`
   height: auto;
-  margin: 15px;
-  padding: 20px;
+  margin: 35px 15px 15px 15px;
   min-height: 100vh;
-  background-color: white;
   /* background-color: ${generalStyles.active}; */
   border-radius: 15px;
   /* border: 1px solid ${generalStyles.border}; */
@@ -84,6 +85,7 @@ export const Cover = styled.div`
   border-radius: 10px;
   min-height: 100vh;
   background-color: white;
+  box-shadow: gray 0px 0px 8px 0px;
 `;
 
 export const Other = styled.div`

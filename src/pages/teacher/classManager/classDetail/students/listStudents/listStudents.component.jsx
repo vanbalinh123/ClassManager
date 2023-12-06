@@ -62,7 +62,7 @@ const ListStudents = () => {
       students: newListStudent,
     };
     const response = await updateInfoClass(dataUpdate);
-
+    console.log(response)
     if(response.data) {
       setStudentCode('');
       findStudent(studentCode);

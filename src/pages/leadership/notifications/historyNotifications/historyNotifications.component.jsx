@@ -31,14 +31,14 @@ const LeaderHistoryNotifications = () => {
       <ListNotifications 
         listNotificationsAdmin={listNotificationsAdmin}
       />
-      <DivBtn>
+      {/* <DivBtn>
         <Btn
             onClick={() => navigate('/leader/createNotification')}
         >
             <IoChevronBack size="15px" />
             Back
         </Btn>
-      </DivBtn>
+      </DivBtn> */}
     </Page>
   );
 };

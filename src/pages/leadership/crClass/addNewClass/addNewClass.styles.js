@@ -12,6 +12,7 @@ export const Form = styled.form`
   padding-top: 20px;
   padding-bottom: 20px;
   border: 1px solid ${generalStyles.border};
+  box-shadow: ${generalStyles.border} 0px 0px 15px;
 `;
 
 export const Title = styled.span`

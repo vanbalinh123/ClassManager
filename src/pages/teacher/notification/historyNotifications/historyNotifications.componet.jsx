@@ -39,14 +39,14 @@ const HistoryNotificationTeacher = () => {
   return (
     <Page>
       <Title>Notifications History</Title>
-      <DivBtn>
+      {/* <DivBtn>
         <Btn
             onClick={() => navigate('/teacher/createNotification')}
         >
             <IoAddSharp size="15px" />
             Create
         </Btn>
-      </DivBtn>
+      </DivBtn> */}
       <FilterNotifications 
         selectedValue={selectedValue}
         setSelectedValue={setSelectedValue}

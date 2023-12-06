@@ -87,12 +87,12 @@ const CreateNotificationTeacher = () => {
   return (
     <Page>
       <Title>Create Notification</Title>
-      <DivHis>
+      {/* <DivHis>
         <BtnHis onClick={() => navigate("/teacher/historyNotifications")}>
           History
           <MdOutlineNavigateNext size="15px" />
         </BtnHis>
-      </DivHis>
+      </DivHis> */}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <DivRole>
           Send to class:

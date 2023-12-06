@@ -5,5 +5,6 @@ export default {
     hover: '#1a9ca6',
     border: '#e2e0e1',
     active: '#1a9ca6',
-    textGrey: '#a7a7a7'
+    textGrey: '#a7a7a7',
+    sizeTitle: '22px'
 }

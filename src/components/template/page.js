@@ -15,21 +15,20 @@ export const Left = styled.div`
   top: 0;
   bottom: 0;
   left: 0;
-  /* background-color: ${generalStyles.hover}; */
-  background-color: ${generalStyles.border};
+  background-color: ${generalStyles.bgc};
   /* border-right: 1px solid ${generalStyles.border}; */
-  /* box-shadow: ${generalStyles.border} 0px 2px 8px 0px; */
+  box-shadow: gray 5px 5px 8px 0px;
 `;
 
 export const DivLogo = styled.div`
-  border-bottom: 1px solid ${generalStyles.border};
+  /* border-bottom: 1px solid ${generalStyles.border}; */
   width: 100%;
   height: 70px;
   display: flex;
   /* box-shadow: ${generalStyles.border} 0px 2px 8px 0px; */
   align-items: center;
+  /* background-color: ${generalStyles.bgc}; */
   background-color: #ffffff;
-  
 `;
 
 export const Logo = styled.img`

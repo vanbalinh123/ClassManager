@@ -18,7 +18,7 @@ const CreateAccount = () => {
     <Page>
       <Title>Create Account</Title>
       <TypeUser>
-        User Type:
+        User Role:
         <Select value={selectedValue} onChange={handleSelectChange}>
           <Option value="Admin">Admin</Option>
           <Option value="Teacher">Teacher</Option>

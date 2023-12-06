@@ -7,10 +7,11 @@ import { BsCalendarPlus } from "react-icons/bs";
 import { PiUsersThree } from "react-icons/pi";
 import { LuBellPlus } from "react-icons/lu";
 
-import { Sidebar, Item, ItemName, FlexNavLink } from "../sidebar.styles";
+import { Sidebar, Item, ItemName, FlexNavLink, Div, DivPopup, ItemPopup, NavlinkChild } from "../sidebar.styles";
+
 
 const SidebarLeader = () => {
-  const [checkNoti, setCheckNoti] = useState(false)
+  const [checkNoti, setCheckNoti] = useState(false);
   return (
     <Sidebar>
       <FlexNavLink to="/leader/dashboard">
@@ -43,7 +44,7 @@ const SidebarLeader = () => {
           <ItemName>Users Management</ItemName>
         </Item>
       </FlexNavLink>
-      <div 
+      <Div
         // to="/leader/createNotification"
         onClick={() => setCheckNoti(!checkNoti)}
       >
@@ -51,29 +52,29 @@ const SidebarLeader = () => {
           <LuBellPlus size="20px" />
           <ItemName>Notifications</ItemName>
         </Item>
-      </div>
-      {checkNoti === true && 
-        <FlexNavLink
-        style={{marginLeft: '20px', width: '80%'}} 
-        to="/leader/historyNotifications"
-      >
-        <Item>
-          <LuBellPlus size="20px" />
-          <ItemName>History Notifications</ItemName>
-        </Item>
-      </FlexNavLink>
-      }
-      {checkNoti === true && 
-        <FlexNavLink
-        style={{marginLeft: '20px', width: '80%'}} 
-        to="/leader/createNotification"
-      >
-        <Item>
-          <LuBellPlus size="20px" />
-          <ItemName>Create Notifications</ItemName>
-        </Item>
-      </FlexNavLink>
-      }
+      </Div>
+      {checkNoti === true && (
+        <DivPopup>
+          <NavlinkChild
+            style={{ marginLeft: "10px", width: "80%" }}
+            to="/leader/historyNotifications"
+          >
+            <ItemPopup>
+              <LuBellPlus size="20px" />
+              <ItemName>History</ItemName>
+            </ItemPopup>
+          </NavlinkChild>
+          <NavlinkChild
+            style={{ marginLeft: "10px", width: "80%" }}
+            to="/leader/createNotification"
+          >
+            <ItemPopup>
+              <LuBellPlus size="20px" />
+              <ItemName>Compose</ItemName>
+            </ItemPopup>
+          </NavlinkChild>
+        </DivPopup>
+      )}
     </Sidebar>
   );
 };

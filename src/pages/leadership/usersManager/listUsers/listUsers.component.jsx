@@ -13,6 +13,11 @@ import {
   Section,
   DivItem,
   Item,
+  Table,
+  TableHeader,
+  TableRow,
+  TableHeaderCell,
+  TableCell
 } from "../../../../generalCss/shared.styles";
 
 const ListUsers = ({ 
@@ -80,6 +85,30 @@ const ListUsers = ({
           </DivItem>
         ))}
       </Section>
+      {/* <Table>
+      <TableHeader>
+        <TableHeaderCell>Index</TableHeaderCell>
+        <TableHeaderCell>User Code</TableHeaderCell>
+        <TableHeaderCell>User Name</TableHeaderCell>
+        <TableHeaderCell>Email</TableHeaderCell>
+        <TableHeaderCell>Role</TableHeaderCell>
+      </TableHeader>
+      <tbody>
+        {customListUsers?.map((item, index) => (
+          <TableRow
+            key={index} 
+            onClick={() => handleClickUserDetail(item.usercode)}
+          >
+            <TableCell>{index + 1}</TableCell>
+            <TableCell>{item.usercode}</TableCell>
+            <TableCell>{item.full_name}</TableCell>
+            <TableCell>{item.email}</TableCell>
+            <TableCell>{item.role}</TableCell>
+          </TableRow>
+        ))}
+      </tbody>
+      </Table> */}
+      
       <Pagination
         totalPages={totalPages}
         handlePageClick={handlePageClick}

@@ -71,7 +71,7 @@ const RightLayout = () => {
   return (
     <Right>
       <Header>
-        <Name>Classroom Management</Name>
+        {/* <Name>Classroom Management</Name> */}
         <DivUser>
           <NameUser>{currentUser?.full_name}</NameUser>
           <DivImg onClick={() => handleImgClick()}>

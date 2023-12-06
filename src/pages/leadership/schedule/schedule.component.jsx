@@ -21,9 +21,7 @@ import RightLayout from "./rightLayout/rightLayoout.component";
 import { Form, Right, DivBtn, Btn } from "./schedule.styles";
 import { useEffect } from "react";
 
-
 const CreateSchedule = () => {
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -66,12 +64,15 @@ const CreateSchedule = () => {
       setValue("week", findSchedule?.num_sessions_per_week);
       setValue("startDate", findSchedule?.start_day);
       setValue("room", findSchedule?.class_sessions_set[0].room);
-      if(clCodeNew === '') {
+      if (clCodeNew === "") {
         const scheduleDetails = findSchedule?.class_sessions_set;
-        console.log(scheduleDetails)
-        const totalSessionsPerWeek = findSchedule?.num_sessions_per_week
-        const listDayOfWeekToUpdate = filterDays(scheduleDetails, totalSessionsPerWeek)
-        console.log(listDayOfWeekToUpdate)
+        console.log(scheduleDetails);
+        const totalSessionsPerWeek = findSchedule?.num_sessions_per_week;
+        const listDayOfWeekToUpdate = filterDays(
+          scheduleDetails,
+          totalSessionsPerWeek
+        );
+        console.log(listDayOfWeekToUpdate);
         listDayOfWeekToUpdate?.forEach((session, index) => {
           setValue(`date[${index}].room`, session.room);
           setValue(`date[${index}].startTime`, session.startTime);
@@ -79,18 +80,15 @@ const CreateSchedule = () => {
           setValue(`date[${index}].day`, session.dayOfWeek);
         });
       }
-    } 
+    }
   }, [classCodeParam]);
-
 
   const onSubmit = async (data) => {
     await data.date.map((item) => {
       if (item.startTime !== "" || item.endTime !== "") {
-        
         daysOfWeek.push(Number(item.day));
       }
     });
-   
 
     const sessionDetails = data.date.map((item) => ({
       day: Number(item.day),
@@ -124,12 +122,11 @@ const CreateSchedule = () => {
       const classInfo = {
         class_info: data.classCode,
         Teachers: data.teacherCode,
-        students: []
-      }
-      await createClassInfo(classInfo)
+        students: [],
+      };
+      await createClassInfo(classInfo);
 
       if (response.data) {
-
         toastSuccess(
           `Create a teaching schedule for ${data.classCode} successful`
         );
@@ -180,9 +177,9 @@ const CreateSchedule = () => {
         const classInfo = {
           class_info: data.classCode,
           Teachers: data.teacherCode,
-          students: []
-        }
-        await createClassInfo(classInfo)
+          students: [],
+        };
+        await createClassInfo(classInfo);
 
         if (response.data) {
           toastSuccess(
@@ -203,7 +200,13 @@ const CreateSchedule = () => {
 
   return (
     <Page>
-      <Title>Create a teaching schedule</Title>
+      {(classCodeParam === "new" && (
+        <Title>Create a teaching schedule </Title>
+      )) ||
+        (clCodeNew === "" && (
+          <Title>Update a teaching schedule {classCodeParam}</Title>
+        )) || <Title>Create a teaching schedule</Title>}
+
       <Form onSubmit={handleSubmit(onSubmit)}>
         <LeftLayout
           register={register}
@@ -221,10 +224,23 @@ const CreateSchedule = () => {
           />
         </Right>
         <DivBtn>
-          <Btn>
-            <IoAdd size="15px" />
-            Create
-          </Btn>
+          {(classCodeParam === "new" && (
+            <Btn>
+              <IoAdd size="15px" />
+              Create
+            </Btn>
+          )) ||
+            (clCodeNew === "" && (
+              <Btn>
+                <IoAdd size="15px" />
+                Update
+              </Btn>
+            )) || (
+              <Btn>
+                <IoAdd size="15px" />
+                Create
+              </Btn>
+            )}
         </DivBtn>
       </Form>
       <ToastCtn />
