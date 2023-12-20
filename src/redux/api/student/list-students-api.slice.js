@@ -11,9 +11,16 @@ const listStudentsApi = apiSlice.injectEndpoints({
                 params: data
             }),
         }),
+        detailStudent: builder.query({
+            query: (usercode) => ({
+                url: `/api/student/${usercode}/`,
+                // params: data
+            }),
+        }),
     })
 })
 
 export const {
-    useListStudentsQuery
+    useListStudentsQuery,
+    useDetailStudentQuery
 } = listStudentsApi

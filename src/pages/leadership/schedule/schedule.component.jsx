@@ -124,6 +124,7 @@ const CreateSchedule = () => {
         Teachers: data.teacherCode,
         students: [],
       };
+      
       await createClassInfo(classInfo);
 
       if (response.data) {

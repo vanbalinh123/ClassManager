@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useListAdminsQuery } from "../../../../redux/api/leader/list-users-api.slice";
+import { useListAdminsQuery, useListParentsQuery } from "../../../../redux/api/leader/list-users-api.slice";
 import { useListTeachersQuery } from "../../../../redux/api/leader/list-users-api.slice";
 import { useListStudentsQuery } from "../../../../redux/api/leader/list-users-api.slice";
 import Pagination from "../../../../components/paginate/paginate";
@@ -28,6 +28,7 @@ const ListUsers = ({
   const { data: listAdmins } = useListAdminsQuery({search: `${valueSearch}`});
   const { data: listTeachers } = useListTeachersQuery({search: `${valueSearch}`});
   const { data: listStudents } = useListStudentsQuery({search: `${valueSearch}`});
+  const { data: listParents } = useListParentsQuery({search: `${valueSearch}`});
 
   let listUsers = [];
   if (selectedValue === "Admin") {
@@ -36,6 +37,8 @@ const ListUsers = ({
     listUsers = listTeachers;
   } else if (selectedValue === "Student") {
     listUsers = listStudents;
+  } else if (selectedValue === 'Parents') {
+    listUsers = listParents;
   }
 
   const handleClickUserDetail = (id) => {

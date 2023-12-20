@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginTeacherMutation } from "../../redux/api/login/teacher-login-api.slice";
 import { useLoginAdminMutation } from "../../redux/api/login/teacher-login-api.slice";
 import { useLoginStudentMutation } from "../../redux/api/login/teacher-login-api.slice";
+import { useLoginParentMutation } from "../../redux/api/login/teacher-login-api.slice";
 
 import {
   Left,
@@ -72,6 +73,7 @@ const Login = () => {
   const [loginTeacher] = useLoginTeacherMutation();
   const [loginAdmin] = useLoginAdminMutation();
   const [loginStudent] = useLoginStudentMutation();
+  const [loginParent] = useLoginParentMutation();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -94,7 +96,11 @@ const Login = () => {
       response = await loginTeacher(dataLogin);
     } else if (userRole === "Student") {
       response = await loginStudent(dataLogin);
+    } else if (userRole === "Parents") {
+      response = await loginParent(data)
     }
+
+    console.log(response.data)
 
     try {
       if (response.data.bool === true) {
@@ -120,10 +126,9 @@ const Login = () => {
           );
           navigate("/student");
         } else if (userRole === "Parents") {
-          console.log('cc')
           localStorage.setItem(
             "user_code",
-            JSON.stringify(response.data.student_usercode)
+            JSON.stringify(response.data.parent_usercode)
           );
           navigate("/parents");
         }

@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-import Infomations from "./Infomations/infomations.component";
 
+import Infomations from "./Infomations/infomations.component";
+import UploadListUserXML from "./upLoadUsersXml/uploadUserXml.component";
 import { Page, Title } from "../../../generalCss/shared.styles";
 import { TypeUser, Select, Option } from "./createAccount.styles";
 
@@ -23,12 +24,13 @@ const CreateAccount = () => {
           <Option value="Admin">Admin</Option>
           <Option value="Teacher">Teacher</Option>
           <Option value="Student">Student</Option>
-          <Option value="Parents">Parents</Option>
+          <Option value="Parent">Parent</Option>
         </Select>
       </TypeUser>
       <Infomations 
         selectedValue={selectedValue}
       />
+      <UploadListUserXML />
     </Page>
   );
 };

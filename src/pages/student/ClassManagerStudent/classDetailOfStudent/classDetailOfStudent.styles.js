@@ -15,9 +15,9 @@ export const DivTeacher = styled.div`
 `;
 
 export const Left = styled.div` 
-    width: 40%;
+    width: 50%;
 `;
 
 export const Right = styled.div` 
-    width: 60%
+    width: 50%
 `;

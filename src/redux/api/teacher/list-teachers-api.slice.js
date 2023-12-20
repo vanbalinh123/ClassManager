@@ -11,6 +11,12 @@ const listTeachersApi = apiSlice.injectEndpoints({
                 params: data
             }),
         }),
+        detailTeacher: builder.query({
+            query: (usercode) => ({
+                url: `/api/teacher/${usercode}/`,
+                // params: data
+            }),
+        }),
         updateTeacher: builder.mutation({
             query: (dataUpdate) => {
                 const usercode = dataUpdate.get('usercode');
@@ -55,5 +61,6 @@ const listTeachersApi = apiSlice.injectEndpoints({
 
 export const {
     useListTeachersQuery,
+    useDetailTeacherQuery,
     useUpdateTeacherMutation
 } = listTeachersApi

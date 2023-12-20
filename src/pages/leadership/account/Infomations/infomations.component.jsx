@@ -8,6 +8,7 @@ import { ToastCtn } from "../../../../components/toast/toast";
 import { useCreateAdminMutation } from "../../../../redux/api/leader/createAccount.slice";
 import { useCreateTeacherMutation } from "../../../../redux/api/leader/createAccount.slice";
 import { useCreateStudentMutation } from "../../../../redux/api/leader/createAccount.slice";
+import { useCreateParentsMutation } from "../../../../redux/api/leader/createAccount.slice";
 
 import {
   Form,
@@ -21,62 +22,65 @@ import {
   MessageErorrs,
 } from "./infomations.styles";
 
-const Infomations = ({selectedValue}) => {
+const Infomations = ({ selectedValue }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm();
 
   const [createAdmin] = useCreateAdminMutation();
   const [createTeacher] = useCreateTeacherMutation();
   const [createStudent] = useCreateStudentMutation();
+  const [createParent] = useCreateParentsMutation();
 
   const onSubmit = async (data) => {
-    console.log(selectedValue)
+    console.log(selectedValue);
     const dulieu = {
       full_name: data.name,
       email: data.email,
       password: data.password,
       mobile: data.phone,
-      classes: [],
       role: selectedValue.toLowerCase(),
-    }
+    };
 
     let response = null;
-    console.log(dulieu)
+    console.log(dulieu);
 
     if (selectedValue === "Admin") {
-      console.log('ccc')
-      response = await createAdmin(dulieu)
+      console.log("ccc");
+      dulieu.classes = [];
+      response = await createAdmin(dulieu);
     } else if (selectedValue === "Teacher") {
-      response = await createTeacher(dulieu)
+      dulieu.classes = [];
+      response = await createTeacher(dulieu);
     } else if (selectedValue === "Student") {
-      response = await createStudent(dulieu)
+      dulieu.address = "ABC";
+      response = await createStudent(dulieu);
+    } else if (selectedValue === "Parent") {
+      dulieu.student = [data.student.toUpperCase()];
+      response = await createParent(dulieu)
     }
-
     console.log(response)
-
     try {
-      if(response.data !== undefined) {
-        console.log(response.data)
+      if (response.data !== undefined) {
+        console.log(response.data);
         // alert('Successful')
         toastSuccess("Create Account Successfull");
-        setValue('name', '');
-        setValue('email', '');
-        setValue('password', '');
-        setValue('phone', '');
-
+        setValue("name", "");
+        setValue("email", "");
+        setValue("password", "");
+        setValue("phone", "");
+        setValue("student", "")
       } else {
-        toastError("Create Account Fail")
+        toastError("Create Account Fail");
       }
-
-    } catch(error) {
-      console.log('Error Server')
+    } catch (error) {
+      console.log("Error Server");
     }
   };
-  
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <DivInputs>
@@ -94,20 +98,25 @@ const Infomations = ({selectedValue}) => {
           </DivInput>
         </Item>
         {errors.name && <MessageErorrs>{errors.name.message}</MessageErorrs>}
-        {/* <Item>
-          <Key>User Code</Key>
-          <DivInput>
-            <Input
-              type="text"
-              placeholder="Code..."
-              hasError={!!errors.code}
-              {...register("code", {
-                required: "Code is required!",
-              })}
-            />
-          </DivInput>
-        </Item> */}
-        {/* {errors.code && <MessageErorrs>{errors.code.message}</MessageErorrs>} */}
+        {selectedValue === "Parent" && (
+          <Item>
+            <Key>Student Code</Key>
+            <DivInput>
+              <Input
+                type="text"
+                placeholder="student..."
+                hasError={!!errors.student}
+                {...register("student", {
+                  required: "Student code is required!",
+                })}
+              />
+            </DivInput>
+          </Item>
+        )}
+        {selectedValue === "Parent" && errors.student && (
+          <MessageErorrs>{errors.student.message}</MessageErorrs>
+        )}
+
         <Item>
           <Key>Email</Key>
           <DivInput>
@@ -159,7 +168,7 @@ const Infomations = ({selectedValue}) => {
       </DivInputs>
       <DivBtn>
         <Btn>
-          <AiOutlineUserAdd size="15px"/>
+          <AiOutlineUserAdd size="15px" />
           Create
         </Btn>
       </DivBtn>

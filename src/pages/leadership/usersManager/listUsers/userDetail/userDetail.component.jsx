@@ -5,6 +5,7 @@ import { useListStudentsQuery } from "../../../../../redux/api/leader/list-users
 import { useDeleteAdminMutation } from "../../../../../redux/api/leader/delete-account-api.slice";
 import { useDeleteTeacherMutation } from "../../../../../redux/api/leader/delete-account-api.slice";
 import { useDeleteStudentMutation } from "../../../../../redux/api/leader/delete-account-api.slice";
+import { useDeleteParentMutation } from "../../../../../redux/api/leader/delete-account-api.slice";
 
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -49,6 +50,7 @@ const UserDetail = () => {
   const [deleteAdminAccount] = useDeleteAdminMutation();
   const [deleteTeacherAccount] = useDeleteTeacherMutation();
   const [deleteStudentAccount] = useDeleteStudentMutation();
+  const [deleteParentAccount] = useDeleteParentMutation();
 
   let user = null;
   if (role === "Admin") {
@@ -71,6 +73,8 @@ const UserDetail = () => {
           await deleteTeacherAccount(usercode)
         } else if (role === "Student") {
           await deleteStudentAccount(usercode)
+        } else if (role === "Parents") {
+          await deleteParentAccount(usercode)
         }
         
         navigate("/leader/listUsers");

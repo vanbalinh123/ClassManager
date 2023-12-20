@@ -34,7 +34,6 @@ const StudentSchedule = () => {
     }));
     return [...allEvents, ...classEvents];
   }, []);
-  console.log(mySchedule);
 
   // const events = [
   //   {

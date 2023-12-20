@@ -17,7 +17,7 @@ const SidebarLeader = () => {
       <FlexNavLink to="/leader/dashboard">
         <Item>
           <AiOutlineDashboard size="20px" />
-          <ItemName>Dashboard</ItemName>
+          <ItemName>Tổng quan</ItemName>
         </Item>
       </FlexNavLink>
       <FlexNavLink to="/leader/createAccount">

@@ -9,7 +9,7 @@ const ListClassesStudent = () => {
     
     const { data: listClasses } = useListClassQuery({
         search: `${valueSearch}`,
-      });
+    });
 
   return (
     <Page>

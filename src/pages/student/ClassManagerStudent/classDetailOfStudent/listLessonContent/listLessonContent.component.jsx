@@ -2,73 +2,52 @@ import { useState } from "react";
 
 import DetailLessonContent from "./detailLessonContent/detailLessonContent.component";
 
-import { 
-    Div,
-    Title,
-    List,
-    Item,
-    Date,
-    Notificate,
-} from "./listLessonCotent.styles"
+import {
+  Div,
+  Title,
+  List,
+  Item,
+  Date,
+  Notificate,
+} from "./listLessonCotent.styles";
 
-const ListLessonContent = () => {
-    const [check, setCheck] = useState(false)
+const ListLessonContent = ({ thisLessonContent }) => {
+  const [check, setCheck] = useState(false);
+  const [detail, setDetail] = useState(null);
+  const handleItemClick = (item) => {
+    setDetail(item)
+    setCheck(true);
+  };
 
-    const handleItemClick = () => {
-        setCheck(true)
-    }
+  const thisLessonContentReverse = thisLessonContent?.reverse();
+  console.log(thisLessonContent)
 
-    return (
-        <Div>
-            {check === true && 
-                <DetailLessonContent 
-                    setCheck = {setCheck}
-                />
-            }
-            
-            <Title>List of lesson content</Title>
-            <List>
-                <Item
-                    onClick={() => handleItemClick()}
-                >
-                    <Date>26/10/2023</Date>
-                    <Notificate>
-                        Hom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyz
-                    </Notificate>
-                </Item>
-                <Item>
-                    <Date>26/10/2023</Date>
-                    <Notificate>
-                        Hom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyz
-                    </Notificate>
-                </Item>
-                <Item>
-                    <Date>26/10/2023</Date>
-                    <Notificate>
-                        Hom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyz
-                    </Notificate>
-                </Item>
-                <Item>
-                    <Date>26/10/2023</Date>
-                    <Notificate>
-                        Hom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyz
-                    </Notificate>
-                </Item>
-                <Item>
-                    <Date>26/10/2023</Date>
-                    <Notificate>
-                        Hom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyz
-                    </Notificate>
-                </Item>
-                <Item>
-                    <Date>26/10/2023</Date>
-                    <Notificate>
-                        Hom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyzHom nay chung ta hoc ve su hinh thanh cua abcxyz
-                    </Notificate>
-                </Item>
-            </List>
-        </Div>
-    )
-}
+  return (
+    <Div>
+      {check === true && <DetailLessonContent 
+        setCheck={setCheck} 
+        detail={detail}
+    />}
 
-export default ListLessonContent
+      <Title>List of lesson content</Title>
+      <List>
+        {(thisLessonContent?.length > 0 &&
+          thisLessonContentReverse?.reverse().map((item, index) => {
+            return (
+              <Item key={index} onClick={() => handleItemClick(item)}>
+                <Date>{item.session_day}</Date>
+                <Notificate>{item.content}</Notificate>
+              </Item>
+            );
+          })) || (
+          <Item>
+            {/* <Date></Date> */}
+            <Notificate>No lesson content has been added yet!</Notificate>
+          </Item>
+        )}
+      </List>
+    </Div>
+  );
+};
+
+export default ListLessonContent;

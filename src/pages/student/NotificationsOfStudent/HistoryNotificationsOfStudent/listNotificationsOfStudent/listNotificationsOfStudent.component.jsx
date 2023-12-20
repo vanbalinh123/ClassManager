@@ -14,19 +14,18 @@ import {
 
 const ListNotificationsOfStudent = ({
   listTeacherNotifications,
-  selectedValue,
   listAdminNotifications,
+  roleNoti
 }) => {
   const [check, setCheck] = useState(false);
   const [value, setValue] = useState({});
 
   let listNoti = [];
-  if (selectedValue === "teacher") {
+  if (roleNoti === "teacher") {
     listNoti = listTeacherNotifications;
   } else {
     listNoti = listAdminNotifications;
   }
-  console.log(listNoti)
 
     //paginate
     const itemsPerPage = 10;
@@ -49,6 +48,8 @@ const ListNotificationsOfStudent = ({
       setCheck(true)
       setValue(item)
     };
+
+    console.log(listNoti)
   
     return (
       <List>
@@ -58,7 +59,6 @@ const ListNotificationsOfStudent = ({
             setCheck={setCheck}
             value={value}
             setValue={setValue}
-            selectedValue={selectedValue}
           />
         }
         <Header>
@@ -66,7 +66,7 @@ const ListNotificationsOfStudent = ({
           <TitleList>Content</TitleList>
           <TitleList style={{ flex: "0.5" }}>Date</TitleList>
           <TitleList style={{ flex: "0.5" }}>Time</TitleList>
-          {(selectedValue === "teacher" && (
+          {(roleNoti === "teacher" && (
             <TitleList style={{ flex: "0.5" }}>Class</TitleList>
           )) || <TitleList style={{ flex: "0.5" }}>From</TitleList>}
         </Header>
@@ -77,15 +77,15 @@ const ListNotificationsOfStudent = ({
               onClick={() => handleItemClick(item)}
             >
               <Item style={{ flex: "0.5" }}>{item.title}</Item>
-              {(selectedValue === "teacher" && <Item>{item.message}</Item>) || (
+              {(roleNoti === "teacher" && <Item>{item.message}</Item>) || (
                 <Item>{item.content}</Item>
               )}
   
               <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[0]}</Item>
               <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[1]}</Item>
-              {(selectedValue === "teacher" && (
+              {(roleNoti === "teacher" && (
                 <Item style={{ flex: "0.5" }}>{item.class_code[0]}</Item>
-              )) || <Item style={{ flex: "0.5" }}>{item.usercode}</Item>}
+              )) || <Item style={{ flex: "0.5" }}>{item.usercode}sai</Item>}
             </DivItem>
           ))}
         </Section>

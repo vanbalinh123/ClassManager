@@ -1,3 +1,5 @@
+import { useListClassSessionQuery } from "../../../../../../../redux/api/leader/class-session.slice";
+
 import {
   Layout,
   Detail,
@@ -21,36 +23,66 @@ const StudentDetail = ({
   infoClass,
   updateInfoClass,
   toastSuccess,
-  toastError
+  toastError,
+  countAttendance,
+  findListScoreOfSt,
+  listTestsOfThisClass,
+  listLessonOfClass,
+  listAttendance,
 }) => {
+  const { data: listClassSession } = useListClassSessionQuery();
+
   const handleCancelClick = () => {
     setDetail(false);
   };
+
+  console.log(listLessonOfClass);
 
   const handleDeleteStudent = async () => {
     let newListStudents = infoClass?.students.filter(
       (item) => item !== studentDetail.usercode
     );
-    
+
     const dataUpdate = {
-        class_info: infoClass.class_info,
-        Teachers: infoClass.Teachers,
-        students: newListStudents,
-    }
+      class_info: infoClass.class_info,
+      Teachers: infoClass.Teachers,
+      students: newListStudents,
+    };
 
     const response = await updateInfoClass(dataUpdate);
-    
-    if(response.data) {
-        await setDetail(false);
-        toastSuccess('Student has been successfully removed from class!!');
-        return;
-    } 
 
-    if(response.error) {
-        toastError('Error!!!.');
-        return;
+    if (response.data) {
+      await setDetail(false);
+      toastSuccess("Student has been successfully removed from class!!");
+      return;
+    }
+
+    if (response.error) {
+      toastError("Error!!!.");
+      return;
     }
   };
+
+  const listScore = findListScoreOfSt(studentDetail?.usercode);
+
+  const findAbsent = (usercode) => {
+    let result = [];
+    let arrID = [];
+    listLessonOfClass?.forEach((item) => arrID.push(item.id));
+    const listAttendanceOfClass = listAttendance?.filter((item) =>
+      arrID.includes(item.lesson)
+    );
+
+    listAttendanceOfClass?.forEach((item) => {
+      if (item.student === usercode && item.is_present === "absent") {
+        result.push(item);
+      }
+    });
+
+    return result;
+  };
+
+  console.log(findAbsent(studentDetail?.usercode));
 
   return (
     <Layout active={detail ? "active" : ""}>
@@ -71,17 +103,15 @@ const StudentDetail = ({
               <Span>Phone:</Span>
               <Value>{studentDetail?.mobile}</Value>
             </Div>
-            <Div>
-              <Span>First test:</Span>
-              <Value>9</Value>
-            </Div>
-            <Div>
-              <Span>Second test:</Span>
-              <Value>7</Value>
-            </Div>
+            {listScore?.map((item, index) => (
+              <Div>
+                <Span>{listTestsOfThisClass[index].quiz_name}</Span>
+                <Value>{item.score}</Value>
+              </Div>
+            ))}
             <Div>
               <Span>Total absence:</Span>
-              <Value>2</Value>
+              <Value>{countAttendance(studentDetail?.usercode)}</Value>
             </Div>
             <Div>
               <Span>Absent Day 1</Span>

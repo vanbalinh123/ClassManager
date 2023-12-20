@@ -23,11 +23,19 @@ const createAccountApi = apiSlice.injectEndpoints({
                 body: data
             })
         }),
+        createParents: builder.mutation({
+            query: (data) => ({
+                url: 'api/parent/',
+                method: 'POST',
+                body: data
+            })
+        }),
     })
 })
 
 export const {
     useCreateAdminMutation,
     useCreateTeacherMutation,
-    useCreateStudentMutation
+    useCreateStudentMutation,
+    useCreateParentsMutation
 } = createAccountApi

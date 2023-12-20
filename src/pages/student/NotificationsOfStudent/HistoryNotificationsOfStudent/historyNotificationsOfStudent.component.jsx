@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useParams } from "react-router-dom";
 import { IoAddSharp } from "react-icons/io5";
 import { useListNotiAdminQuery } from "../../../../redux/api/leader/admin-notifications.slice";
 import { useListNotiTeacherQuery } from "../../../../redux/api/teacher/teacher-notifications-api.slice";
@@ -12,6 +12,7 @@ import { Page, Title } from "../../../../generalCss/shared.styles";
 const HistoryNotificationStudent = () => {
   const [selectedValue, setSelectedValue] = useState("teacher");
   const [valueSearch, setValueSearch] = useState("");
+  const {roleNoti} = useParams();
   const userCode = JSON.parse(localStorage.getItem("user_code"));
   const { data: listNotiTeacher } = useListNotiTeacherQuery({
     search: `${valueSearch}`,
@@ -47,7 +48,7 @@ const HistoryNotificationStudent = () => {
       <ListNotificationsOfStudent
         listAdminNotifications={listAdminNotifications}
         listTeacherNotifications={listTeacherNotifications}
-        selectedValue={selectedValue}
+        roleNoti={roleNoti}
       />
     </Page>
   );

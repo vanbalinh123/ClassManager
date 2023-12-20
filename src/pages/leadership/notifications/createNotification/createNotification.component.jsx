@@ -112,7 +112,7 @@ const CreateNotification = () => {
             <Option value="All">All</Option>
             <Option value="Teacher">Teacher</Option>
             <Option value="Student">Student</Option>
-            <Option value="Parents">Parents</Option>
+            <Option value="Parent">Parents</Option>
           </Select>
         </DivRole>
         <TitleNoti>

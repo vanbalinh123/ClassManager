@@ -19,12 +19,19 @@ const deleteAccountApi = apiSlice.injectEndpoints({
                 url: `api/student/${usercode}/`,
                 method: 'DELETE',
             })
-        })
+        }),
+        deleteParent: builder.mutation({
+            query: (usercode) => ({
+                url: `api/parent/${usercode}/`,
+                method: 'DELETE',
+            })
+        }),
     })
 });
 
 export const {
     useDeleteAdminMutation,
     useDeleteTeacherMutation,
-    useDeleteStudentMutation
+    useDeleteStudentMutation,
+    useDeleteParentMutation
 } = deleteAccountApi

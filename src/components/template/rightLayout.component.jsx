@@ -8,6 +8,7 @@ import { BiLogOut } from "react-icons/bi";
 import { useListAdminsQuery } from "../../redux/api/leader/list-users-api.slice";
 import { useListTeachersQuery } from "../../redux/api/teacher/list-teachers-api.slice";
 import { useListStudentsQuery } from "../../redux/api/student/list-students-api.slice";
+import { useListParentsQuery } from "../../redux/api/leader/list-users-api.slice";
 
 import {
   Right,
@@ -33,16 +34,20 @@ const RightLayout = () => {
   const { data: listAdmins } = useListAdminsQuery();
   const { data: listTeachers } = useListTeachersQuery();
   const { data: listStudents } = useListStudentsQuery();
+  const { data: listParents } = useListParentsQuery();
 
   const usersData = {
     Admin: listAdmins,
     Teacher: listTeachers,
     Student: listStudents,
+    Parents: listParents
   };
 
   const currentUser = usersData[userRole]?.find(
     (item) => item.usercode === userCode
   );
+
+  console.log(currentUser)
 
   const handleImgClick = () => {
     return setCheck(!check);
@@ -57,6 +62,8 @@ const RightLayout = () => {
       navigate("/teacher/profile");
     } else if (userRole === "Student") {
       navigate("/student/profile");
+    } else if (userRole === "Parents") {
+      navigate("/parents/profile");
     }
   };
 

@@ -23,11 +23,19 @@ const loginApi = apiSlice.injectEndpoints({
                 body: data
             })
         }),
+        loginParent: builder.mutation({
+            query: (data) => ({
+                url: 'api/parent_login',
+                method: 'POST',
+                body: data
+            })
+        }),
     })
 })
 
 export const {
     useLoginTeacherMutation,
     useLoginAdminMutation,
-    useLoginStudentMutation
+    useLoginStudentMutation,
+    useLoginParentMutation
 } = loginApi

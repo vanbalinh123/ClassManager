@@ -10,7 +10,7 @@ export const Div = styled.div`
 `;
 
 export const Header = styled.header`
-  height: 40px;
+  height: 60px;
   display: flex;
   align-items: center;
   background-color: ${generalStyles.active};

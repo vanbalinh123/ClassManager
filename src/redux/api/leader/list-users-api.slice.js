@@ -29,11 +29,21 @@ const listAdminsApi = apiSlice.injectEndpoints({
                 params: data
             }),
         }),
+        listParents: builder.query({
+            serializeQueryArgs: () => {
+                return undefined;
+            },
+            query: (data) => ({
+                url: '/api/parent/',
+                params: data
+            }),
+        }),
     })
 })
 
 export const {
     useListAdminsQuery,
     useListTeachersQuery,
-    useListStudentsQuery
+    useListStudentsQuery,
+    useListParentsQuery
 } = listAdminsApi

@@ -7,19 +7,19 @@ import {
   Input,
 } from "../../../../../generalCss/shared.styles";
 
-import { SelectSearch, Option } from "./filterNotificationsOfStudent.styles";
+// import { SelectSearch, Option } from "./filterNotificationsOfStudent.styles";
 
 const FilterNotificationsOfStudent = ({
-  selectedValue,
-  setSelectedValue,
+  // selectedValue,
+  // setSelectedValue,
   setValueSearch,
 }) => {
   const [checkValueSearch, setCheckValueSearch] = useState("");
 
-  const handleSelectChange = (event) => {
-    const newValue = event.target.value;
-    setSelectedValue(newValue);
-  };
+  // const handleSelectChange = (event) => {
+  //   const newValue = event.target.value;
+  //   setSelectedValue(newValue);
+  // };
 
   const handleSearch = () => {
     setValueSearch(checkValueSearch);
@@ -40,10 +40,10 @@ const FilterNotificationsOfStudent = ({
           onChange={(e) => setCheckValueSearch(e.target.value)}
         />
       </ItemSearch>
-      <SelectSearch value={selectedValue} onChange={handleSelectChange}>
+      {/* <SelectSearch value={selectedValue} onChange={handleSelectChange}>
         <Option value="teacher">Teacher</Option>
         <Option value="admin">Admin</Option>
-      </SelectSearch>
+      </SelectSearch> */}
       <DivBtnFilter>
         <BtnFilter onClick={() => handleSearch()}>Filter</BtnFilter>
       </DivBtnFilter>

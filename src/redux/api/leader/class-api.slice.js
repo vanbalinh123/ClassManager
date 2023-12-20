@@ -11,6 +11,12 @@ const classApi = apiSlice.injectEndpoints({
         params: data,
       }),
     }),
+    classDetail: builder.query({
+      query: (classcode) => ({
+        url: `/api/class/${classcode}/`,
+        // params: data,
+      }),
+    }),
     createClass: builder.mutation({
       query: (data) => ({
         url: "api/class/",
@@ -36,4 +42,8 @@ const classApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateClassMutation, useListClassQuery } = classApi;
+export const { 
+  useCreateClassMutation, 
+  useListClassQuery,
+  useClassDetailQuery 
+} = classApi;

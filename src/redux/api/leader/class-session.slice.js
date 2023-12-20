@@ -11,12 +11,24 @@ const classSessionApi = apiSlice.injectEndpoints({
         params: data
       }),
     }),
-    postClassSession: builder.mutation({
-      
+    classSession: builder.query({
+      query: (id) => ({
+        url: `/api/class-session/${id}/`,
+        // params: id
+      }),
+    }),
+    updateClassSession: builder.mutation({
+      query: ( data ) => ({
+        url: `api/class-session/${data.id}/`,
+        method: "PUT",
+        body: data
+      }),
     })
   })
 })
 
 export const {
-  useListClassSessionQuery
+  useListClassSessionQuery,
+  useClassSessionQuery,
+  useUpdateClassSessionMutation
 } = classSessionApi;

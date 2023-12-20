@@ -367,7 +367,7 @@ const router = createBrowserRouter([
                 element: <ListAssignment />,
               },
               {
-                path: "listAssignments/detail",
+                path: "listAssignments/:idTest",
                 element: <QuizDetail />,
               },
             ],
@@ -405,7 +405,7 @@ const router = createBrowserRouter([
         element: <ClassDetailOfStudent />,
       },
       {
-        path: "/student/historyNotifications",
+        path: "/student/historyNotifications/:roleNoti",
         element: <HistoryNotificationStudent />,
       },
     ],
@@ -427,11 +427,11 @@ const router = createBrowserRouter([
         element: <ListClassesChild />
       },
       {
-        path: '/parents/listClassesOfChild/classDetail',
+        path: '/parents/listClassesOfChild/:userCodeStudent/:classCode',
         element: <ClassDetailOfChild />
       },
       {
-        path: '/parents/historyNotifications',
+        path: '/parents/historyNotifications/:roleNoti',
         element: <HistoryNotificationParents />
       }
     ]
