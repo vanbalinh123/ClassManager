@@ -66,10 +66,10 @@ const ListClassOfStudent = ({ listClasses }) => {
   return (
     <ListClass>
       <Header>
-        <TitleList>Class Code</TitleList>
-        <TitleList>Class Name</TitleList>
-        <TitleList>Teacher Name</TitleList>
-        <TitleList>Course</TitleList>
+        <TitleList>Mã lớp</TitleList>
+        <TitleList>Tên lớp</TitleList>
+        <TitleList>Giáo viên</TitleList>
+        <TitleList>Khoá</TitleList>
       </Header>
       <Section>
         {customListClasses?.map((item, index) => (

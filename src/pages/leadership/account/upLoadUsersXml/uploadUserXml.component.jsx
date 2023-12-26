@@ -100,7 +100,7 @@ const UploadListUserXML = () => {
   //paginate
 
   return (
-    <div>
+    <div style={{paddingTop: '40px'}}>
       <input 
         type="file" 
         accept=".xlsx, .xls" 

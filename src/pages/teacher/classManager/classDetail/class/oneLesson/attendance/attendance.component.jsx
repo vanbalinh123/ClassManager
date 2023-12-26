@@ -114,12 +114,12 @@ const Attendance = () => {
   return (
     <PageAttendance>
       <Header>
-        <TitleList style={{ flex: "0.5" }}>Index</TitleList>
-        <TitleList>Student Code</TitleList>
-        <TitleList>Student Name</TitleList>
+        <TitleList style={{ flex: "0.5" }}>STT</TitleList>
+        <TitleList>Mã học sinh</TitleList>
+        <TitleList>Tên học sinh</TitleList>
         <TitleList style={{ display: "flex", justifyContent: "center" }}>
-          <Span>Present</Span>
-          <Span>Absent</Span>
+          <Span>Hiện diện</Span>
+          <Span>Vắng mặt</Span>
         </TitleList>
       </Header>
       <Section>
@@ -158,12 +158,12 @@ const Attendance = () => {
           {(lessonToday?.Attendance_set.length === 0 && (
             <Btn onClick={handleSubmitAttendance}>
               <RiSaveLine size="15px" />
-              Save
+              Lưu
             </Btn>
           )) || (
             <Btn onClick={handleUpdateAttendance}>
               <RiSaveLine size="15px" />
-              Update
+              Cập nhật
             </Btn>
           )}
         </DivBtn>

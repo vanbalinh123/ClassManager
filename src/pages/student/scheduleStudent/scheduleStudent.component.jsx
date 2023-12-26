@@ -61,7 +61,7 @@ const StudentSchedule = () => {
 
   return (
     <Page>
-      <Title style={{ paddingBottom: "30px" }}>Schedule</Title>
+      <Title style={{ paddingBottom: "30px" }}>Lịch học</Title>
       <Calendar
         style={{ flex: 1, minHeight: "90vh" }}
         localizer={localizer}

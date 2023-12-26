@@ -86,7 +86,7 @@ const CreateNotificationTeacher = () => {
 
   return (
     <Page>
-      <Title>Create Notification</Title>
+      <Title>TẠO THÔNG BÁO</Title>
       {/* <DivHis>
         <BtnHis onClick={() => navigate("/teacher/historyNotifications")}>
           History
@@ -95,7 +95,7 @@ const CreateNotificationTeacher = () => {
       </DivHis> */}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <DivRole>
-          Send to class:
+          Gửi đến lớp:
           <Select onChange={(e) => setClassToSend(e.target.value)}>
             <Option></Option>
             {listClass?.map((item, index) => (
@@ -104,7 +104,7 @@ const CreateNotificationTeacher = () => {
           </Select>
         </DivRole>
         <TitleNoti>
-          <Span>Title</Span>
+          <Span>Tiêu đề</Span>
           <DivInput>
             <Input
               type="text"
@@ -117,7 +117,7 @@ const CreateNotificationTeacher = () => {
           </DivInput>
         </TitleNoti>
         <ContentNoti>
-          <Span>Content</Span>
+          <Span>Nội dung</Span>
           <DivTextarea>
             <Textarea
               type="text"
@@ -132,7 +132,7 @@ const CreateNotificationTeacher = () => {
         <DivSend>
           <BtnSend>
             <BsSend size="15px" />
-            Send
+            Gửi
           </BtnSend>
         </DivSend>
       </Form>

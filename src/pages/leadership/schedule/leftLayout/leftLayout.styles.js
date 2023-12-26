@@ -5,6 +5,10 @@ import generalStyles from "../../../../generalCss/general.styles";
 //left
 export const Left = styled.div`
   flex: 1;
+  padding: 30px 20px;
+  border-radius: 5px;
+  border: 1px solid ${generalStyles.border};
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
 `;
 
 export const DivInputs = styled.div`
@@ -27,7 +31,7 @@ export const Key = styled.div`
 `;
 
 export const DivInput = styled.div`
-  flex: 3;
+  flex: 2;
   height: 100%;
   position: relative;
 `;

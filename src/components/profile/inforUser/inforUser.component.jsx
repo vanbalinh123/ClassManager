@@ -113,7 +113,7 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
       </DivImg>
       <DivInfors>
         <Child>
-          <Key>User's Name: </Key>
+          <Key>Tên người dùng: </Key>
           {(update === false && <Result>{currentUser?.full_name}</Result>) || (
             <DivInput>
               <Input
@@ -125,11 +125,11 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
           )}
         </Child>
         <Child>
-          <Key>User's Code: </Key>
+          <Key>Mã người dùng: </Key>
           <Result>{currentUser?.usercode}</Result>
         </Child>
         <Child>
-          <Key>Role: </Key>
+          <Key>Vai trò: </Key>
           <Result>{userRole}</Result>
         </Child>
         <Child>
@@ -145,7 +145,7 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
           )}
         </Child>
         <Child>
-          <Key>Phone: </Key>
+          <Key>Số điện thoại: </Key>
           {(update === false && <Result>{currentUser?.mobile}</Result>) || (
             <DivInput>
               <Input
@@ -159,16 +159,16 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
       </DivInfors>
       {(update === false && (
         <DivBtn>
-          <Btn onClick={() => handleToUpdate()}>Update</Btn>
+          <Btn onClick={() => handleToUpdate()}>Cập nhật</Btn>
         </DivBtn>
       )) || (
         <DivBtn>
-          <Btn onClick={() => handleCancel()}>Cancel</Btn>
-          <Btn onClick={() => handleUpdate()}>Send</Btn>
+          <Btn onClick={() => handleCancel()}>Huỷ</Btn>
+          <Btn onClick={() => handleUpdate()}>Lưu</Btn>
         </DivBtn>
       )}
       <DivChangePass>
-        <Span>You want to change your password?</Span>
+        <Span>Bạn muốn thay đổi mật khẩu ?</Span>
         <ToChangePass onClick={() => setChangePass(true)}>
           Click here
         </ToChangePass>

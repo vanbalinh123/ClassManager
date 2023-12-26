@@ -18,19 +18,17 @@ const CreateClasses = () => {
 
   return (
     <Page>
-      <Title>Class Manager</Title>
+      <Title>Quản lý lớp học</Title>
       <SearchContainer 
         setValueSearch={setValueSearch}
-        placeholder='Class Code, Class Name, Course'
+        placeholder='Tìm kiếm theo mã lớp, tên lớp, khoá'
         type='text'
       />
       <Content>
         <ListClasses 
           listClasses={listClasses}
-        >
-          List Class
-        </ListClasses>
-        <AddNewClass>Add Class</AddNewClass>
+        />
+        <AddNewClass />
       </Content>
     </Page>
   );

@@ -36,25 +36,25 @@ const FilterNotifications = ({
       <ItemSearch>
         <Input 
           type="text" 
-          placeholder="Title, Cotent, Date..." 
+          placeholder="Tiêu đề, nội dung, ngày..." 
           value={checkValueSearch} 
           onChange={(e) => setCheckValueSearch(e.target.value)}
         />
       </ItemSearch>
       <SelectSearch value={selectedValue} onChange={handleSelectChange}>
-        <Option value='sent'>Sent</Option>
-        <Option value='received'>Received</Option>
+        <Option value='sent'>Đã gửi</Option>
+        <Option value='received'>Đã nhận</Option>
       </SelectSearch>
       <DivBtnFilter>
         <BtnFilter
           onClick={() => handleSearch()}
-        >Filter</BtnFilter>
+        >Tìm kiếm</BtnFilter>
       </DivBtnFilter>
       <DivBtnFilter>
         <BtnFilter
           onClick={() => handleClear()}
         >
-          Clear
+          Xoá
         </BtnFilter>
       </DivBtnFilter>
     </Filter>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { FaRegClipboard } from "react-icons/fa";
 import { LuBell } from "react-icons/lu";
@@ -16,30 +16,42 @@ import {
 
 const SidebarStudent = () => {
   const [checkNoti, setCheckNoti] = useState(false);
+  const [newNotificationsCount, setNewNotificationsCount] = useState(0);
+
+  useEffect(() => {
+    // Fetch the count of new notifications from local storage
+    const count = localStorage.getItem("newNotificationsCount");
+    setNewNotificationsCount(parseInt(count) || 0);
+
+    // Set up an interval to periodically update the new notifications count
+    const intervalId = setInterval(() => {
+      const updatedCount = localStorage.getItem("newNotificationsCount");
+      setNewNotificationsCount(parseInt(updatedCount) || 0);
+    }, 5000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <Sidebar>
       <FlexNavLink to="/student/schedule">
         <Item>
           <AiOutlineSchedule size="20px" />
-          <ItemName>Schedule</ItemName>
+          <ItemName>Lịch học</ItemName>
         </Item>
       </FlexNavLink>
       <FlexNavLink to="listClassesOfStudent">
         <Item>
           <FaRegClipboard size="20px" />
-          <ItemName>Class manager</ItemName>
+          <ItemName>Lớp học</ItemName>
         </Item>
       </FlexNavLink>
-      {/* <FlexNavLink to='historyNotifications'>
-        <Item>
-          <LuBell size="20px" />
-          <ItemName>Notifications</ItemName>
-        </Item>
-      </FlexNavLink> */}
       <Div onClick={() => setCheckNoti(!checkNoti)}>
         <Item>
           <LuBell size="20px" />
-          <ItemName>Notifications</ItemName>
+          <ItemName>Thông báo</ItemName>
+          {newNotificationsCount > 0 && <span>({newNotificationsCount})</span>}
         </Item>
       </Div>
       {checkNoti === true && (
@@ -50,7 +62,7 @@ const SidebarStudent = () => {
           >
             <ItemPopup>
               <LuBell size="20px" />
-              <ItemName>Admin</ItemName>
+              <ItemName>Lãnh đạo</ItemName>
             </ItemPopup>
           </NavlinkChild>
           <NavlinkChild
@@ -59,7 +71,7 @@ const SidebarStudent = () => {
           >
             <ItemPopup>
               <LuBell size="20px" />
-              <ItemName>Teacher</ItemName>
+              <ItemName>Giáo viên</ItemName>
             </ItemPopup>
           </NavlinkChild>
         </DivPopup>

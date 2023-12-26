@@ -15,6 +15,10 @@ export const Right = styled.div`
   flex-direction: column;
   gap: 20px;
   width: 100%;
+  border-radius: 5px;
+  border: 1px solid ${generalStyles.border};
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
+  padding: 30px 20px;
 `;
 
 //button

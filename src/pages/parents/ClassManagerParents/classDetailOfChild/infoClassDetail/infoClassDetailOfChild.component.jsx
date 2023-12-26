@@ -2,6 +2,7 @@ import { useClassDetailQuery } from "../../../../../redux/api/leader/class-api.s
 import { useListAttendanceQuery } from "../../../../../redux/api/teacher/attendance-api.slice";
 import { useListTestsQuery } from "../../../../../redux/api/teacher/test-api";
 import { BiUserX } from "react-icons/bi";
+import { useInforClassQuery } from "../../../../../redux/api/teacher/class-information-api";
 
 import {
   Div,
@@ -22,6 +23,16 @@ const InforClassDetailOfChild = ({
 }) => {
   const { data: classDetail } = useClassDetailQuery(classCode);
   const { data: listTests } = useListTestsQuery();
+  const { data: classInfor } = useInforClassQuery(classCode);
+  const findTuition = () => {
+    const tuition = classInfor?.payment.find(item => item.student === detailStudent?.usercode)
+    console.log(detailStudent)
+    if(tuition) {
+      return 'Đã thanh toán'
+    } else {
+      return 'Chưa thanh toán'
+    }
+  }
 
   const listTestsOfThisClass = listTests?.filter(
     (item) => item.class_info === classCode
@@ -88,22 +99,33 @@ const InforClassDetailOfChild = ({
   console.log(findAbsentDay("ST00039"));
   return (
     <Div>
-      <Title>Learning outcomes</Title>
+      <Title>Kết quả học tập</Title>
       <Content>
         <Info>
-          <Span>Student Name:</Span>
+          <Span>Tên học sinh:</Span>
           <Data>{detailStudent?.full_name}</Data>
         </Info>
         <Info>
-          <Span>Class Name:</Span>
+          <Span>Tên lớp:</Span>
           <Data>{classDetail?.class_name}</Data>
         </Info>
         <Info>
-          <Span>Class Code:</Span>
+          <Span>Mã lớp:</Span>
           <Data>{classDetail?.class_code}</Data>
         </Info>
         <Info>
-          <Span>Total Absent:</Span>
+          <Span>Học phí:</Span>
+          <Data>{classDetail?.cost}</Data>
+        </Info>
+        <Info>
+          <Span>Trạng thái:</Span>
+          {findTuition() === 'Chưa thanh toán'
+            && <Data style={{color: 'red'}}>{findTuition()}</Data>
+            || <Data style={{color: '#1a9ca6'}}>{findTuition()}</Data>
+          }
+        </Info>
+        <Info>
+          <Span>Tổng số buổi vắng:</Span>
           <Data>
             <TotalAbsent>
               {countAttendance(detailStudent?.usercode)}

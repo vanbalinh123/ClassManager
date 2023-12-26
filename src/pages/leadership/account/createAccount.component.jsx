@@ -17,14 +17,14 @@ const CreateAccount = () => {
 
   return (
     <Page>
-      <Title>Create Account</Title>
+      <Title>Tạo tài khoản</Title>
       <TypeUser>
-        User Role:
+        Vai trò:
         <Select value={selectedValue} onChange={handleSelectChange}>
-          <Option value="Admin">Admin</Option>
-          <Option value="Teacher">Teacher</Option>
-          <Option value="Student">Student</Option>
-          <Option value="Parent">Parent</Option>
+          <Option value="Admin">Quản lý</Option>
+          <Option value="Teacher">Giáo viên</Option>
+          <Option value="Student">Học sinh</Option>
+          <Option value="Parent">Phụ huynh</Option>
         </Select>
       </TypeUser>
       <Infomations 

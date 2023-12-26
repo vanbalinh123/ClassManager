@@ -13,8 +13,8 @@ const Students = () => {
       {/* <FilterStudents /> */}
       <Content>
         <Left>
-          <FlexNavLink to='listStudents'>List</FlexNavLink>
-          <FlexNavLink to='listAssignments'>Score</FlexNavLink>
+          <FlexNavLink to='listStudents'>Danh sách học sinh</FlexNavLink>
+          <FlexNavLink to='listAssignments'>Bài kiểm tra</FlexNavLink>
         </Left>
         <Right>
             <Outlet />

@@ -29,8 +29,8 @@ const ClassDetailOfStudent = () => {
    
     return (
         <Page>
-            <Title>Details class {classCode}</Title>
-            <DivTeacher>Teacher Name: {detailTeacher?.full_name}</DivTeacher>
+            <Title>Chi tiết lớp {classCode}</Title>
+            <DivTeacher>Giáo viên phụ trách: {detailTeacher?.full_name}</DivTeacher>
             <Body>
                 <Left>
                     <InforClassDetail 

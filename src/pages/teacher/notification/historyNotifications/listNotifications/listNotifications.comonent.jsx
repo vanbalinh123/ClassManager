@@ -60,13 +60,13 @@ const ListNotifications = ({
         />
       }
       <Header>
-        <TitleList style={{ flex: "0.5" }}>Title</TitleList>
-        <TitleList>Content</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Date</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Time</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Tiêu đề</TitleList>
+        <TitleList>Nội dung</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Ngày</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Giờ</TitleList>
         {(selectedValue === "sent" && (
-          <TitleList style={{ flex: "0.5" }}>To</TitleList>
-        )) || <TitleList style={{ flex: "0.5" }}>From</TitleList>}
+          <TitleList style={{ flex: "0.5" }}>Gửi đến</TitleList>
+        )) || <TitleList style={{ flex: "0.5" }}>Từ</TitleList>}
       </Header>
       <Section>
         {customList?.map((item, index) => (

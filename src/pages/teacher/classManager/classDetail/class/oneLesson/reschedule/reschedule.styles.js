@@ -19,7 +19,7 @@ export const Old = styled.div`
 `;
 
 export const New = styled.div`
-  flex: 2;
+  flex: 1;
   height: 100%;
   display: flex;
   flex-direction: column;

@@ -1,107 +1,149 @@
-import { useState } from "react";
-
-import BarChartTopProduct from "./chartDbClass/chartDbClass.component";
-
+import { useState, useEffect } from "react";
+import BarChartClass from "./chartDbClass/chartDbClass.component";
 import {
-    Div,
-    DivLeft,
-    DivContent,
-    H1,
-    DivBody,
-    Span,
-    DivHead,
-    Select,
-    Option,
-    DivSelect,
-    SpanName,
-    Input
-} from "./dbClass.styles"
-const TopProduct = () => {
-    const [quantity, setQuantity] = useState(8)
-    const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    const calculateYears = () => {
-        const currentYear = new Date().getFullYear();
-        const startYear = 2000;
-        const years = [];
+  Div,
+  DivHead,
+  DivSelect,
+  SpanName,
+  Select,
+  Option,
+  DivBody,
+} from "./dbClass.styles";
+import {
+  useListAdminsQuery,
+  useListTeachersQuery,
+  useListStudentsQuery,
+  useListParentsQuery,
+} from "../../../../redux/api/leader/list-users-api.slice";
 
-        for (let year = startYear; year <= currentYear; year++) {
-            years.push(year);
-        }
+const ChartClass = () => {
+  const [quantity, setQuantity] = useState(8);
+  const { data: listAdmin } = useListAdminsQuery();
+  const { data: listTeacher } = useListTeachersQuery();
+  const { data: listStudent } = useListStudentsQuery();
+  const { data: listParent } = useListParentsQuery();
 
-        return years;
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const calculateYears = () => {
+    const currentYear = new Date().getFullYear();
+    const startYear = 2023;
+    const years = [];
+
+    for (let year = startYear; year <= currentYear; year++) {
+      years.push(year);
     }
 
-    const yearsList = calculateYears();
+    return years;
+  };
 
-    const data = [
-        {diem:10, soluong: 150},
-        {diem:9, soluong: 250},
-        {diem:8, soluong: 10},
-        {diem:7, soluong: 350},
-        {diem:6, soluong: 110},
-        {diem:5, soluong: 170},
-        {diem:4, soluong: 103},
-        {diem:3, soluong: 12},
-        {diem:2, soluong: 13},
-        {diem:1, soluong: 150},
-    ];
+  const yearsList = calculateYears();
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
 
-    data.sort((a, b) => b.soluong - a.soluong);
+  const getRoleCounts = (roleList) => {
+    const filteredList = roleList?.filter((user) => {
+      const createdAt = new Date(user.created_at);
+      const createdAtMonth = createdAt.getMonth() + 1; // getMonth trả về từ 0-11
+      const createdAtYear = createdAt.getFullYear();
 
-    const [useData, setUseData] = useState({
-        labels: data.map((item) => item.diem),
-        datasets: [
-            {
-                label: "Tổng số điểm:",
-                data: data.map(item => item.soluong),
-                backgroundColor: [
-                    "#83D9EC"
-                ],
-            },
-        ]
+      return (
+        (!selectedMonth || createdAtMonth === parseInt(selectedMonth, 10)) &&
+        (!selectedYear || createdAtYear === parseInt(selectedYear, 10))
+      );
     });
 
-    return (
-        <Div>
-            <DivHead>      
-                <DivSelect>
-                    <SpanName>Day:</SpanName>
-                    <Input type="number" min={1} max={31}/>
-                </DivSelect> 
-                <DivSelect>
-                    <SpanName>Month:</SpanName>
-                    <Select>
-                        <Option></Option>
-                        {months.map((item, index) => (
-                            <Option key={index}>{item}</Option>
-                        ))}
-                    </Select>
-                </DivSelect>
-                <DivSelect>
-                    <SpanName>Year:</SpanName>
-                    <Select>
-                        <Option></Option>
-                        {yearsList.map((item, index) => (
-                            <Option key={index}>{item}</Option>
-                        ))}
-                    </Select>
-                </DivSelect>
-                <DivSelect>
-                    <SpanName>Quantity</SpanName>
-                    <Input value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
-                </DivSelect>
-            </DivHead>
-            <DivBody>
-                {/* <DivLeft>
-                    <H1>Top Product</H1>
-                    <Span>Total: 1000 san pham</Span>
-                </DivLeft> */}
-                <DivContent>
-                    <BarChartTopProduct chartData={useData} />
-                </DivContent>
-            </DivBody>
-        </Div>
-    )
-}
+    const roleCounts = filteredList?.reduce((countMap, user) => {
+      countMap[user.role] = (countMap[user.role] || 0) + 1;
+      return countMap;
+    }, {});
 
-export default TopProduct;
+    return roleCounts;
+  };
+
+  const getChartData = (roleCounts) => {
+    const roles = Object.keys(roleCounts);
+    const counts = roles.map((role) => roleCounts[role]);
+
+    const chartData = [
+      {
+        type: "bar",
+        x: roles,
+        y: counts,
+        marker: { color: "#83D9EC" },
+      },
+    ];
+
+    return chartData;
+  };
+
+  const [chartData, setChartData] = useState([]);
+
+  useEffect(() => {
+    const adminCounts = getRoleCounts(listAdmin);
+    const teacherCounts = getRoleCounts(listTeacher);
+    const studentCounts = getRoleCounts(listStudent);
+    const parentCounts = getRoleCounts(listParent);
+
+    const combinedCounts = {
+      admin: adminCounts ? adminCounts["admin"] || 0 : 0,
+      teacher: teacherCounts ? teacherCounts["teacher"] || 0 : 0,
+      student: studentCounts ? studentCounts["student"] || 0 : 0,
+      parent: parentCounts ? parentCounts["parent"] || 0 : 0,
+    };
+
+    setChartData(getChartData(combinedCounts));
+  }, [
+    listAdmin,
+    listTeacher,
+    listStudent,
+    listParent,
+    selectedMonth,
+    selectedYear,
+  ]);
+
+  const layout = {
+    title: "Tổng số tài khoản được tạo",
+    xaxis: { title: "Vai trò" },
+    yaxis: { title: "Số lượng" },
+  };
+
+  return (
+    <Div>
+      <DivBody>
+        <BarChartClass chartData={chartData} layout={layout} />
+      </DivBody>
+      <DivHead>
+        <DivSelect>
+          <SpanName>Month:</SpanName>
+          <Select
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          >
+            <Option value="">All</Option>
+            {months.map((item, index) => (
+              <Option key={index} value={item}>
+                {item}
+              </Option>
+            ))}
+          </Select>
+        </DivSelect>
+        <DivSelect>
+          <SpanName>Year:</SpanName>
+          <Select
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+          >
+            <Option value="">All</Option>
+            {yearsList.map((item, index) => (
+              <Option key={index} value={item}>
+                {item}
+              </Option>
+            ))}
+          </Select>
+        </DivSelect>
+      </DivHead>
+    </Div>
+  );
+};
+
+export default ChartClass;

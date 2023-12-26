@@ -12,7 +12,7 @@ const UsersManager = () => {
 
   return (
     <Page>
-      <Title>List Users</Title>
+      <Title>Danh sách người dùng</Title>
       <FilterUsers 
         selectedValue={selectedValue}
         setSelectedValue={setSelectedValue}

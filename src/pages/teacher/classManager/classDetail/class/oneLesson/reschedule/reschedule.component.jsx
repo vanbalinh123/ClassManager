@@ -52,25 +52,25 @@ const Reschedule = () => {
       <Old>
         <Item>
           <Span style={{ color: `${generalStyles.bgc}`, fontWeight: "bold" }}>
-            Day:
+            Ngày:
           </Span>
           <Span>{session?.day}</Span>
         </Item>
         <Item>
           <Span style={{ color: `${generalStyles.bgc}`, fontWeight: "bold" }}>
-            Start time:
+            Thời gian bắt đầu:
           </Span>
           <Span>{session?.start_time}</Span>
         </Item>
         <Item>
           <Span style={{ color: `${generalStyles.bgc}`, fontWeight: "bold" }}>
-            End time:
+            Thời gian kết thúc:
           </Span>
           <Span>{session?.end_time}</Span>
         </Item>
         <Item>
           <Span style={{ color: `${generalStyles.bgc}`, fontWeight: "bold" }}>
-            Room:
+            Phòng học:
           </Span>
           <Span>{session?.room}</Span>
         </Item>
@@ -79,7 +79,7 @@ const Reschedule = () => {
       <New>
         <Item>
           <Span style={{ color: `${generalStyles.bgc}`, fontWeight: "bold" }}>
-            Day:
+            Ngày:
           </Span>
           <Input
             type="date"
@@ -89,7 +89,7 @@ const Reschedule = () => {
         </Item>
         <Item>
           <Span style={{ color: `${generalStyles.bgc}`, fontWeight: "bold" }}>
-            Start time:
+            Thời gian bắt đầu:
           </Span>
           <Input
             type="time"
@@ -99,7 +99,7 @@ const Reschedule = () => {
         </Item>
         <Item>
           <Span style={{ color: `${generalStyles.bgc}`, fontWeight: "bold" }}>
-            End time:
+            Thời gian kết thúc:
           </Span>
           <Input
             type="time"
@@ -109,7 +109,7 @@ const Reschedule = () => {
         </Item>
         <Item>
           <Span style={{ color: `${generalStyles.bgc}`, fontWeight: "bold" }}>
-            Room:
+            Phòng học:
           </Span>
           <Input
             type="text"
@@ -121,7 +121,7 @@ const Reschedule = () => {
       <DivBtn>
         <Btn onClick={handleSave}>
           <RiSaveLine size="15px" />
-          Save
+          Lưu
         </Btn>
       </DivBtn>
       <ToastCtn />

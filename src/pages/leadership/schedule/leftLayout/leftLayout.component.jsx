@@ -54,7 +54,7 @@ const LeftLayout = ({
         </Item>
         {errors.name && <MessageErorrs>{errors.name.message}</MessageErorrs>} */}
         <Item>
-          <Key>Teacher code</Key>
+          <Key>Mã giáo viên</Key>
           <DivInput>
             <Input
               type="text"
@@ -70,7 +70,7 @@ const LeftLayout = ({
           <MessageErorrs>{errors.teacherCode.message}</MessageErorrs>
         )}
         <Item>
-          <Key>Class code</Key>
+          <Key>Mã lớp</Key>
           <DivInput>
             {/* <Input
               type="text"
@@ -104,7 +104,7 @@ const LeftLayout = ({
           <MessageErorrs>{errors.classCode.message}</MessageErorrs>
         )}
         <Item>
-          <Key>Number of sessions/courses</Key>
+          <Key>Tổng số buổi học/khoá</Key>
           <DivInput>
             <Input
               type="number"
@@ -120,7 +120,7 @@ const LeftLayout = ({
           <MessageErorrs>{errors.course.message}</MessageErorrs>
         )}
         <Item>
-          <Key>Number of sessions/week</Key>
+          <Key>Tống số buổi học/tuần</Key>
           <DivInput>
             <Input
               type="number"
@@ -134,7 +134,7 @@ const LeftLayout = ({
         </Item>
         {errors.week && <MessageErorrs>{errors.week.message}</MessageErorrs>}
         <Item>
-          <Key>Start day</Key>
+          <Key>Ngày bắt đầu</Key>
           <DivInput>
             <Input
               type="date"
@@ -150,7 +150,7 @@ const LeftLayout = ({
           <MessageErorrs>{errors.startDate.message}</MessageErorrs>
         )}
         <Item>
-          <Key>Room</Key>
+          <Key>Phòng học</Key>
           <DivInput>
             <Input
               type="text"

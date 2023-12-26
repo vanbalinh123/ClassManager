@@ -80,7 +80,12 @@ export const BtnFilter = styled.button`
 `;
 
 //list
-export const Header = styled.header`
+export const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+export const Header = styled.tr`
   height: 50px;
   display: flex;
   align-items: center;
@@ -90,7 +95,7 @@ export const Header = styled.header`
   gap: 2%;
 `;
 
-export const TitleList = styled.span`
+export const TitleList = styled.th`
   flex: ${(props) => props.content ? 3 : 1};
   text-align: center;
   font-weight: bold;
@@ -98,7 +103,7 @@ export const TitleList = styled.span`
   padding-right: 10px;
 `;
 
-export const Section = styled.section`
+export const Section = styled.tbody`
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -108,7 +113,7 @@ export const Section = styled.section`
   }
 `;
 
-export const DivItem = styled.div`
+export const DivItem = styled.tr`
   /* border: 1px solid ${generalStyles.border}; */
   /* border-radius: 5px; */
   display: flex;
@@ -124,7 +129,7 @@ export const DivItem = styled.div`
   }
 `;
 
-export const Item = styled.span`
+export const Item = styled.td`
   /* flex: 1; */
   padding-left: 10px;
   padding-right: 10px;
@@ -136,37 +141,3 @@ export const Item = styled.span`
   transition: all 0.3s;
 `;
 
-//table
-export const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-// Table Header
-export const TableHeader = styled.thead`
-  background-color: ${generalStyles.active};
-  color: ${generalStyles.textWhite};
-`;
-
-// Table Row
-export const TableRow = styled.tr`
-  &:hover {
-    cursor: pointer;
-    background-color: ${generalStyles.bgc};
-  }
-`;
-
-// Table Header Cell
-export const TableHeaderCell = styled.th`
-  padding: 10px;
-  font-weight: bold;
-`;
-
-// Table Cell
-export const TableCell = styled.td`
-  padding: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.3s;
-`;

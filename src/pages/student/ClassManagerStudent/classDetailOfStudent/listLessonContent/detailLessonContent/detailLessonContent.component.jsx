@@ -21,7 +21,7 @@ const DetailLessonContent = ({setCheck, detail}) => {
     return (
         <DetailLesson>
             <Title>
-                <Span>Lesson Content</Span>
+                <Span>Nội dung bài học</Span>
                 <Date>{detail?.session_day}</Date>
             </Title>
             <Content>
@@ -32,7 +32,7 @@ const DetailLessonContent = ({setCheck, detail}) => {
                     onClick={() => handleCloseClick()}
                >
                 <AiOutlineClose size="15px"/>
-                    Close
+                    Đóng
                 </Btn>
             </DivButton>
         </DetailLesson>

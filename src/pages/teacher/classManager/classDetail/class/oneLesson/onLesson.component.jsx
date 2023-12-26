@@ -20,13 +20,13 @@ const OneLesson = () => {
     <Page>
       <Header>
         <FlexNavLink to={`attendance/${idSession}`}>
-          <TitleList>Attendance</TitleList>
+          <TitleList>Điểm danh</TitleList>
         </FlexNavLink>
         <FlexNavLink to={`lessonContent/${idSession}`}>
-          <TitleList>Lesson content</TitleList>
+          <TitleList>Nội dung bài học</TitleList>
         </FlexNavLink>
         <FlexNavLink to={`reschedule/${idSession}`}>
-          <TitleList>Reschedule</TitleList>
+          <TitleList>Đổi lịch</TitleList>
         </FlexNavLink>
       </Header>
       <Section>
@@ -36,7 +36,7 @@ const OneLesson = () => {
         onClick={() => navigate(`/teacher/listClasses/classDetail/${classCode}/listLesson`)}
       >
         <IoMdArrowBack size="15px" />
-        Back
+        Quay lại
       </BtnBack>
     </Page>
   );

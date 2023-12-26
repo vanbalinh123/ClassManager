@@ -13,10 +13,10 @@ const ListClassesStudent = () => {
 
   return (
     <Page>
-      <Title>List classes</Title>
+      <Title>DANH SÁCH LỚP HỌC</Title>
       <SearchContainer
         setValueSearch={setValueSearch}
-        placeholder="Class Code, Class Name, Course"
+        placeholder="Mã lớp, Tên lớp, Khoá..."
         type="text"
       />
       <ListClassOfStudent 

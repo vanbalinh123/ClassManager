@@ -202,11 +202,11 @@ const CreateSchedule = () => {
   return (
     <Page>
       {(classCodeParam === "new" && (
-        <Title>Create a teaching schedule </Title>
+        <Title>TẠO LỊCH DẠY</Title>
       )) ||
         (clCodeNew === "" && (
-          <Title>Update a teaching schedule {classCodeParam}</Title>
-        )) || <Title>Create a teaching schedule</Title>}
+          <Title>CẬP NHẬT LỊCH DẠY {classCodeParam}</Title>
+        )) || <Title>TẠO LỊCH DẠY</Title>}
 
       <Form onSubmit={handleSubmit(onSubmit)}>
         <LeftLayout
@@ -228,18 +228,18 @@ const CreateSchedule = () => {
           {(classCodeParam === "new" && (
             <Btn>
               <IoAdd size="15px" />
-              Create
+              Lưu
             </Btn>
           )) ||
             (clCodeNew === "" && (
               <Btn>
                 <IoAdd size="15px" />
-                Update
+                Cập nhật
               </Btn>
             )) || (
               <Btn>
                 <IoAdd size="15px" />
-                Create
+                Lưu
               </Btn>
             )}
         </DivBtn>

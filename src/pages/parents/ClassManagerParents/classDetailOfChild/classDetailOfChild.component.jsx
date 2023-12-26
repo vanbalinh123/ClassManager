@@ -30,8 +30,8 @@ const ClassDetailOfChild = () => {
     
     return (
         <Page>
-            <Title>Details of class {classCode}</Title>
-            <DivTeacher>Teacher Name: {detailTeacher?.full_name}</DivTeacher>
+            <Title>Chi tiết lớp học {classCode}</Title>
+            <DivTeacher>Giáo viên phụ trách {detailTeacher?.full_name}</DivTeacher>
             <Body>
                 <Left>
                     <InforClassDetailOfChild 

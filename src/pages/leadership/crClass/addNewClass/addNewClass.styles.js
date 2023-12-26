@@ -5,7 +5,7 @@ import generalStyles from "../../../../generalCss/general.styles";
 export const Form = styled.form`
   border-radius: 10px;
   flex: 1;
-  height: 400px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   gap: 5%;
@@ -19,7 +19,6 @@ export const Title = styled.span`
   padding-left: 15px;
   color: ${generalStyles.active};
   font-weight: bold;
-  font-size: 15px;
 `;
 
 export const DivInputs = styled.div`
@@ -38,7 +37,6 @@ export const Item = styled.div`
 export const Key = styled.span`
   flex: 1;
   font-weight: bold;
-  font-size: 14px;
 `;
 
 export const DivInput = styled.div`

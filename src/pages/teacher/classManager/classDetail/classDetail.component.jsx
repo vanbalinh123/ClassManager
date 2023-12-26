@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { Page, Title } from "../../../../generalCss/shared.styles";
 import { Choose, Select, Option, Content } from "./classDetail.styles";
 
 const ClassDetail = () => {
     const [choose, setChoose] = useState('class');
+    const {classCode} = useParams();
 
     const navigate = useNavigate();
 
@@ -20,14 +22,14 @@ const ClassDetail = () => {
 
     return(
         <Page>
-            <Title>Class Detail TI123 Toeic Basic</Title>
+            <Title>Chi tiết lớp học {classCode}</Title>
             <Choose>
                 <Select 
                     value={choose} 
                     onChange={(e) => setChoose(e.target.value)}
                 >
-                    <Option value='class'>Class</Option>
-                    <Option value='students'>Student</Option>
+                    <Option value='class'>Lớp học</Option>
+                    <Option value='students'>Học sinh</Option>
                 </Select>
             </Choose>
             <Content>

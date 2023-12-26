@@ -33,11 +33,13 @@ const AddNewClass = () => {
     const class_code = data.classCode;
     const class_name = data.className;
     const course = data.course;
+    const tution = data.tution;
 
     const newClass = {
       class_code: class_code,
       class_name: class_name,
-      course: course
+      course: course,
+      cost: tution
     }
 
     const response = await creatClass(newClass);
@@ -57,10 +59,10 @@ const AddNewClass = () => {
     <Form 
         onSubmit={handleSubmit(onSubmit)}
     >
-      <Title>Create Class</Title>
+      <Title>Tạo lớp học</Title>
       <DivInputs>
         <Item>
-          <Key>Class Code</Key>
+          <Key>Mã lớp</Key>
           <DivInput>
             <Input
               type="text"
@@ -73,7 +75,7 @@ const AddNewClass = () => {
           </DivInput>
         </Item>
         <Item>
-          <Key>Class Name</Key>
+          <Key>Tên lớp</Key>
           <DivInput>
             <Input
               type="text"
@@ -86,7 +88,7 @@ const AddNewClass = () => {
           </DivInput>
         </Item>
         <Item>
-          <Key>Course</Key>
+          <Key>Khoá</Key>
           <DivInput>
             <Input
               type="text"
@@ -98,11 +100,24 @@ const AddNewClass = () => {
             />
           </DivInput>
         </Item>
+        <Item>
+          <Key>Học phí</Key>
+          <DivInput>
+            <Input
+              type="text"
+              placeholder="Tution..."
+              hasError={!!errors.course}
+              {...register("tution", {
+                required: "Tution is required!",
+              })}
+            />
+          </DivInput>
+        </Item>
       </DivInputs>
       <DivBtn>
         <Btn>
           <IoAdd size="15px"/>
-          Create
+          Tạo
           </Btn>
       </DivBtn>
       <ToastCtn />

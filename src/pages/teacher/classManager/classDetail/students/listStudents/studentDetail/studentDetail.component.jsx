@@ -88,19 +88,19 @@ const StudentDetail = ({
     <Layout active={detail ? "active" : ""}>
       <Blur></Blur>
       <Detail>
-        <Title>Student Detail</Title>
+        <Title>Thông tin chi tiết</Title>
         <Content>
           <Left>
             <Div>
-              <Span>Name:</Span>
+              <Span>Tên học sinh:</Span>
               <Value>{studentDetail?.full_name}</Value>
             </Div>
             <Div>
-              <Span>Code:</Span>
+              <Span>Mã học sinh:</Span>
               <Value>{studentDetail?.usercode}</Value>
             </Div>
             <Div>
-              <Span>Phone:</Span>
+              <Span>Số điện thoại:</Span>
               <Value>{studentDetail?.mobile}</Value>
             </Div>
             {listScore?.map((item, index) => (
@@ -110,16 +110,12 @@ const StudentDetail = ({
               </Div>
             ))}
             <Div>
-              <Span>Total absence:</Span>
+              <Span>Tổng ngày vắng:</Span>
               <Value>{countAttendance(studentDetail?.usercode)}</Value>
             </Div>
             <Div>
-              <Span>Absent Day 1</Span>
+              <Span>Ngày vắng chưa sửa</Span>
               <Value>22/12/2023</Value>
-            </Div>
-            <Div>
-              <Span>Absent Day 2</Span>
-              <Value>27/12/2023</Value>
             </Div>
           </Left>
           <Right>
@@ -127,8 +123,8 @@ const StudentDetail = ({
           </Right>
         </Content>
         <DivBtn>
-          <Btn onClick={() => handleDeleteStudent()}>Delete</Btn>
-          <Btn onClick={() => handleCancelClick()}>Cancel</Btn>
+          <Btn onClick={() => handleDeleteStudent()}>Xoá</Btn>
+          <Btn onClick={() => handleCancelClick()}>Thoát</Btn>
         </DivBtn>
       </Detail>
     </Layout>

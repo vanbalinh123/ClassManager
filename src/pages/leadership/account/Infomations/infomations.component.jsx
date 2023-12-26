@@ -56,7 +56,7 @@ const Infomations = ({ selectedValue }) => {
       dulieu.classes = [];
       response = await createTeacher(dulieu);
     } else if (selectedValue === "Student") {
-      dulieu.address = "ABC";
+      // dulieu.address = "ABC";
       response = await createStudent(dulieu);
     } else if (selectedValue === "Parent") {
       dulieu.student = [data.student.toUpperCase()];
@@ -85,7 +85,7 @@ const Infomations = ({ selectedValue }) => {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <DivInputs>
         <Item>
-          <Key>User Name</Key>
+          <Key>Tên người dùng:</Key>
           <DivInput>
             <Input
               type="text"
@@ -100,7 +100,7 @@ const Infomations = ({ selectedValue }) => {
         {errors.name && <MessageErorrs>{errors.name.message}</MessageErorrs>}
         {selectedValue === "Parent" && (
           <Item>
-            <Key>Student Code</Key>
+            <Key>Mã học sinh:</Key>
             <DivInput>
               <Input
                 type="text"
@@ -136,7 +136,7 @@ const Infomations = ({ selectedValue }) => {
         </Item>
         {errors.email && <MessageErorrs>{errors.email.message}</MessageErorrs>}
         <Item>
-          <Key>Password</Key>
+          <Key>Mật khẩu</Key>
           <DivInput>
             <Input
               type="password"
@@ -152,7 +152,7 @@ const Infomations = ({ selectedValue }) => {
           <MessageErorrs>{errors.password.message}</MessageErorrs>
         )}
         <Item>
-          <Key>Phone</Key>
+          <Key>Số điện thoại</Key>
           <DivInput>
             <Input
               type="number"
@@ -169,7 +169,7 @@ const Infomations = ({ selectedValue }) => {
       <DivBtn>
         <Btn>
           <AiOutlineUserAdd size="15px" />
-          Create
+          Tạo
         </Btn>
       </DivBtn>
       <ToastCtn />

@@ -12,13 +12,13 @@ const SidebarParents = () => {
           <FlexNavLink to="/parents/schedule">
             <Item>
               <AiOutlineSchedule size="20px" />
-              <ItemName>Schedule</ItemName>
+              <ItemName>Lịch học</ItemName>
             </Item>
           </FlexNavLink>
           <FlexNavLink to="listClassesOfChild">
             <Item>
               <FaRegClipboard size="20px" />
-              <ItemName>Class manager</ItemName>
+              <ItemName>Lớp học</ItemName>
             </Item>
           </FlexNavLink>
           {/* <FlexNavLink to='historyNotifications'>
@@ -32,7 +32,7 @@ const SidebarParents = () => {
       >
         <Item>
           <LuBell size="20px" />
-          <ItemName>Notifications</ItemName>
+          <ItemName>Thông báo</ItemName>
         </Item>
       </Div>
       {checkNoti === true && (
@@ -43,7 +43,7 @@ const SidebarParents = () => {
           >
             <ItemPopup>
               <LuBell size="20px" />
-              <ItemName>Admin</ItemName>
+              <ItemName>Lãnh đạo</ItemName>
             </ItemPopup>
           </NavlinkChild>
           <NavlinkChild
@@ -52,7 +52,7 @@ const SidebarParents = () => {
           >
             <ItemPopup>
               <LuBell size="20px" />
-              <ItemName>Teacher</ItemName>
+              <ItemName>Giáo viên</ItemName>
             </ItemPopup>
           </NavlinkChild>
         </DivPopup>

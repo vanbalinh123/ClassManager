@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useListNotiAdminQuery } from "../../../../redux/api/leader/admin-notifications.slice";
-import FilterNotifications from "./filterNotifications/filterNotifications.component";
 import ListNotifications from "./listNotifications/listNotifications.component";
 import SearchContainer from "../../../../components/search/search";
 import { IoChevronBack } from "react-icons/io5";
@@ -21,11 +20,11 @@ const LeaderHistoryNotifications = () => {
     
   return (
     <Page>
-      <Title>Notifications History</Title>
+      <Title>Lịch sử thông báo</Title>
       {/* <FilterNotifications /> */}
       <SearchContainer 
         setValueSearch={setValueSearch}
-        placeholder='Title, Content, Date...'
+        placeholder='Tiêu đề, nội dung, ngày...'
         type='text'
       />
       <ListNotifications 

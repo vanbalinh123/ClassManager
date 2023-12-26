@@ -29,7 +29,7 @@ const ListLessonContent = ({ thisLessonContent }) => {
         detail={detail}
     />}
 
-      <Title>List of lesson content</Title>
+      <Title>Danh sách nội dung các buổi học</Title>
       <List>
         {(thisLessonContent?.length > 0 &&
           thisLessonContentReverse?.reverse().map((item, index) => {
@@ -42,7 +42,7 @@ const ListLessonContent = ({ thisLessonContent }) => {
           })) || (
           <Item>
             {/* <Date></Date> */}
-            <Notificate>No lesson content has been added yet!</Notificate>
+            <Notificate>Chưa có buổi học nào diễn ra!!!</Notificate>
           </Item>
         )}
       </List>

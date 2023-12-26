@@ -41,7 +41,7 @@ const FilterUsers = ({
       <ItemSearch>
         <Input 
           type="text" 
-          placeholder="User Code, User Name, User Email..."
+          placeholder="Mã người dùng, tên người dùng, email"
           value={checkValueSearch} 
           onChange={(e) => setCheckValueSearch(e.target.value)}
         />
@@ -64,24 +64,24 @@ const FilterUsers = ({
       </ItemSearch> */}
       <DivSelect>
         <Select value={selectedValue} onChange={handleSelectChange}>
-          <Option value="Admin">Admin</Option>
-          <Option value="Teacher">Teacher</Option>
-          <Option value="Student">Student</Option>
-          <Option value="Parents">Parents</Option>
+          <Option value="Admin">Quản lý</Option>
+          <Option value="Teacher">Giáo viên</Option>
+          <Option value="Student">Học sinh</Option>
+          <Option value="Parents">Phụ huynh</Option>
         </Select>
       </DivSelect>
       <DivBtnFilter>
         <BtnFilter
           onClick={() => handleSearch()}
         >
-          Filter
+          Tìm kiếm
         </BtnFilter>
       </DivBtnFilter>
       <DivBtnFilter>
         <BtnFilter
           onClick={() => handleClear()}
         >
-          Clear
+          Xoá
         </BtnFilter>
       </DivBtnFilter>
     </Filter>

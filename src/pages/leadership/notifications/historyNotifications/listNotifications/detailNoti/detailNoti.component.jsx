@@ -29,30 +29,30 @@ const DetailNoti = ({
     <>
       <Layout />
       <Div>
-        <Text>Notification Detail</Text>
+        <Text>Chi tiết thông báo</Text>
         <DivHead>
           <DivRole>
-            <Key>Send to: </Key>
+            <Key>Gửi đến: </Key>
             <span>{value.role}</span>
           </DivRole>
           <DivDateTime>
             <div>
-              <Key>Date: </Key>
+              <Key>Ngày: </Key>
               <span>{calDate(value.created_at)}</span>
             </div>
             <div>
-              <Key>Time: </Key>
+              <Key>Thời gian: </Key>
               <span>{calTime(value.created_at)}</span>
             </div>
           </DivDateTime>
         </DivHead>
         <DivBody>
           <DivTitle>
-              <Key>Title:</Key>
+              <Key>Tiêu đề:</Key>
               <span>{value.title}</span>
           </DivTitle>
           <DivContent>
-            <Key>Content:</Key>
+            <Key>Nội dung:</Key>
             <span>{value.content}</span>
           </DivContent>
         </DivBody>
@@ -60,7 +60,7 @@ const DetailNoti = ({
         <Btn
           onClick={() => handleClose()}
         >
-            Exist
+            Thoát
         </Btn>
       </DivBtn>
       </Div>

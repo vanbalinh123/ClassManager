@@ -24,7 +24,7 @@ const ChangePassword = ({ changePass, setChangePass }) => {
       <LayoutOpacity></LayoutOpacity>
       <LayoutChangPass>
         <ChangePass>
-            Change Password
+            Thay đổi mật khẩu
             <DivOut
                 onClick={() => setChangePass(false)}
             >
@@ -33,22 +33,22 @@ const ChangePassword = ({ changePass, setChangePass }) => {
         </ChangePass>
         <DivInputs>
             <DivInput>
-                <Key>Old Password :</Key>
+                <Key>Mật khẩu cũ :</Key>
                 <Input />
             </DivInput>
             <DivInput>
-                <Key>New Password :</Key>
+                <Key>Mật khẩu mới :</Key>
                 <Input />
             </DivInput>
             <DivInput>
-                <Key>Confirm Password :</Key>
+                <Key>Xác nhận mật khẩu :</Key>
                 <Input />
             </DivInput>
         </DivInputs>
         <DivBtnPass>
             <Btn>
                 <BsSend size='15px' />
-                Update
+                Cập nhật
             </Btn>
         </DivBtnPass>
       </LayoutChangPass>

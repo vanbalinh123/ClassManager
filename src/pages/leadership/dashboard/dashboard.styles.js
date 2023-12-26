@@ -2,14 +2,13 @@ import styled from "styled-components";
 import generalStyles from "../../../generalCss/general.styles";
 
 export const Div = styled.div`
-  border: 1px solid red;
   display: flex;
-  gap: 10%;
+  flex-direction: column;
+  gap: 100px;
 `;
 
 export const DivChart = styled.div`
-  border: 1px solid blue;
-  flex: 1;
-  height: 400px;
-  overflow: hidden;
+  /* flex: 1; */
+  /* height: 1000px; */
+  /* overflow: hidden; */
 `;

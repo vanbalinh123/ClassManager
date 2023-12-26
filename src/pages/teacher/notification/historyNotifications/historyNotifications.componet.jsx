@@ -38,7 +38,7 @@ const HistoryNotificationTeacher = () => {
 
   return (
     <Page>
-      <Title>Notifications History</Title>
+      <Title>Lịch sử thông báo</Title>
       {/* <DivBtn>
         <Btn
             onClick={() => navigate('/teacher/createNotification')}

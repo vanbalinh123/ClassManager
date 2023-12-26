@@ -7,15 +7,19 @@ export const Content = styled.div`
   padding: 3% 3% 10% 3%;
   gap: 30px;
   position: relative;
-  min-height: 600px;
+  flex-direction: column;
 `;
 
 //infor
 export const Infors = styled.div`
   flex: 1;
   display: flex;
-  height: 240px;
-  padding-top: 40px;
+  height: 200px;
+  width: 50%;
+  padding: 40px;
+  border: 1px solid ${generalStyles.border};
+  border-radius: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
 
 export const DivImg = styled.div`
@@ -35,6 +39,7 @@ export const DivInfors = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: 200px;
 `;
 
 export const Child = styled.div`
@@ -49,7 +54,7 @@ export const Key = styled.span`
 
 export const Result = styled.span`
   color: ${generalStyles.active};
-  flex: 3;
+  flex: 1;
 `;
 
 //history

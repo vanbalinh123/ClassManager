@@ -1,21 +1,28 @@
 import { Page, Title } from "../../../generalCss/shared.styles";
 import { Div, DivChart } from "./dashboard.styles";
 
-import TopProduct from "./dbClass/dbClass.component";
+import ChartClass from "./dbClass/dbClass.component";
+import ChartScore from "./dbScore/dbScore.component";
+import ChartAbsent from "./dbAbsent/dbAbsent.component";
+import ChartTuition from "./dbTuition/dbTuition.component";
 
 const DashBoard = () => {
   return (
     <Page>
-      <Title>Dashboard</Title>
+      <Title>Biểu đồ tổng quát</Title>
       <Div>
         <DivChart>
-            <TopProduct />
+            <ChartTuition />
         </DivChart>
-        <DivChart>cc2</DivChart>
-      </Div>
-      <Div>
-        <DivChart>cc3</DivChart>
-        <DivChart>cc4</DivChart>
+        <DivChart>
+            <ChartClass />
+        </DivChart>
+        <DivChart>
+          <ChartScore />
+        </DivChart>
+        <DivChart>
+          <ChartAbsent />
+        </DivChart>
       </Div>
     </Page>
   );

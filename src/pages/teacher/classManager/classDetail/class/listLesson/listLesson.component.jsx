@@ -27,7 +27,7 @@ const ListLesson = () => {
     if(ls) {
       return ls.content;
     } else {
-      return 'Class has not started yet!!!'
+      return 'Chưa có nội dung bài học!!'
     }
   }
 
@@ -65,9 +65,9 @@ const ListLesson = () => {
   return (
     <>
       <Header>
-        <TitleList>Lesson</TitleList>
-        <TitleList>Lesson content</TitleList>
-        <TitleList>Day</TitleList>
+        <TitleList>STT</TitleList>
+        <TitleList>Nội dung bài học</TitleList>
+        <TitleList>Ngày</TitleList>
       </Header>
       <Section>
         {customList?.map((item, index) => (

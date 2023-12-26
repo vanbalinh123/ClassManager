@@ -68,11 +68,11 @@ const ListUsers = ({
   return (
     <List>
       <Header>
-        <TitleList>Index</TitleList>
-        <TitleList>User Code</TitleList>
-        <TitleList>User Name</TitleList>
+        <TitleList>STT</TitleList>
+        <TitleList>Mã người dùng</TitleList>
+        <TitleList>Tên người dùng</TitleList>
         <TitleList>Email</TitleList>
-        <TitleList>Role</TitleList>
+        <TitleList>Vai trò</TitleList>
       </Header>
       <Section>
         {customListUsers?.map((item, index) => (
@@ -88,29 +88,6 @@ const ListUsers = ({
           </DivItem>
         ))}
       </Section>
-      {/* <Table>
-      <TableHeader>
-        <TableHeaderCell>Index</TableHeaderCell>
-        <TableHeaderCell>User Code</TableHeaderCell>
-        <TableHeaderCell>User Name</TableHeaderCell>
-        <TableHeaderCell>Email</TableHeaderCell>
-        <TableHeaderCell>Role</TableHeaderCell>
-      </TableHeader>
-      <tbody>
-        {customListUsers?.map((item, index) => (
-          <TableRow
-            key={index} 
-            onClick={() => handleClickUserDetail(item.usercode)}
-          >
-            <TableCell>{index + 1}</TableCell>
-            <TableCell>{item.usercode}</TableCell>
-            <TableCell>{item.full_name}</TableCell>
-            <TableCell>{item.email}</TableCell>
-            <TableCell>{item.role}</TableCell>
-          </TableRow>
-        ))}
-      </tbody>
-      </Table> */}
       
       <Pagination
         totalPages={totalPages}

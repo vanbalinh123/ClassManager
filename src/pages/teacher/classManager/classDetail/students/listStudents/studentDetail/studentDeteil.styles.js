@@ -7,7 +7,7 @@ export const Layout = styled.div`
   top: 70px;
   right: 0;
   bottom: 0;
-  left: 349px;
+  left: 345px;
   z-index: 20;
   display: flex;
   justify-content: center;
@@ -38,8 +38,8 @@ export const Blur = styled.div`
 export const Detail = styled.div`
   position: absolute;
   border-radius: 10px;
-  width: 600px;
-  height: 500px;
+  width: 700px;
+  /* height: 500px; */
   z-index: 21;
   background-color: #ffffff;
   border: 1px solid ${generalStyles.border};
@@ -56,7 +56,7 @@ export const Title = styled.span`
   padding-left: 10px;
   font-weight: bold;
   color: ${generalStyles.active};
-  font-size: 15px;
+  font-size: ${generalStyles.sizeTitle};
 `;
 
 export const Content = styled.div`
@@ -71,6 +71,7 @@ export const Left = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 20px;
 `;
 
 export const Div = styled.div`
@@ -113,6 +114,7 @@ export const DivBtn = styled.div`
   align-items: center;
   gap: 10px;
   padding-right: 10px;
+  padding-bottom: 20px;
 `;
 
 export const Btn = styled.button`

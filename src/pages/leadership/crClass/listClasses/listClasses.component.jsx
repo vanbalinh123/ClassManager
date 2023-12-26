@@ -67,10 +67,10 @@ const ListClasses = ({ listClasses }) => {
   return (
     <ListClass>
       <Header>
-        <TitleList>Class Code</TitleList>
-        <TitleList>Class Name</TitleList>
-        <TitleList>Teacher Name</TitleList>
-        <TitleList>Course</TitleList>
+        <TitleList>Mã lớp</TitleList>
+        <TitleList>Tên lớp</TitleList>
+        <TitleList>Tên giáo viên</TitleList>
+        <TitleList>Khoá</TitleList>
       </Header>
       <Section>
         {customListClasses?.map((item, index) => (
@@ -79,7 +79,7 @@ const ListClasses = ({ listClasses }) => {
             <Item>{item.class_name}</Item>
             {(classNoSchedule?.find(
               (item2) => item2.class_code === item.class_code
-            ) && <Item style={{ color: "red" }}>Chua co lich day</Item>) || (
+            ) && <Item style={{ color: "red" }}>Chưa có lịch dạy</Item>) || (
               <Item>{findTeacherName(teacherMap[item.class_code])}</Item>
             )}
             <Item>{item.course}</Item>

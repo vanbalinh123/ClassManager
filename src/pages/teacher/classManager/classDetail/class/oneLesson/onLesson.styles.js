@@ -58,7 +58,7 @@ export const BtnBack = styled.button`
   gap: 5px;
   border-radius: 5px;
   height: 30px;
-  width: 80px;
+  width: 150px;
   border: none;
   font-weight: bold;
   background-color: ${generalStyles.border};

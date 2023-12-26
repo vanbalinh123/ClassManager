@@ -93,6 +93,7 @@ export const Input = styled.input`
   border: 1px solid
     ${(props) => (props.hasError ? "red" : generalStyles.border)};
   box-shadow: 0px 0px 5px ${(props) => (props.hasError ? "red" : "none")};
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   transition: all 0.3s;
 
   &:focus {
@@ -118,6 +119,7 @@ export const Textarea = styled.textarea`
   padding: 15px;
   border-radius: 10px;
   border: none;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   border: 1px solid
     ${(props) => (props.hasError ? "red" : generalStyles.border)};
   box-shadow: 0px 0px 5px ${(props) => (props.hasError ? "red" : "none")};
@@ -157,4 +159,6 @@ export const BtnSend = styled.button`
     cursor: pointer;
     background-color: ${generalStyles.active};
   }
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
+  border: 1px solid ${generalStyles.border};
 `;

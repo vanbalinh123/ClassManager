@@ -59,9 +59,9 @@ const ListAssignment = () => {
   return (
     <Div>
       <Header>
-        <TitleList style={{ flex: 0.5 }}>Index</TitleList>
-        <TitleList>Quiz Title</TitleList>
-        <TitleList style={{ flex: 0.5 }}>Create At</TitleList>
+        <TitleList style={{ flex: 0.5 }}>STT</TitleList>
+        <TitleList>Tiêu đề bài kiểm tra</TitleList>
+        <TitleList style={{ flex: 0.5 }}>Ngày tạo</TitleList>
       </Header>
       <Section>
         {listTestsOfThisClass?.map((item, index) => (
@@ -75,16 +75,16 @@ const ListAssignment = () => {
           </DivItem>
         ))}
       </Section>
-      <DivBtn>
+      {/* <DivBtn>
         <Btn>
           <AiOutlineUserAdd size="15px" />
-          Add Ass
+          Tạo bài 
         </Btn>
-      </DivBtn>
+      </DivBtn> */}
       <DivBtn>
         <DivInput>
           <Input 
-            placeholder="Enter Quiz title..."
+            placeholder="Nhập tiêu đề"
             value={titleQuiz}
             onChange={(e) => setTitleQuiz(e.target.value)}
           />
@@ -93,7 +93,7 @@ const ListAssignment = () => {
           onClick={() => handleAddQuiz()}
         >
           <AiOutlineUserAdd size="15px" />
-          Add
+          Thêm
         </Btn>
       </DivBtn>
       <ToastCtn />

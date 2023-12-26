@@ -4,14 +4,17 @@ import generalStyles from "../../../../generalCss/general.styles";
 
 export const Form = styled.form`
   margin: 0 auto;
-  width: 50%;
-  height: 100%;
+  width: 60%;
+  /* height: 100%; */
   display: flex;
+  padding: 50px 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-  margin-top: 20px;
+  /* gap: 30px; */
+  border: 1px solid ${generalStyles.border};
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
+  border-radius: 5px;
 `;
 
 export const DivInputs = styled.div`
@@ -34,7 +37,7 @@ export const Key = styled.div`
 `;
 
 export const DivInput = styled.div`
-  flex: 5;
+  flex: 4;
   height: 100%;
   position: relative;
 `;
@@ -65,7 +68,8 @@ export const DivBtn = styled.div`
   width: 100%;
   height: 50px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; 
+  margin-top: 20px;
 `;
 
 export const Btn = styled.button`

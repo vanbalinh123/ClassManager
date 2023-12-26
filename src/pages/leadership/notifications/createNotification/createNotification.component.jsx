@@ -107,16 +107,16 @@ const CreateNotification = () => {
       </DivHis> */}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <DivRole>
-          Send to:
+          Gửi đến:
           <Select value={selectedValue} onChange={handleSelectChange}>
-            <Option value="All">All</Option>
-            <Option value="Teacher">Teacher</Option>
-            <Option value="Student">Student</Option>
-            <Option value="Parent">Parents</Option>
+            <Option value="All">Tất cả</Option>
+            <Option value="Teacher">Giáo viên</Option>
+            <Option value="Student">Học sinh</Option>
+            <Option value="Parent">Phụ huynh</Option>
           </Select>
         </DivRole>
         <TitleNoti>
-          <Span>Title</Span>
+          <Span>Tiêu đề</Span>
           <DivInput>
             <Input
               type="text"
@@ -129,7 +129,7 @@ const CreateNotification = () => {
           </DivInput>
         </TitleNoti>
         <ContentNoti>
-          <Span>Content</Span>
+          <Span>Nội dung</Span>
           <DivTextarea>
             <Textarea
               type="text"
@@ -144,7 +144,7 @@ const CreateNotification = () => {
         <DivSend>
           <BtnSend>
             <BsSend size="15px" />
-            Send
+            Gửi
           </BtnSend>
         </DivSend>
       </Form>

@@ -24,38 +24,38 @@ const DetailNotiTC = ({ setCheck, value, setValue, selectedValue }) => {
     <>
       <Layout />
       <Div>
-        <Text>Notification Detail</Text>
+        <Text>Chi tiết thông báo</Text>
         <DivHead>
           {(selectedValue === "sent" && (
             <DivRole>
-              <Key>Sent to class: </Key>
+              <Key>Gửi đến lớp: </Key>
               <span>{value.class_code}</span>
             </DivRole>
           )) || (
             <DivRole>
-              <Key>From to: </Key>
+              <Key>Nhận từ: </Key>
               <span>{value.usercode}</span>
             </DivRole>
           )}
 
           <DivDateTime>
             <div>
-              <Key>Date: </Key>
+              <Key>Ngày: </Key>
               <span>{value.created_at.split(" ")[0]}</span>
             </div>
             <div>
-              <Key>Time: </Key>
+              <Key>Giờ: </Key>
               <span>{value.created_at.split(" ")[1]}</span>
             </div>
           </DivDateTime>
         </DivHead>
         <DivBody>
           <DivTitle>
-            <Key>Title:</Key>
+            <Key>Tiêu đề:</Key>
             <span>{value.title}</span>
           </DivTitle>
           <DivContent>
-            <Key>Content:</Key>
+            <Key>Nội dung:</Key>
             {(selectedValue === "sent" && <span>{value.message}</span>) || (
               <span>{value.content}</span>
             )}

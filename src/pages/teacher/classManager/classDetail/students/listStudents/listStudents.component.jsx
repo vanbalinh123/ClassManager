@@ -133,10 +133,10 @@ const ListStudents = () => {
         listAttendance={listAttendance}
       />
       <Header>
-        <TitleList style={{ flex: 0.5 }}>Index</TitleList>
-        <TitleList>Student Code</TitleList>
-        <TitleList>Student Name</TitleList>
-        <TitleList style={{ flex: 0.5 }}>Absent</TitleList>
+        <TitleList style={{ flex: 0.5 }}>STT</TitleList>
+        <TitleList>Mã học sinh</TitleList>
+        <TitleList>Tên học sinh</TitleList>
+        <TitleList style={{ flex: 0.5 }}>Vắng mặt</TitleList>
         {listTestsOfThisClass?.map((item, index) => {
           if (item.scores.length > 0) {
             return (
@@ -170,14 +170,14 @@ const ListStudents = () => {
       <DivBtn>
         <DivInput>
           <Input
-            placeholder="Enter student code..."
+            placeholder="Nhập mã học sinh..."
             value={studentCode}
             onChange={(e) => setStudentCode(e.target.value)}
           />
         </DivInput>
         <Btn onClick={() => handleAddNewStudent()}>
           <AiOutlineUserAdd size="15px" />
-          Add
+          Thêm
         </Btn>
       </DivBtn>
       <ToastCtn />

@@ -56,8 +56,8 @@ const QuizDetail = () => {
         const newScores = [...prevScores];
         newScores[existingIndex] = {
           student: userCode,
-          score: Number(score),
-          test_and_quiz: Number(idTest),
+          score: score,
+          test_and_quiz: idTest,
         };
         return newScores;
       } else {
@@ -65,8 +65,8 @@ const QuizDetail = () => {
           ...prevScores,
           {
             student: userCode,
-            score: Number(score),
-            test_and_quiz: Number(idTest),
+            score: score,
+            test_and_quiz: idTest,
           },
         ];
       }
@@ -74,8 +74,6 @@ const QuizDetail = () => {
   };
 
   const handleSubmitScores = async () => {
-    console.log(scores.length)
-      console.log(listStudentsCode.length)
     if (scores.length !== listStudentsCode.length)
       return toastError("Not enough students have been enrolled!");
 
@@ -103,42 +101,43 @@ const QuizDetail = () => {
     }
   };
 
-  const handleUpdateScores = async () => {
-    if (scores.length !== listStudentsCode.length)
-      return toastError("Not enough students have been enrolled!");
+const handleUpdateScores = async () => {
+  if (scores.length !== listStudentsCode.length)
+    return toastError("Not enough students have been enrolled!");
 
-    const invalidScores = scores?.find(
-      (item) => Number(item.score) < 0 || Number(item.score) > 10
-    );
+  const invalidScores = scores.find(
+    (item) => isNaN(Number(item.score)) || Number(item.score) < 0 || Number(item.score) > 10
+  );
 
-    if (invalidScores) {
-      toastWarn("Scores must be greater than 0 and less than 10!");
-      return;
-    }
+  if (invalidScores) {
+    toastWarn("Scores must be valid numbers between 0 and 10!");
+    return;
+  }
 
-    const data = {
-      id: detailTest.id,
-      class_info: detailTest.class_info,
-      quiz_name: detailTest.quiz_name,
-      scores: scores,
-    };
-
-    try {
-      const response = await updateTest(data);
-      toastSuccess("Score update successful!!");
-    } catch (err) {
-      toastError("Error");
-    }
+  const data = {
+    id: detailTest.id,
+    class_info: detailTest.class_info,
+    quiz_name: detailTest.quiz_name,
+    scores: scores,
   };
+
+  try {
+    const response = await updateTest(data);
+    toastSuccess("Score update successful!!");
+  } catch (err) {
+    toastError("Error");
+  }
+};
+
 
   return (
     <Div>
       <Span>{detailTest?.quiz_name}</Span>
       <Header>
-        <TitleList style={{ flex: 0.5 }}>Index</TitleList>
-        <TitleList>Student Code</TitleList>
-        <TitleList>Student Name</TitleList>
-        <TitleList style={{ flex: 0.5 }}>Score</TitleList>
+        <TitleList style={{ flex: 0.5 }}>STT</TitleList>
+        <TitleList>Mã học sinh</TitleList>
+        <TitleList>Tên học sinh</TitleList>
+        <TitleList style={{ flex: 0.5 }}>Điểm</TitleList>
       </Header>
       <Section>
         {listStudentsCode?.map((item, index) => {
@@ -150,9 +149,8 @@ const QuizDetail = () => {
               <Item>{findStudent(item).full_name}</Item>
               <Item style={{ flex: 0.5 }}>
                 <Input
-                  min={0}
-                  max={10}
                   type="number"
+                  step="0.1"
                   value={studentScore ? studentScore.score : ""}
                   onChange={(e) => handleScoreChange(item, e.target.value)}
                 />
@@ -165,12 +163,12 @@ const QuizDetail = () => {
         {(detailTest?.scores.length === 0 && (
           <Btn onClick={handleSubmitScores}>
             <CiSaveUp2 size="15px" />
-            Save
+            Lưu
           </Btn>
         )) || (
           <Btn onClick={handleUpdateScores}>
             <CiSaveUp2 size="15px" />
-            Update
+            Cập nhật
           </Btn>
         )}
       </DivBtn>

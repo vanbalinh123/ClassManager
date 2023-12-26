@@ -35,7 +35,7 @@ const FilterNotificationsOfStudent = ({
       <ItemSearch>
         <Input
           type="text"
-          placeholder="Title, Cotent, Date......"
+          placeholder="Tiêu đề, nội dung, ngày nhận......"
           value={checkValueSearch}
           onChange={(e) => setCheckValueSearch(e.target.value)}
         />
@@ -45,10 +45,10 @@ const FilterNotificationsOfStudent = ({
         <Option value="admin">Admin</Option>
       </SelectSearch> */}
       <DivBtnFilter>
-        <BtnFilter onClick={() => handleSearch()}>Filter</BtnFilter>
+        <BtnFilter onClick={() => handleSearch()}>Tìm kiếm</BtnFilter>
       </DivBtnFilter>
       <DivBtnFilter>
-        <BtnFilter onClick={() => handleClear()}>Clear</BtnFilter>
+        <BtnFilter onClick={() => handleClear()}>Xoá</BtnFilter>
       </DivBtnFilter>
     </Filter>
   );

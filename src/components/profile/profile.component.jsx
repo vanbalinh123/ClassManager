@@ -34,7 +34,7 @@ const Profile = () => {
 
   return (
     <Page>
-      <Title>Your Profile</Title>
+      <Title>Hồ sơ</Title>
       <InforUser 
         setChangePass={setChangePass}
         currentUser={currentUser}

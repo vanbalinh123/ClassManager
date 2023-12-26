@@ -10,7 +10,14 @@ import {
   Section,
   DivItem,
   Item,
+  Table
 } from "../../../../../generalCss/shared.styles";
+
+import { 
+  TableStyled,
+  ThStyled,
+  TdStyled
+} from '../../../../../generalCss/table.styles.js'
 
 const ListNotifications = ({ listNotificationsAdmin }) => {
   const [check, setCheck] = useState(false);
@@ -72,11 +79,11 @@ const ListNotifications = ({ listNotificationsAdmin }) => {
         />
       }
       <Header>
-        <TitleList style={{ flex: "0.5" }}>Title</TitleList>
-        <TitleList >Content</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Date</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Time</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Recipient role</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Tiêu đề</TitleList>
+        <TitleList >Nội dung</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Ngày</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Thời gian</TitleList>
+        <TitleList style={{ flex: "0.5" }}>Người nhận</TitleList>
       </Header>
       <Section>
         {customListNoti?.map((item, index) => {

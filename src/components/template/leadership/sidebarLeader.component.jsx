@@ -17,31 +17,37 @@ const SidebarLeader = () => {
       <FlexNavLink to="/leader/dashboard">
         <Item>
           <AiOutlineDashboard size="20px" />
-          <ItemName>Tổng quan</ItemName>
+          <ItemName>Tổng quát</ItemName>
         </Item>
       </FlexNavLink>
       <FlexNavLink to="/leader/createAccount">
         <Item>
           <BsPersonAdd size="20px" />
-          <ItemName>Create Account</ItemName>
+          <ItemName>Tạo tài khoản</ItemName>
         </Item>
       </FlexNavLink>
       <FlexNavLink to="/leader/createSchedule/new">
         <Item>
           <BsCalendar3 size="20px" />
-          <ItemName>Teaching Schedule</ItemName>
+          <ItemName>Tạo lịch dạy</ItemName>
         </Item>
       </FlexNavLink>
       <FlexNavLink to="/leader/createClasses">
         <Item>
           <BsCalendarPlus size="20px" />
-          <ItemName>Classes Management</ItemName>
+          <ItemName>Lớp học</ItemName>
+        </Item>
+      </FlexNavLink>
+      <FlexNavLink to="/leader/tuition">
+        <Item>
+          <BsCalendarPlus size="20px" />
+          <ItemName>Học phí</ItemName>
         </Item>
       </FlexNavLink>
       <FlexNavLink to="/leader/listUsers">
         <Item>
           <PiUsersThree size="20px" />
-          <ItemName>Users Management</ItemName>
+          <ItemName>Quản lý người dùng</ItemName>
         </Item>
       </FlexNavLink>
       <Div
@@ -50,7 +56,7 @@ const SidebarLeader = () => {
       >
         <Item>
           <LuBellPlus size="20px" />
-          <ItemName>Notifications</ItemName>
+          <ItemName>Thông báo</ItemName>
         </Item>
       </Div>
       {checkNoti === true && (
@@ -61,7 +67,7 @@ const SidebarLeader = () => {
           >
             <ItemPopup>
               <LuBellPlus size="20px" />
-              <ItemName>History</ItemName>
+              <ItemName>Lịch sử</ItemName>
             </ItemPopup>
           </NavlinkChild>
           <NavlinkChild
@@ -70,7 +76,7 @@ const SidebarLeader = () => {
           >
             <ItemPopup>
               <LuBellPlus size="20px" />
-              <ItemName>Compose</ItemName>
+              <ItemName>Gửi</ItemName>
             </ItemPopup>
           </NavlinkChild>
         </DivPopup>

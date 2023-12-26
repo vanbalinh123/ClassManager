@@ -36,10 +36,10 @@ const ListClass = () => {
 
   return (
     <Page>
-      <Title>List classes</Title>
+      <Title>Danh sách lớp học</Title>
       <SearchContainer 
         setValueSearch={setValueSearch}
-        placeholder='Class Code, Class Name, Course...'
+        placeholder='Mã lớp, tên lớp, khoá...'
         type='text'
       />
       <ListClassOfTeacher 

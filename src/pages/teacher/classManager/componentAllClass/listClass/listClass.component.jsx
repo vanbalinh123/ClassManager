@@ -41,9 +41,9 @@ const ListClassOfTeacher = ({ listClass }) => {
   return (
     <ListClass>
       <Header>
-        <TitleList>Class Code</TitleList>
-        <TitleList>Class Name</TitleList>
-        <TitleList>Course</TitleList>
+        <TitleList>Mã lớp</TitleList>
+        <TitleList>Tên lớp</TitleList>
+        <TitleList>Khoá học</TitleList>
       </Header>
       {(customListClasses?.length > 0 && (
         <Section>
@@ -58,7 +58,7 @@ const ListClassOfTeacher = ({ listClass }) => {
         </Section>
       )) || (
         <div style={{ textAlign: "center", paddingTop: "20px" }}>
-          No corresponding class found!!!
+          Không tìm thấy dữ liệu thích hợp!!
         </div>
       )}
       <Pagination
