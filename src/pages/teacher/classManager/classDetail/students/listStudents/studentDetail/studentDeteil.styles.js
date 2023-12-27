@@ -105,8 +105,8 @@ export const Img = styled.img`
 `;
 
 export const DivBtn = styled.div`
-  position: absolute;
-  bottom: 0;
+  /* position: absolute;
+  bottom: 0; */
   width: 100%;
   height: 70px;
   display: flex;

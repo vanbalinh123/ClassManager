@@ -5,15 +5,18 @@ import { useInforClassQuery } from "../../../../../../../redux/api/teacher/class
 import { useListStudentsQuery } from "../../../../../../../redux/api/leader/list-users-api.slice";
 import { useListLessonContentsQuery } from "../../../../../../../redux/api/teacher/lesson-content-api.slice";
 import { useUpdateLessonContentMutation } from "../../../../../../../redux/api/teacher/lesson-content-api.slice";
-import { ToastCtn, toastSuccess, toastError } from "../../../../../../../components/toast/toast";
+import {
+  ToastCtn,
+  toastSuccess,
+  toastError,
+} from "../../../../../../../components/toast/toast";
 
 import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-} from "../../../../../../../generalCss/shared.styles";
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../../../generalCss/table.styles";
 
 import { PageAttendance, Span, Input, DivBtn, Btn } from "./attendance.styles";
 
@@ -24,7 +27,7 @@ const Attendance = () => {
   const { data: infoClass } = useInforClassQuery(classCode);
   const { data: listStudent } = useListStudentsQuery();
   const { data: listLessonContent } = useListLessonContentsQuery();
-  const [ updateLessonContent ] = useUpdateLessonContentMutation();
+  const [updateLessonContent] = useUpdateLessonContentMutation();
 
   const lessonToday = listLessonContent?.find(
     (item) => item.class_session === Number(idSession)
@@ -75,7 +78,7 @@ const Attendance = () => {
 
   const handleSubmitAttendance = async () => {
     if (attendanceValues.length !== infoClass?.students.length) {
-      return toastError('Not enough students have been enrolled!')
+      return toastError("Not enough students have been enrolled!");
     }
 
     const data = {
@@ -88,9 +91,9 @@ const Attendance = () => {
 
     try {
       const response = await updateLessonContent(data);
-      toastSuccess('Attendance successful!!')
+      toastSuccess("Attendance successful!!");
     } catch (err) {
-      toastError('Attendance failed!!')
+      toastError("Attendance failed!!");
     }
   };
 
@@ -105,69 +108,77 @@ const Attendance = () => {
 
     try {
       const response = await updateLessonContent(data);
-      toastSuccess('Attendance updated successful!!')
+      toastSuccess("Attendance updated successful!!");
     } catch (err) {
-      toastError('Attendance updated failed!!')
+      toastError("Attendance updated failed!!");
     }
-  }
+  };
 
   return (
     <PageAttendance>
-      <Header>
-        <TitleList style={{ flex: "0.5" }}>STT</TitleList>
-        <TitleList>Mã học sinh</TitleList>
-        <TitleList>Tên học sinh</TitleList>
-        <TitleList style={{ display: "flex", justifyContent: "center" }}>
-          <Span>Hiện diện</Span>
-          <Span>Vắng mặt</Span>
-        </TitleList>
-      </Header>
-      <Section>
-        {infoClass?.students.map((usercode, index) => (
-          <DivItem key={index}>
-            <Item style={{ flex: "0.5" }}>{index + 1}</Item>
-            <Item>{usercode}</Item>
-            <Item>{findStudent(usercode).full_name}</Item>
-            <Item style={{ display: "flex", justifyContent: "center" }}>
-              <Input
-                type="radio"
-                name={`attendance_${usercode}`}
-                style={{ flex: "1" }}
-                value="present"
-                checked={attendanceValues.some(
-                  (item) =>
-                    item.student === usercode && item.is_present === "present"
-                )}
-                onChange={() => handleAttendanceChange(usercode, "present")}
-              />
-              <Input
-                type="radio"
-                name={`attendance_${usercode}`}
-                style={{ flex: "1" }}
-                value="absent"
-                checked={attendanceValues.some(
-                  (item) =>
-                    item.student === usercode && item.is_present === "absent"
-                )}
-                onChange={() => handleAttendanceChange(usercode, "absent")}
-              />
-            </Item>
-          </DivItem>
-        ))}
-        <DivBtn>
-          {(lessonToday?.Attendance_set.length === 0 && (
-            <Btn onClick={handleSubmitAttendance}>
-              <RiSaveLine size="15px" />
-              Lưu
-            </Btn>
-          )) || (
-            <Btn onClick={handleUpdateAttendance}>
-              <RiSaveLine size="15px" />
-              Cập nhật
-            </Btn>
-          )}
-        </DivBtn>
-      </Section>
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <Th>STT</Th>
+              <Th>Mã học sinh</Th>
+              <Th>Tên học sinh</Th>
+              <Th>Hiện diện</Th>
+              <Th>Vắng Mặt</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {infoClass?.students.map((usercode, index) => (
+              <tr key={index}>
+                <Td>{index + 1}</Td>
+                <Td>{usercode}</Td>
+                <Td>{findStudent(usercode).full_name}</Td>
+                <Td>
+                  <Input
+                    type="radio"
+                    name={`attendance_${usercode}`}
+                    style={{ flex: "1" }}
+                    value="present"
+                    checked={attendanceValues.some(
+                      (item) =>
+                        item.student === usercode &&
+                        item.is_present === "present"
+                    )}
+                    onChange={() => handleAttendanceChange(usercode, "present")}
+                  />
+                </Td>
+                <Td>
+                  <Input
+                    type="radio"
+                    name={`attendance_${usercode}`}
+                    style={{ flex: "1" }}
+                    value="absent"
+                    checked={attendanceValues.some(
+                      (item) =>
+                        item.student === usercode &&
+                        item.is_present === "absent"
+                    )}
+                    onChange={() => handleAttendanceChange(usercode, "absent")}
+                  />
+                </Td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
+      <DivBtn>
+        {(lessonToday?.Attendance_set.length === 0 && (
+          <Btn onClick={handleSubmitAttendance}>
+            <RiSaveLine size="15px" />
+            Lưu
+          </Btn>
+        )) || (
+          <Btn onClick={handleUpdateAttendance}>
+            <RiSaveLine size="15px" />
+            Cập nhật
+          </Btn>
+        )}
+      </DivBtn>
       <ToastCtn />
     </PageAttendance>
   );

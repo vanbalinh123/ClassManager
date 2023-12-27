@@ -11,6 +11,7 @@ import { Content } from "./classes.styles";
 
 const CreateClasses = () => {
   const [valueSearch, setValueSearch] = useState("");
+  const [check, setCheck] = useState(false)
 
   const { data: listClasses } = useListClassQuery({
     search: `${valueSearch}`,
@@ -25,10 +26,13 @@ const CreateClasses = () => {
         type='text'
       />
       <Content>
+        <div onClick={() => setCheck(!check)}>tạo lớp</div>
+        {check === true
+          && <AddNewClass />
+        }
         <ListClasses 
           listClasses={listClasses}
         />
-        <AddNewClass />
       </Content>
     </Page>
   );

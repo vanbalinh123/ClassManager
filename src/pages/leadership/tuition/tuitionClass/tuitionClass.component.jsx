@@ -20,6 +20,12 @@ import {
   Item,
 } from "../../../../generalCss/shared.styles";
 import { ListST, Span, Input, DivBtn, Btn } from "./tuitionClass.styles";
+import {
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../generalCss/table.styles";
 
 // ... (các import khác)
 
@@ -40,19 +46,21 @@ const TuitionClass = () => {
   };
 
   // State để lưu trữ thông tin thanh toán của mỗi học sinh
-  
+
   const [paymentData, setPaymentData] = useState([]);
 
   useEffect(() => {
     if (infoClass) {
       const initialPaymentData = infoClass.students.map((student) => {
-        const paymentInfo = infoClass.payment.find((payment) => payment.student === student);
+        const paymentInfo = infoClass.payment.find(
+          (payment) => payment.student === student
+        );
         return {
           student,
           payment: paymentInfo ? paymentInfo.Payment : false,
         };
       });
-      console.log(initialPaymentData)
+      console.log(initialPaymentData);
       setPaymentData(initialPaymentData);
     } else {
       setPaymentData([]);
@@ -64,23 +72,24 @@ const TuitionClass = () => {
     setPaymentData((prevPaymentData) => {
       const updatedPaymentData = [...prevPaymentData];
       const student = infoClass?.students?.[index];
-      console.log(student)
+      console.log(student);
       if (student) {
         // Find the payment information, default to an object with Payment: false
-        const existingPayment = infoClass?.payment?.find((item) => item.student === student);
-  
+        const existingPayment = infoClass?.payment?.find(
+          (item) => item.student === student
+        );
+
         // If existingPayment is undefined, default to an object with Payment: false
         const defaultPayment = { Payment: false };
-  
+
         // Update the payment status
-        updatedPaymentData[index].payment = !existingPayment?.Payment ?? defaultPayment.Payment;
+        updatedPaymentData[index].payment =
+          !existingPayment?.Payment ?? defaultPayment.Payment;
       }
-  
+
       return updatedPaymentData;
     });
   };
-  
-  
 
   // Hàm xử lý khi nhấn nút "Lưu"
   const handleSaveClick = async () => {
@@ -94,13 +103,13 @@ const TuitionClass = () => {
           date: new Date().toISOString().split("T")[0], // Lấy ngày hiện tại
           student: item.student,
         }));
-      
+
       const data = {
         Teachers: infoClass.Teachers,
         class_info: infoClass.class_info,
         students: infoClass.students,
         payment: paidStudents,
-      }
+      };
 
       await updateInforClass(data);
 
@@ -115,40 +124,48 @@ const TuitionClass = () => {
     <Page>
       <Title>Học phí lớp {classCode}</Title>
       <ListST>
-        <Header>
-          <TitleList style={{ flex: "0.5" }}>STT</TitleList>
-          <TitleList>Mã học sinh</TitleList>
-          <TitleList>Tên học sinh</TitleList>
-          <TitleList>Học phí</TitleList>
-          <TitleList>Đã thanh toán</TitleList>
-        </Header>
-        <Section>
-          {infoClass?.students.map((student, index) => {
-            const paymentItem = paymentData?.find((item) => item.student === student) || { payment: false };
-            return (
-              <DivItem key={index}>
-                <Item style={{ flex: "0.5" }}>{index + 1}</Item>
-                <Item>{student}</Item>
-                <Item>{findStudent(student)?.full_name}</Item>
-                <Item>{findCost()}</Item>
-                <Item>
-                  <Input
-                    type="checkbox"
-                    style={{ flex: "1" }}
-                    checked={paymentItem?.payment}
-                    onChange={() => handlePaymentChange(index)}
-                  />
-                </Item>
-              </DivItem>
-            );
-          })}
-          <DivBtn>
-            <Btn onClick={handleSaveClick}>
-              <RiSaveLine size="15px" />
-              Lưu
-            </Btn>
-          </DivBtn>
-        </Section>
+        <TableWrapper>
+          <Table>
+            <thead>
+              <tr>
+                <Th>STT</Th>
+                <Th>Mã học sinh</Th>
+                <Th>Tên học sinh</Th>
+                <Th>Học phí</Th>
+                <Th>Đã thanh toán</Th>
+              </tr>
+            </thead>
+            <tbody>
+              {infoClass?.students.map((student, index) => {
+                const paymentItem = paymentData?.find(
+                  (item) => item.student === student
+                ) || { payment: false };
+                return (
+                  <tr key={index}>
+                    <Td style={{ flex: "0.5" }}>{index + 1}</Td>
+                    <Td>{student}</Td>
+                    <Td>{findStudent(student)?.full_name}</Td>
+                    <Td>{findCost()}</Td>
+                    <Td>
+                      <Input
+                        type="checkbox"
+                        style={{ flex: "1" }}
+                        checked={paymentItem?.payment}
+                        onChange={() => handlePaymentChange(index)}
+                      />
+                    </Td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </TableWrapper>
+        <DivBtn>
+          <Btn onClick={handleSaveClick}>
+            <RiSaveLine size="15px" />
+            Lưu
+          </Btn>
+        </DivBtn>
       </ListST>
       <ToastCtn />
     </Page>

@@ -2,15 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useListSchedulesQuery } from "../../../../../../redux/api/leader/schedule-api.slice";
-import { useListLessonContentsQuery } from "../../../../../../redux/api/teacher/lesson-content-api.slice"
+import { useListLessonContentsQuery } from "../../../../../../redux/api/teacher/lesson-content-api.slice";
 import Pagination from "../../../../../../components/paginate/paginate";
+
 import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-} from "../../../../../../generalCss/shared.styles";
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../../generalCss/table.styles";
 
 const ListLesson = () => {
   const navigate = useNavigate();
@@ -18,35 +18,36 @@ const ListLesson = () => {
   console.log(classCode);
   const { data: listScheduleApi } = useListSchedulesQuery();
   const { data: listLessonContentApi } = useListLessonContentsQuery();
-  
-  const listLessonContent = listLessonContentApi?.filter((item) => item.class_info === classCode);
-  
+
+  const listLessonContent = listLessonContentApi?.filter(
+    (item) => item.class_info === classCode
+  );
+
   const findLessContent = (id) => {
-    console.log(id)
+    console.log(id);
     let ls = listLessonContent?.find((item) => item.class_session === id);
-    if(ls) {
+    if (ls) {
       return ls.content;
     } else {
-      return 'Chưa có nội dung bài học!!'
+      return "Chưa có nội dung bài học!!";
     }
-  }
+  };
 
-  console.log(listLessonContent)
+  console.log(listLessonContent);
 
   const listSchedule = listScheduleApi?.find(
     (item) => item.class_code === classCode
   );
-  
 
   const handleItemClick = (item) => {
-    console.log(item)
+    console.log(item);
     navigate(`lesson/attendance/${item.id}`);
   };
 
   //paginate
   const itemsPerPage = 10;
   const totalItems = listSchedule?.class_sessions_set.length;
-  console.log(totalItems)
+  console.log(totalItems);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -59,35 +60,30 @@ const ListLesson = () => {
     (currentPage + 1) * itemsPerPage
   );
 
-
   //paginate
 
   return (
     <>
-      <Header>
-        <TitleList>STT</TitleList>
-        <TitleList>Nội dung bài học</TitleList>
-        <TitleList>Ngày</TitleList>
-      </Header>
-      <Section>
-        {customList?.map((item, index) => (
-          <DivItem key={index} onClick={() => handleItemClick(item)}>
-            <Item>{item.id}</Item>
-            <Item>
-              {/* Bố mẹ bận rộn công việc, anh trai là người luôn dạy cho tôi nhiều
-              điều bổ ích. Không chỉ giảng bài cho tôi, anh còn dạy tôi học võ
-              nữa. Anh bảo con gái phải biết tự bảo vệ bản thân mình. Biết bao
-              nhiêu là kỉ niệm đẹp đẽ như vừa mới xảy ra thôi. Những năm anh học
-              đại học, phải xa nhà thường xuyên, tôi thấy nhớ anh. Nhớ những lúc
-              anh nấu cơm dỗ tôi ăn khi tôi bị ốm còn bố mẹ bận công chuyện,
-              những lần anh dạy tôi học bài… Nhờ có anh mà tuổi thơ của tôi luôn
-              cảm thấy hạnh phúc. */}
-              {findLessContent(item.id)}
-            </Item>
-            <Item>{item.day}</Item>
-          </DivItem>
-        ))}
-      </Section>
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <Th>STT</Th>
+              <Th>Nội dung bài học</Th>
+              <Th>Ngày</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {customList?.map((item, index) => (
+              <tr key={index} onClick={() => handleItemClick(item)}>
+                <Td>{item.id}</Td>
+                <Td>{findLessContent(item.id)}</Td>
+                <Td>{item.day}</Td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
       <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
     </>
   );

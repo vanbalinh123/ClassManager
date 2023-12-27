@@ -58,11 +58,11 @@ const ChartAbsent = () => {
   
     const chartData = [
       {
-        x: ["Absent", "Present"],
-        y: [attendanceData?.absentCount, attendanceData?.presentCount],
-        // labels: ["Absent", "Present"],
-        // values: [attendanceData?.absentCount, attendanceData?.presentCount],
-        type: "bar",
+        // x: ["Absent", "Present"],
+        // y: [attendanceData?.absentCount, attendanceData?.presentCount],
+        labels: ["Absent", "Present"],
+        values: [attendanceData?.absentCount, attendanceData?.presentCount],
+        type: "pie",
         marker: { color: ["#d85858", "#83D9EC"] },
       },
     ];

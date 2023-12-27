@@ -4,18 +4,25 @@ import { List } from "./listNotificationsOfParents.styles";
 import Pagination from "../../../../../components/paginate/paginate";
 import DetailNotiST from "../../../../student/NotificationsOfStudent/HistoryNotificationsOfStudent/listNotificationsOfStudent/detailNotiST/detailNotiSt.component";
 
-import { 
-    Header,
-    TitleList,
-    Section,
-    DivItem,
-    Item,
+import {
+  Header,
+  TitleList,
+  Section,
+  DivItem,
+  Item,
 } from "../../../../../generalCss/shared.styles";
+
+import {
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../generalCss/table.styles";
 
 const ListNotificationsOfParents = ({
   listTeacherNotifications,
   listAdminNotifications,
-  roleNoti
+  roleNoti,
 }) => {
   const [check, setCheck] = useState(false);
   const [value, setValue] = useState({});
@@ -27,7 +34,7 @@ const ListNotificationsOfParents = ({
     listNoti = listAdminNotifications;
   }
 
-  console.log(listNoti)
+  console.log(listNoti);
 
   //paginate
   const itemsPerPage = 10;
@@ -46,54 +53,53 @@ const ListNotificationsOfParents = ({
   //paginate
 
   const handleItemClick = (item) => {
-    setCheck(true)
-    setValue(item)
+    setCheck(true);
+    setValue(item);
   };
-  
-    return (
-      <List>
-        {check === true 
-          && 
-          <DetailNotiST 
-            setCheck={setCheck}
-            value={value}
-            setValue={setValue}
-          />
-        }
-        <Header>
-          <TitleList style={{ flex: "0.5" }}>Title</TitleList>
-          <TitleList>Content</TitleList>
-          <TitleList style={{ flex: "0.5" }}>Date</TitleList>
-          <TitleList style={{ flex: "0.5" }}>Time</TitleList>
-          {(roleNoti === "teacher" && (
-            <TitleList style={{ flex: "0.5" }}>Class</TitleList>
-          )) || <TitleList style={{ flex: "0.5" }}>From</TitleList>}
-        </Header>
-        <Section>
-          {customList?.map((item, index) => (
-            <DivItem 
-              key={index} 
-              onClick={() => handleItemClick(item)}
-            >
-              <Item style={{ flex: "0.5" }}>{item.title}</Item>
-              {(roleNoti === "teacher" && <Item>{item.message}</Item>) || (
-                <Item>{item.content}</Item>
+
+  return (
+    <List>
+      {check === true && (
+        <DetailNotiST setCheck={setCheck} value={value} setValue={setValue} />
+      )}
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Tiêu đề</Th>
+              <Th>Nội dung</Th>
+              <Th>Ngày</Th>
+              <Th>Giờ</Th>
+              {(roleNoti === "teacher" && <Th>Lớp học</Th>) || (
+                <Th>Từ</Th>
               )}
-  
-              <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[0]}</Item>
-              <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[1]}</Item>
-              {(roleNoti === "teacher" && (
-                <Item style={{ flex: "0.5" }}>{item.class_code[0]}</Item>
-              )) || <Item style={{ flex: "0.5" }}>{item.usercode}sai</Item>}
-            </DivItem>
-          ))}
-        </Section>
-        <Pagination
-          totalPages={totalPages}
-          handlePageClick={handlePageClick}
-        />
-      </List>
-    );
-  };
-  
-  export default ListNotificationsOfParents;
+            </tr>
+          </thead>
+          <tbody>
+            {customList?.map((item, index) => (
+              <tr key={index} onClick={() => handleItemClick(item)}>
+                <Td>{item.title}</Td>
+                {(roleNoti === "teacher" && <Td>{item.message}</Td>) || (
+                  <Td>{item.content}</Td>
+                )}
+
+                <Td>
+                  {item.created_at.split(" ")[0]}
+                </Td>
+                <Td>
+                  {item.created_at.split(" ")[1]}
+                </Td>
+                {(roleNoti === "teacher" && (
+                  <Td>{item.class_code[0]}</Td>
+                )) || <Td>{item.usercode}sai</Td>}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
+      <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
+    </List>
+  );
+};
+
+export default ListNotificationsOfParents;

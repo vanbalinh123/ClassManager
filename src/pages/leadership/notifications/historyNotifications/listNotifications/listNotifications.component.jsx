@@ -4,28 +4,21 @@ import DetailNoti from "./detailNoti/detailNoti.component";
 
 import { List } from "./listNotifications.styles";
 import Pagination from "../../../../../components/paginate/paginate";
-import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-  Table
-} from "../../../../../generalCss/shared.styles";
 
-import { 
-  TableStyled,
-  ThStyled,
-  TdStyled
-} from '../../../../../generalCss/table.styles.js'
+import {
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../generalCss/table.styles.js";
 
 const ListNotifications = ({ listNotificationsAdmin }) => {
   const [check, setCheck] = useState(false);
-  const [value, setValue] = useState({})
+  const [value, setValue] = useState({});
 
   const handleItemClick = (item) => {
-    setCheck(true)
-    setValue(item)
+    setCheck(true);
+    setValue(item);
   };
 
   const calDate = (value) => {
@@ -68,39 +61,45 @@ const ListNotifications = ({ listNotificationsAdmin }) => {
 
   return (
     <List>
-      {check === true 
-        && 
-        <DetailNoti 
+      {check === true && (
+        <DetailNoti
           setCheck={setCheck}
           value={value}
           calDate={calDate}
           calTime={calTime}
           setValue={setValue}
         />
-      }
-      <Header>
-        <TitleList style={{ flex: "0.5" }}>Tiêu đề</TitleList>
-        <TitleList >Nội dung</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Ngày</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Thời gian</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Người nhận</TitleList>
-      </Header>
-      <Section>
-        {customListNoti?.map((item, index) => {
-          return (
-            <DivItem 
-              onClick={() => handleItemClick(item)} 
-              key={index}
-            >
-              <Item style={{ flex: "0.5" }}>{item.title}</Item>
-              <Item>{item.content}</Item>
-              <Item style={{ flex: "0.5" }}>{calDate(item.created_at)}</Item>
-              <Item style={{ flex: "0.5" }}>{calTime(item.created_at)}</Item>
-              <Item style={{ flex: "0.5" }}>{item.role}</Item>
-            </DivItem>
-          );
-        })}
-      </Section>
+      )}
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Ngày</Th>
+              <Th>Thời gian</Th>
+              <Th>Tiêu đề</Th>
+              <Th>Nội dung</Th>
+              <Th>Người nhận</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {customListNoti?.map((item, index) => {
+              return (
+                <tr onClick={() => handleItemClick(item)} key={index}>
+                  <Td>
+                    {calDate(item.created_at)}
+                  </Td>
+                  <Td>
+                    {calTime(item.created_at)}
+                  </Td>
+                  <Td>{item.title}</Td>
+                  <Td>{item.content}</Td>
+                  <Td>{item.role}</Td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </TableWrapper>
       <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
     </List>
   );

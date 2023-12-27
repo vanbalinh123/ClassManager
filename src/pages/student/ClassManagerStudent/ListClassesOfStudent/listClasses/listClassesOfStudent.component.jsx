@@ -5,13 +5,13 @@ import { useListInforClassQuery } from "../../../../../redux/api/teacher/class-i
 import { useListSchedulesQuery } from "../../../../../redux/api/leader/schedule-api.slice.js";
 import { useListTeachersQuery } from "../../../../../redux/api/leader/list-users-api.slice.js";
 import Pagination from "../../../../../components/paginate/paginate.js";
+
 import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-} from "../../../../../generalCss/shared.styles";
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../generalCss/table.styles.js";
 
 const ListClassOfStudent = ({ listClasses }) => {
   const navigate = useNavigate();
@@ -65,22 +65,31 @@ const ListClassOfStudent = ({ listClasses }) => {
 
   return (
     <ListClass>
-      <Header>
-        <TitleList>Mã lớp</TitleList>
-        <TitleList>Tên lớp</TitleList>
-        <TitleList>Giáo viên</TitleList>
-        <TitleList>Khoá</TitleList>
-      </Header>
-      <Section>
-        {customListClasses?.map((item, index) => (
-          <DivItem onClick={() => handleItemClick(item.class_code)} key={index}>
-            <Item>{item.class_code}</Item>
-            <Item>{item.class_name}</Item>
-            <Item>{findTeacherName(teacherMap[item.class_code])}</Item>
-            <Item>{item.course}</Item>
-          </DivItem>
-        ))}
-      </Section>
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Mã lớp</Th>
+              <Th>Tên lớp</Th>
+              <Th>Giáo viên</Th>
+              <Th>Khoá</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {customListClasses?.map((item, index) => (
+              <tr
+                onClick={() => handleItemClick(item.class_code)}
+                key={index}
+              >
+                <Td>{item.class_code}</Td>
+                <Td>{item.class_name}</Td>
+                <Td>{findTeacherName(teacherMap[item.class_code])}</Td>
+                <Td>{item.course}</Td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
       <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
     </ListClass>
   );

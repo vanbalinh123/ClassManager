@@ -9,13 +9,13 @@ import { useListStudentsQuery } from "../../../../../redux/api/leader/list-users
 import Pagination from "../../../../../components/paginate/paginate.js";
 
 import { ListClass } from "./listClassesOfChild.styles";
+
 import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-} from "../../../../../generalCss/shared.styles";
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../generalCss/table.styles.js";
 
 const ListClassOfChild = ({ listClasses }) => {
   const navigate = useNavigate();
@@ -32,7 +32,9 @@ const ListClassOfChild = ({ listClasses }) => {
 
   const arrayClassOfStudent =
     listClassInfo
-      ?.filter((item) => userCodes?.some((code) => item.students.includes(code)))
+      ?.filter((item) =>
+        userCodes?.some((code) => item.students.includes(code))
+      )
       .map((item) => item.class_info) || [];
 
   const listClassOfStudent = listClasses?.filter((item) =>
@@ -54,19 +56,24 @@ const ListClassOfChild = ({ listClasses }) => {
   };
 
   const findStudentInClass = (classCode) => {
-    const listStdInCls = listClassInfo?.find(item => item.class_info === classCode)?.students;
-    const student =  listStdInCls?.find(item => userCodes?.includes(item));
-    const studentName = listStudents?.find(item => item.usercode === student)?.full_name
-    
+    const listStdInCls = listClassInfo?.find(
+      (item) => item.class_info === classCode
+    )?.students;
+    const student = listStdInCls?.find((item) => userCodes?.includes(item));
+    const studentName = listStudents?.find(
+      (item) => item.usercode === student
+    )?.full_name;
+
     return studentName;
-  }
+  };
 
   const findStudentCodeInClass = (classCode) => {
-    const listStdInCls = listClassInfo?.find(item => item.class_info === classCode)?.students;
-    const student =  listStdInCls?.find(item => userCodes?.includes(item));
-    return student
-  }
-
+    const listStdInCls = listClassInfo?.find(
+      (item) => item.class_info === classCode
+    )?.students;
+    const student = listStdInCls?.find((item) => userCodes?.includes(item));
+    return student;
+  };
 
   const handleItemClick = (classCode) => {
     const studentCode = findStudentCodeInClass(classCode);
@@ -91,24 +98,30 @@ const ListClassOfChild = ({ listClasses }) => {
 
   return (
     <ListClass>
-      <Header>
-        <TitleList>Class Code</TitleList>
-        <TitleList>Class Name</TitleList>
-        <TitleList>Teacher Name</TitleList>
-        {/* <TitleList>Course</TitleList> */}
-        <TitleList>Student</TitleList>
-      </Header>
-      <Section>
-        {customListClasses?.map((item, index) => (
-          <DivItem onClick={() => handleItemClick(item.class_code)} key={index}>
-            <Item>{item.class_code}</Item>
-            <Item>{item.class_name}</Item>
-            <Item>{findTeacherName(teacherMap[item.class_code])}</Item>
-            {/* <Item>{item.course}</Item> */}
-            <Item>{findStudentInClass(item.class_code)}</Item>
-          </DivItem>
-        ))}
-      </Section>
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Class Code</Th>
+              <Th>Class Name</Th>
+              <Th>Teacher Name</Th>
+              <Th>Course</Th>
+              <Th>Student</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {customListClasses?.map((item, index) => (
+              <tr onClick={() => handleItemClick(item.class_code)} key={index}>
+                <Td>{item.class_code}</Td>
+                <Td>{item.class_name}</Td>
+                <Td>{findTeacherName(teacherMap[item.class_code])}</Td>
+                <Td>{item.course}</Td>
+                <Td>{findStudentInClass(item.class_code)}</Td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
       <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
     </ListClass>
   );

@@ -7,6 +7,9 @@ export const ListST = styled.div`
   flex-direction: column;
   gap: 10px;
   position: relative;
+  padding-top: 20px;
+  width: 90%;
+  margin: 0 auto;
 `;
 
 export const Span = styled.span`

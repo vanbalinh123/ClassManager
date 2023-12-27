@@ -1,31 +1,40 @@
 import { useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import { useListStudentsQuery } from "../../../../../../redux/api/leader/list-users-api.slice";
-import { useInforClassQuery } from "../../../../../../redux/api/teacher/class-information-api";
-import { useUpdateInfoClassMutation } from "../../../../../../redux/api/teacher/class-information-api";
-import { useListLessonContentsQuery } from "../../../../../../redux/api/teacher/lesson-content-api.slice";
-import { useListAttendanceQuery } from "../../../../../../redux/api/teacher/attendance-api.slice";
+import { useListStudentsQuery } from "../../../../../redux/api/leader/list-users-api.slice";
+import { useInforClassQuery } from "../../../../../redux/api/teacher/class-information-api";
+import { useUpdateInfoClassMutation } from "../../../../../redux/api/teacher/class-information-api";
+import { useListLessonContentsQuery } from "../../../../../redux/api/teacher/lesson-content-api.slice";
+import { useListAttendanceQuery } from "../../../../../redux/api/teacher/attendance-api.slice";
+import { useListTestsQuery } from "../../../../../redux/api/teacher/test-api";
+
 import {
-  toastSuccess,
   ToastCtn,
   toastError,
   toastWarn,
-} from "../../../../../../components/toast/toast";
-import { useListTestsQuery } from "../../../../../../redux/api/teacher/test-api";
-
-import StudentDetail from "./studentDetail/studentDetail.component";
-
-import { Div, DivBtn, Btn, DivInput, Input } from "./listStudent.styles";
+  toastSuccess,
+} from "../../../../../components/toast/toast";
 
 import {
   TableWrapper,
   Table,
   Th,
   Td,
-} from "../../../../../../generalCss/table.styles";
+} from "../../../../../generalCss/table.styles";
 
-const ListStudents = () => {
+import { Page, Title } from "../../../../../../src/generalCss/shared.styles";
+
+import StudentDetail from "../../../../teacher/classManager/classDetail/students/listStudents/studentDetail/studentDetail.component";
+
+import {
+  Div,
+  DivBtn,
+  Btn,
+  DivInput,
+  Input,
+} from "./detailCls.styles";
+
+const DetailCls = () => {
   const [detail, setDetail] = useState(false);
   const { classCode } = useParams();
   const [studentCode, setStudentCode] = useState("");
@@ -113,7 +122,7 @@ const ListStudents = () => {
   };
 
   return (
-    <Div>
+    <Page>
       <StudentDetail
         detail={detail}
         setDetail={setDetail}
@@ -128,47 +137,7 @@ const ListStudents = () => {
         listLessonOfClass={listLessonOfClass}
         listAttendance={listAttendance}
       />
-      <TableWrapper>
-        <Table>
-          <thead>
-            <tr>
-              <Th style={{ flex: 0.5 }}>STT</Th>
-              <Th>Mã học sinh</Th>
-              <Th>Tên học sinh</Th>
-              <Th style={{ flex: 0.5 }}>Vắng mặt</Th>
-              {listTestsOfThisClass?.map((item, index) => {
-                if (item.scores.length > 0) {
-                  return (
-                    <Th style={{ flex: 0.5 }} key={index}>
-                      {item.quiz_name}
-                    </Th>
-                  );
-                }
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {infoClass?.students.map((usercode, index) => {
-              const listScore = findListScoreOfSt(usercode);
-
-              return (
-                <tr onClick={() => handleItemClick(usercode)} key={index}>
-                  <Td style={{ flex: 0.5 }}>{index + 1}</Td>
-                  <Td>{usercode}</Td>
-                  <Td>{findStudent(usercode)?.full_name}</Td>
-                  <Td style={{ flex: 0.5 }}>{countAttendance(usercode)}</Td>
-                  {listScore.length > 0 &&
-                    listScore?.map((item2, index2) => (
-                      <Td style={{ flex: 0.5 }} key={index2}>
-                        {item2.score}
-                      </Td>
-                    ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </TableWrapper>
+      <Title>Chi tiết lớp học {classCode}</Title>
       <DivBtn>
         <DivInput>
           <Input
@@ -182,9 +151,57 @@ const ListStudents = () => {
           Thêm
         </Btn>
       </DivBtn>
-      <ToastCtn />
-    </Div>
+      <Div>
+        <TableWrapper>
+          <Table>
+            <thead>
+              <tr>
+                <Th style={{ flex: 0.5 }}>STT</Th>
+                <Th>Mã học sinh</Th>
+                <Th>Tên học sinh</Th>
+                <Th style={{ flex: 0.5 }}>Vắng mặt</Th>
+                {listTestsOfThisClass?.map((item, index) => {
+                  if (item.scores.length > 0) {
+                    return (
+                      <Th style={{ flex: 0.5 }} key={index}>
+                        {item.quiz_name}
+                      </Th>
+                    );
+                  }
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {infoClass?.students.map((usercode, index) => {
+                const listScore = findListScoreOfSt(usercode);
+
+                return (
+                  <tr
+                    onClick={() => handleItemClick(usercode)}
+                    key={index}
+                  >
+                    <Td style={{ flex: 0.5 }}>{index + 1}</Td>
+                    <Td>{usercode}</Td>
+                    <Td>{findStudent(usercode)?.full_name}</Td>
+                    <Td style={{ flex: 0.5 }}>
+                      {countAttendance(usercode)}
+                    </Td>
+                    {listScore.length > 0 &&
+                      listScore?.map((item2, index2) => (
+                        <Td style={{ flex: 0.5 }} key={index2}>
+                          {item2.score}
+                        </Td>
+                      ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </TableWrapper>
+        <ToastCtn />
+      </Div>
+    </Page>
   );
 };
 
-export default ListStudents;
+export default DetailCls;

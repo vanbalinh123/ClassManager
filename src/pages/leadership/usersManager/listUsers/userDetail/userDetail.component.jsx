@@ -43,6 +43,13 @@ import {
   Item,
 } from "../../../../../generalCss/shared.styles";
 
+import {
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../generalCss/table.styles";
+
 const UserDetail = () => {
   const { role, usercode } = useParams();
 
@@ -203,20 +210,26 @@ const UserDetail = () => {
           <DivHistory>
             <History>LỊCH SỬ</History>
             <List>
-              <Header>
-                <TitleList>Mã lớp</TitleList>
-                <TitleList>Tên lớp</TitleList>
-                <TitleList>Khoá</TitleList>
-              </Header>
-              <Section>
-                {result?.map((item, index) => (
-                  <DivItem key={index}>
-                    <Item>{item.class_code}</Item>
-                    <Item>{item.class_name}</Item>
-                    <Item>{item.course}</Item>
-                  </DivItem>
-                ))}
-              </Section>
+              <TableWrapper>
+                <Table>
+                  <thead>
+                    <tr>
+                      <Th>Mã lớp</Th>
+                      <Th>Tên lớp</Th>
+                      <Th>Khoá</Th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {result?.map((item, index) => (
+                      <tr key={index}>
+                        <Td>{item.class_code}</Td>
+                        <Td>{item.class_name}</Td>
+                        <Td>{item.course}</Td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </TableWrapper>
             </List>
           </DivHistory>
         )}
@@ -224,24 +237,30 @@ const UserDetail = () => {
           <DivHistory>
             <History>LỊCH SỬ</History>
             <List>
-              <Header>
-                <TitleList>Mã lớp</TitleList>
-                <TitleList>Tên lớp</TitleList>
-                <TitleList>Mã GV</TitleList>
-                <TitleList>Giáo viên</TitleList>
-                <TitleList>Khoá</TitleList>
-              </Header>
-              <Section>
-                {result?.map((item, index) => (
-                  <DivItem key={index}>
-                    <Item>{item.class_code}</Item>
-                    <Item>{item.class_name}</Item>
-                    <Item>{history[index].Teachers}</Item>
-                    <Item>{findTeacher(history[index].Teachers)}</Item>
-                    <Item>{item.course}</Item>
-                  </DivItem>
+              <TableWrapper>
+                <Table>
+                  <thead>
+                    <tr>
+                    <Th>Mã lớp</Th>
+                <Th>Tên lớp</Th>
+                <Th>Mã GV</Th>
+                <Th>Giáo viên</Th>
+                <Th>Khoá</Th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {result?.map((item, index) => (
+                  <tr key={index}>
+                    <Td>{item.class_code}</Td>
+                    <Td>{item.class_name}</Td>
+                    <Td>{history[index].Teachers}</Td>
+                    <Td>{findTeacher(history[index].Teachers)}</Td>
+                    <Td>{item.course}</Td>
+                  </tr>
                 ))}
-              </Section>
+                  </tbody>
+                </Table>
+              </TableWrapper>
             </List>
           </DivHistory>
         )}
@@ -249,29 +268,35 @@ const UserDetail = () => {
           <DivHistory>
             <History>LỊCH SỬ</History>
             <List>
-              <Header>
-                <TitleList>Mã lớp</TitleList>
-                <TitleList>Tên lớp</TitleList>
-                <TitleList>Mã GV</TitleList>
-                <TitleList>Giáo viên</TitleList>
-                <TitleList>Học sinh</TitleList>
-                <TitleList>Khoá</TitleList>
-              </Header>
-              <Section>
-                {result?.map((item, index) => (
-                  <DivItem key={index}>
-                    <Item>{item.class_code}</Item>
-                    <Item>{item.class_name}</Item>
-                    <Item>{history[index].Teachers}</Item>
-                    <Item>{findTeacher(history[index].Teachers)}</Item>
-                    <Item>
+              <TableWrapper>
+                <Table>
+                  <thead>
+                    <tr>
+                    <Th>Mã lớp</Th>
+                <Th>Tên lớp</Th>
+                <Th>Mã GV</Th>
+                <Th>Giáo viên</Th>
+                <Th>Học sinh</Th>
+                <Th>Khoá</Th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {result?.map((item, index) => (
+                  <tr key={index}>
+                    <Td>{item.class_code}</Td>
+                    <Td>{item.class_name}</Td>
+                    <Td>{history[index].Teachers}</Td>
+                    <Td>{findTeacher(history[index].Teachers)}</Td>
+                    <Td>
                       {studentOfParent?.length > 0 &&
                         findStudents(item.class_code).join(", ")}
-                    </Item>
-                    <Item>{item.course}</Item>
-                  </DivItem>
+                    </Td>
+                    <Td>{item.course}</Td>
+                  </tr>
                 ))}
-              </Section>
+                  </tbody>
+                </Table>
+              </TableWrapper>
             </List>
           </DivHistory>
         )}

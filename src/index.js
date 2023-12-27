@@ -26,6 +26,7 @@ import CreateNotification from "./pages/leadership/notifications/createNotificat
 import LeaderHistoryNotifications from "./pages/leadership/notifications/historyNotifications/historyNotifications.component";
 import Tuition from "./pages/leadership/tuition/tuition.component";
 import TuitionClass from "./pages/leadership/tuition/tuitionClass/tuitionClass.component";
+import DetailCls from "./pages/leadership/crClass/listClasses/detailCls/detailCls.component";
 
 //teacher
 import TemplateTeacher from "./components/template/teacher/teacher.component";
@@ -280,12 +281,16 @@ const router = createBrowserRouter([
         element: <CreateAccount />,
       },
       {
-        path: "/leader/createSchedule/:classCode",
+        path: "/leader/schedule/:classCode",
         element: <CreateSchedule />,
       },
       {
-        path: "/leader/createClasses",
+        path: "/leader/class",
         element: <CreateClasses />,
+      },
+      {
+        path: "/leader/class/:classCode",
+        element: <DetailCls />,
       },
       {
         path: "/leader/listUsers",

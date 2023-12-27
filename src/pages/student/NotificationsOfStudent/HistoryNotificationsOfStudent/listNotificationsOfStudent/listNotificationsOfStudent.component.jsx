@@ -2,7 +2,12 @@ import { useState } from "react";
 import { List } from "./listNotificationsOfStudent.styles";
 import Pagination from "../../../../../components/paginate/paginate";
 import DetailNotiST from "./detailNotiST/detailNotiSt.component";
-import { Header, TitleList, Section, DivItem, Item } from "../../../../../generalCss/shared.styles";
+import {
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../generalCss/table.styles";
 
 const ListNotificationsOfStudent = ({
   listTeacherNotifications,
@@ -30,7 +35,10 @@ const ListNotificationsOfStudent = ({
     setCurrentPage(data.selected);
   };
 
-  const customList = listNoti?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+  const customList = listNoti?.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
   //paginate
 
   const handleItemClick = (item) => {
@@ -42,38 +50,51 @@ const ListNotificationsOfStudent = ({
     item.isRead = true;
   };
 
-  console.log(roleNoti)
+  console.log(roleNoti);
 
   return (
     <List>
-      {check === true && <DetailNotiST setCheck={setCheck} value={value} setValue={setValue} />}
-      <Header>
-        <TitleList style={{ flex: "0.5" }}>Tiêu đề</TitleList>
-        <TitleList>Nội dung</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Ngày nhận</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Giờ nhận</TitleList>
-        {roleNoti === "teacher" && <TitleList style={{ flex: "0.5" }}>Lớp</TitleList>}
-        {roleNoti === "admin" && <TitleList style={{ flex: "0.5" }}>Người gửi</TitleList>}
-      </Header>
-      <Section>
-        {customList?.map((item, index) => (
-          <DivItem
-            key={index}
-            onClick={() => handleItemClick(item)}
-          >
-            <Item style={{ flex: "0.5" }}>{item.title}</Item>
-            {roleNoti === "teacher" ? <Item>{item.message}</Item> : <Item>{item.content}</Item>}
+      {check === true && (
+        <DetailNotiST setCheck={setCheck} value={value} setValue={setValue} />
+      )}
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Tiêu đề</Th>
+              <Th>Nội dung</Th>
+              <Th>Ngày nhận</Th>
+              <Th>Giờ nhận</Th>
+              {roleNoti === "teacher" && <Th>Lớp</Th>}
+              {roleNoti === "admin" && <Th>Người gửi</Th>}
+            </tr>
+          </thead>
+          <tbody>
+            {customList?.map((item, index) => (
+              <tr key={index} onClick={() => handleItemClick(item)}>
+                <Td>{item.title}</Td>
+                {roleNoti === "teacher" ? (
+                  <Td>{item.message}</Td>
+                ) : (
+                  <Td>{item.content}</Td>
+                )}
 
-            <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[0]}</Item>
-            <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[1]}</Item>
-            {roleNoti === "teacher" ? (
-              <Item style={{ flex: "0.5" }}>{item.class_code[0]}</Item>
-            ) : (
-              <Item style={{ flex: "0.5" }}>{item.usercode}</Item>
-            )}
-          </DivItem>
-        ))}
-      </Section>
+                <Td>
+                  {item.created_at.split(" ")[0]}
+                </Td>
+                <Td>
+                  {item.created_at.split(" ")[1]}
+                </Td>
+                {roleNoti === "teacher" ? (
+                  <Td>{item.class_code[0]}</Td>
+                ) : (
+                  <Td>{item.usercode}</Td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
       <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
     </List>
   );

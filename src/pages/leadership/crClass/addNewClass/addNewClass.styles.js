@@ -3,14 +3,14 @@ import { styled, css } from "styled-components";
 import generalStyles from "../../../../generalCss/general.styles";
 
 export const Form = styled.form`
+  width: 100%;
   border-radius: 10px;
-  flex: 1;
-  height: 500px;
+  /* height: 200px; */
   display: flex;
   flex-direction: column;
-  gap: 5%;
+  gap: 20px;
   padding-top: 20px;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
   border: 1px solid ${generalStyles.border};
   box-shadow: ${generalStyles.border} 0px 0px 15px;
 `;
@@ -19,30 +19,32 @@ export const Title = styled.span`
   padding-left: 15px;
   color: ${generalStyles.active};
   font-weight: bold;
+  font-size: ${generalStyles.sizeTitle};
 `;
 
 export const DivInputs = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   padding: 0px 20px;
-  flex: 5;
+  gap: 20px;
 `;
 
 export const Item = styled.div`
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 10px;
 `;
 
 export const Key = styled.span`
-  flex: 1;
   font-weight: bold;
 `;
 
 export const DivInput = styled.div`
-  flex: 2;
   position: relative;
   height: 50px;
+  width: 100%;
 `;
 
 export const Input = styled.input`
@@ -68,7 +70,6 @@ export const Input = styled.input`
 `;
 
 export const DivBtn = styled.div`
-  flex: 1;
   display: flex;
   justify-content: flex-end;
   padding: 0px 20px;

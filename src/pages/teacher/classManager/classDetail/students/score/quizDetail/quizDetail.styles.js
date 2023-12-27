@@ -9,11 +9,14 @@ export const Div = styled.div`
 `;
 
 export const Span = styled.span` 
-    height: 30px;
-    text-align: center;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
     font-weight: bold;
     color: ${generalStyles.active};
-    font-size: 17px;
+    font-size: ${generalStyles.sizeTitle};
 `;
 
 export const Header = styled.header`
@@ -70,9 +73,10 @@ export const Item = styled.span`
 `;
 
 export const Input = styled.input`
-    width: 90%;
-  height: 70%;
-  padding-left: 15px;
+    width: 100%;
+  height: 100%;
+  /* padding-left: 15px; */
+  padding: 15px;
   border: none;
   border: 1px solid ${generalStyles.border};
   border-radius: 3px;

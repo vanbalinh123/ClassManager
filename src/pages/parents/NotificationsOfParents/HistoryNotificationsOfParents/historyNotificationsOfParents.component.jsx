@@ -42,7 +42,7 @@ const HistoryNotificationParents = () => {
   
     return (
       <Page>
-        <Title>Notifications History</Title>
+        <Title>Lịch sử thông báo</Title>
         <FilterNotificationsOfParents 
           selectedValue={selectedValue}
           setSelectedValue={setSelectedValue}

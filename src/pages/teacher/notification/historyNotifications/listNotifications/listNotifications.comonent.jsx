@@ -2,6 +2,7 @@ import { useState } from "react";
 import Pagination from "../../../../../components/paginate/paginate";
 import { List } from "./listNotification.styles";
 import DetailNotiTC from "./detailNotiTC/detailNotiTC.component";
+
 import {
   Header,
   TitleList,
@@ -10,13 +11,20 @@ import {
   Item,
 } from "../../../../../generalCss/shared.styles";
 
+import {
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../generalCss/table.styles";
+
 const ListNotifications = ({
   listTeacherNotifications,
   selectedValue,
   listAdminNotifications,
 }) => {
   const [check, setCheck] = useState(false);
-  const [value, setValue] = useState({})
+  const [value, setValue] = useState({});
 
   let listNoti = [];
   if (selectedValue === "sent") {
@@ -42,55 +50,56 @@ const ListNotifications = ({
   //paginate
 
   const handleItemClick = (item) => {
-    setCheck(true)
-    setValue(item)
+    setCheck(true);
+    setValue(item);
   };
-
-
 
   return (
     <List>
-      {check === true 
-        && 
-        <DetailNotiTC 
+      {check === true && (
+        <DetailNotiTC
           setCheck={setCheck}
           value={value}
           setValue={setValue}
           selectedValue={selectedValue}
         />
-      }
-      <Header>
-        <TitleList style={{ flex: "0.5" }}>Tiêu đề</TitleList>
-        <TitleList>Nội dung</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Ngày</TitleList>
-        <TitleList style={{ flex: "0.5" }}>Giờ</TitleList>
-        {(selectedValue === "sent" && (
-          <TitleList style={{ flex: "0.5" }}>Gửi đến</TitleList>
-        )) || <TitleList style={{ flex: "0.5" }}>Từ</TitleList>}
-      </Header>
-      <Section>
-        {customList?.map((item, index) => (
-          <DivItem 
-            key={index} 
-            onClick={() => handleItemClick(item)}
-          >
-            <Item style={{ flex: "0.5" }}>{item.title}</Item>
-            {(selectedValue === "sent" && <Item>{item.message}</Item>) || (
-              <Item>{item.content}</Item>
-            )}
+      )}
+      <TableWrapper>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Tiêu đề</Th>
+              <Th>Nội dung</Th>
+              <Th>Ngày</Th>
+              <Th>Giờ</Th>
+              {(selectedValue === "sent" && (
+                <Th>Gửi đến</Th>
+              )) || <Th>Từ</Th>}
+            </tr>
+          </thead>
+          <tbody>
+            {customList?.map((item, index) => (
+              <tr key={index} onClick={() => handleItemClick(item)}>
+                <Td>{item.title}</Td>
+                {(selectedValue === "sent" && <Td>{item.message}</Td>) || (
+                  <Td>{item.content}</Td>
+                )}
 
-            <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[0]}</Item>
-            <Item style={{ flex: "0.5" }}>{item.created_at.split(" ")[1]}</Item>
-            {(selectedValue === "sent" && (
-              <Item style={{ flex: "0.5" }}>{item.class_code[0]}</Item>
-            )) || <Item style={{ flex: "0.5" }}>{item.usercode}</Item>}
-          </DivItem>
-        ))}
-      </Section>
-      <Pagination
-        totalPages={totalPages}
-        handlePageClick={handlePageClick}
-      />
+                <Td>
+                  {item.created_at.split(" ")[0]}
+                </Td>
+                <Td>
+                  {item.created_at.split(" ")[1]}
+                </Td>
+                {(selectedValue === "sent" && (
+                  <Td>{item.class_code[0]}</Td>
+                )) || <Td>{item.usercode}</Td>}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
+      <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
     </List>
   );
 };

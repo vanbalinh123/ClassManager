@@ -49,6 +49,7 @@ const AddNewClass = () => {
       setValue('classCode', '');
       setValue('className', '');
       setValue('course', '');
+      setValue('tution', '')
     } else {
       toastError(`Create class fail, try again!!`);
     }

@@ -5,13 +5,7 @@ import SearchContainer from "../../../components/search/search";
 
 import Pagination from "../../../components/paginate/paginate";
 
-import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-} from "../../../generalCss/shared.styles";
+import { TableWrapper, Table, Th, Td } from "../../../generalCss/table.styles";
 import { ListClass } from "./tuition.styles";
 import { Page, Title } from "../../../generalCss/shared.styles";
 
@@ -52,21 +46,27 @@ const Tuition = () => {
         type="text"
       />
       <ListClass>
-        <Header>
-          <TitleList>Mã lớp</TitleList>
-          <TitleList>Tên lớp</TitleList>
-          <TitleList>Khoá</TitleList>
-        </Header>
-        <Section>
-          {customListClasses?.reverse()?.map((item, index) => (
-            <DivItem onClick={() => handleClick(item.class_code)} key={index}>
-              <Item>{item.class_code}</Item>
-              <Item>{item.class_name}</Item>
-              <Item>{item.course}</Item>
-            </DivItem>
-          ))}
-        </Section>
-      </ListClass>        
+        <TableWrapper>
+          <Table>
+            <thead>
+              <tr>
+                <Th>Mã lớp</Th>
+                <Th>Tên lớp</Th>
+                <Th>Khoá</Th>
+              </tr>
+            </thead>
+            <tbody>
+              {customListClasses?.reverse()?.map((item, index) => (
+                <tr onClick={() => handleClick(item.class_code)} key={index}>
+                  <Td>{item.class_code}</Td>
+                  <Td>{item.class_name}</Td>
+                  <Td>{item.course}</Td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </TableWrapper>
+      </ListClass>
       <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
     </Page>
   );
