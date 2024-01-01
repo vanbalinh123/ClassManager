@@ -12,9 +12,9 @@ const classInforApi = apiSlice.injectEndpoints({
       }),
     }),
     inforClass: builder.query({
-      serializeQueryArgs: () => {
-        return undefined;
-      },
+      // serializeQueryArgs: () => {
+      //   return undefined;
+      // },
       query: (classCode) => ({
         url: `/api/class-information/${classCode}/`,
         // params: classCode,
@@ -36,7 +36,7 @@ const classInforApi = apiSlice.injectEndpoints({
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         const action = apiSlice.util.updateQueryData(
           "inforClass",
-          undefined,
+          data.class_info,
           (draft) => {
             draft.students = data.students;
           }

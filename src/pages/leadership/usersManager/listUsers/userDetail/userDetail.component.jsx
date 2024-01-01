@@ -36,14 +36,6 @@ import {
 } from "./userDetail.styles";
 
 import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-} from "../../../../../generalCss/shared.styles";
-
-import {
   TableWrapper,
   Table,
   Th,

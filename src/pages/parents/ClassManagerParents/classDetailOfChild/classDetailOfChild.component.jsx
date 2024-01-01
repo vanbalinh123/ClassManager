@@ -5,49 +5,39 @@ import { useDetailTeacherQuery } from "../../../../redux/api/teacher/list-teache
 import { useDetailStudentQuery } from "../../../../redux/api/student/list-students-api.slice";
 import { useListLessonContentsQuery } from "../../../../redux/api/teacher/lesson-content-api.slice";
 
-import { Page, Title } from "../../../../generalCss/shared.styles"
+import { Page, Title } from "../../../../generalCss/shared.styles";
 import InforClassDetailOfChild from "./infoClassDetail/infoClassDetailOfChild.component";
-import ListLessonContent from "../../../student/ClassManagerStudent/classDetailOfStudent/listLessonContent/listLessonContent.component";
-
-import { 
-    Body,
-    DivTeacher,
-    Left,
-    Right 
-} from "./classDetailOfChild.styles"
 
 const ClassDetailOfChild = () => {
-    const { classCode, userCodeStudent: userCode } = useParams();
-    const { data: listSchedule } = useListSchedulesQuery();
-    const thisSchedule = listSchedule?.find(item => item.class_code === classCode);
-    const { data: detailTeacher } = useDetailTeacherQuery(thisSchedule?.teacher_code)
-    const { data: detailStudent } = useDetailStudentQuery(userCode);
-    const { data: listLessonContent } = useListLessonContentsQuery();
-    
-    const thisLessonContent = listLessonContent?.filter(
-        (item) => item.class_info === classCode
-      );
-    
-    return (
-        <Page>
-            <Title>Chi tiết lớp học {classCode}</Title>
-            <DivTeacher>Giáo viên phụ trách {detailTeacher?.full_name}</DivTeacher>
-            <Body>
-                <Left>
-                    <InforClassDetailOfChild 
-                        classCode={classCode}
-                        detailStudent={detailStudent}
-                        thisLessonContent={thisLessonContent}
-                    />
-                </Left>
-                <Right>
-                    <ListLessonContent 
-                        thisLessonContent={thisLessonContent}
-                    />
-                </Right>
-            </Body>
-        </Page>
-    )
-}
+  const { classCode, userCodeStudent: userCode } = useParams();
+  const { data: listSchedule } = useListSchedulesQuery();
+  const thisSchedule = listSchedule?.find(
+    (item) => item.class_code === classCode
+  );
+  const { data: detailTeacher } = useDetailTeacherQuery(
+    thisSchedule?.teacher_code
+  );
+  const { data: detailStudent } = useDetailStudentQuery(userCode);
+  const { data: listLessonContent } = useListLessonContentsQuery();
+
+  const thisLessonContent = listLessonContent?.filter(
+    (item) => item.class_info === classCode
+  );
+
+  return (
+    <Page>
+      <Title>Chi tiết lớp học {classCode}</Title>
+      <div style={{width: '90%', margin: '0 auto', paddingTop: '30px', paddingBottom: '30px' }}>
+        <InforClassDetailOfChild
+          classCode={classCode}
+          detailStudent={detailStudent}
+          thisLessonContent={thisLessonContent}
+          detailTeacher={detailTeacher}
+          thisSchedule={thisSchedule}
+        />
+      </div>
+    </Page>
+  );
+};
 
 export default ClassDetailOfChild;

@@ -20,7 +20,7 @@ const ListLessonContent = ({ thisLessonContent }) => {
   };
 
   const thisLessonContentReverse = thisLessonContent?.reverse();
-  console.log(thisLessonContent)
+
 
   return (
     <Div>

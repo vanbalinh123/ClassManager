@@ -1,20 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { FiAlignJustify } from "react-icons/fi";
+import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
 import { useListSchedulesQuery } from "../../../../redux/api/leader/schedule-api.slice";
 import { useListTeachersQuery } from "../../../../redux/api/leader/list-users-api.slice";
+import { useDeleteClassMutation } from "../../../../redux/api/leader/class-api.slice";
 import Pagination from "../../../../components/paginate/paginate";
 
 import { ListClass } from "./listClasses.styles";
 import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-} from "../../../../generalCss/shared.styles";
-
+  toastSuccess,
+  toastError,
+  ToastCtn,
+} from "../../../../components/toast/toast";
 import {
   TableWrapper,
   Table,
@@ -26,6 +25,7 @@ const ListClasses = ({ listClasses }) => {
   const navigate = useNavigate();
   const { data: listTeachers } = useListTeachersQuery();
   const { data: listSchedules } = useListSchedulesQuery();
+  const [deleteClass] = useDeleteClassMutation();
 
   const uniqueClassCodes = [];
 
@@ -58,8 +58,23 @@ const ListClasses = ({ listClasses }) => {
   };
 
   const handleDetailCls = (classCode) => {
-    navigate(`/leader/class/${classCode}`)
-  }
+    navigate(`/leader/class/${classCode}`);
+  };
+
+  const handleDelete = async (classcode) => {
+    const isConfirmed = window.confirm(
+      `Bạn có muốn xoá lớp '${classcode}' hay không ?`
+    );
+    if (isConfirmed) {
+      try {
+        const response = await deleteClass(classcode);
+        console.log(response)
+        toastSuccess(`Bạn đã xoá lớp ${classcode} thành công`);
+      } catch (error) {
+        toastSuccess(`Bạn đã xoá lớp ${classcode} thất bại`);
+      }
+    }
+  };
 
   //paginate
   const itemsPerPage = 10;
@@ -89,6 +104,7 @@ const ListClasses = ({ listClasses }) => {
               <Th>Khoá</Th>
               <Th>Lịch</Th>
               <Th>Chi tiết</Th>
+              <Th>Xoá</Th>
             </tr>
           </thead>
           <tbody>
@@ -98,19 +114,18 @@ const ListClasses = ({ listClasses }) => {
                 <Td>{item.class_name}</Td>
                 {(classNoSchedule?.find(
                   (item2) => item2.class_code === item.class_code
-                ) && (
-                  <Td style={{ color: "red" }}>Chưa có lịch dạy</Td>
-                )) || (
+                ) && <Td style={{ color: "red" }}>Chưa có lịch dạy</Td>) || (
                   <Td>{findTeacherName(teacherMap[item.class_code])}</Td>
                 )}
                 <Td>{item.course}</Td>
                 <Td onClick={() => handleClick(item.class_code)}>
                   <AiOutlineSchedule />
                 </Td>
-                <Td
-                  onClick={() => handleDetailCls(item.class_code)}
-                >
+                <Td onClick={() => handleDetailCls(item.class_code)}>
                   <FiAlignJustify />
+                </Td>
+                <Td onClick={() => handleDelete(item.class_code)}>
+                  <MdDeleteForever />
                 </Td>
               </tr>
             ))}
@@ -118,6 +133,7 @@ const ListClasses = ({ listClasses }) => {
         </Table>
       </TableWrapper>
       <Pagination totalPages={totalPages} handlePageClick={handlePageClick} />
+      <ToastCtn />
     </ListClass>
   );
 };

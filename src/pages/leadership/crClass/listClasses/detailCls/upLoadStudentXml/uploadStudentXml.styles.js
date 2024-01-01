@@ -1,18 +1,12 @@
 import styled from "styled-components";
-import generalStyles from "../../../../generalCss/general.styles";
+import generalStyles from "../../../../../../generalCss/general.styles";
 
 export const Div = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
   position: relative;
-  padding: 20px 20px 100px 20px;
-  /* padding-bottom: 50px; */
-  width: 90%;
-  margin: 0 auto;
-  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
-  border: 1px solid ${generalStyles.border};
-  border-radius: 7px;
+  padding-bottom: 30px;
 `;
 
 export const Title = styled.div`
@@ -57,8 +51,8 @@ export const FormContainer = styled.div`
 
 export const UploadButton = styled.button`
   position: absolute;
-  bottom: 50px;
-  right: 20px;
+  bottom: 0;
+  right: 0;
   width: 100px;
   justify-content: center;
   align-items: center;

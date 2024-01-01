@@ -62,7 +62,7 @@ const TeacherSchedule = () => {
         events={events}
         startAccessor="start"
         endAccessor="end"
-        defaultView="month"
+        defaultView="week"
         eventPropGetter={eventStyleGetter}
         
       />

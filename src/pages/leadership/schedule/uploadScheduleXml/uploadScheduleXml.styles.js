@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import generalStyles from "../../../../generalCss/general.styles";
 
 export const Div = styled.div`
@@ -8,7 +9,7 @@ export const Div = styled.div`
   position: relative;
   padding: 20px 20px 100px 20px;
   /* padding-bottom: 50px; */
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   border: 1px solid ${generalStyles.border};

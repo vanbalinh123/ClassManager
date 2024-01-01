@@ -30,7 +30,7 @@ export const ItemSearch = styled.div`
   height: 100%;
   align-items: center;
   gap: 10px;
-  width: 400px;
+  width: 500px;
   position: relative;
 `;
 
@@ -45,6 +45,7 @@ export const Input = styled.input`
   border: none;
   border: 1px solid ${generalStyles.border};
   box-shadow: none;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   transition: all 0.3s;
 
   &:focus {
@@ -56,7 +57,7 @@ export const Input = styled.input`
 
 export const DivBtnFilter = styled.div`
   height: 100%;
-  width: 70px;
+  width: 40px;
   position: relative;
 `;
 
@@ -71,11 +72,40 @@ export const BtnFilter = styled.button`
   color: ${generalStyles.textWhite};
   background-color: ${generalStyles.bgc};
   letter-spacing: 1px;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
+
   transition: all 0.3s;
 
   &:hover {
     cursor: pointer;
     background-color: ${generalStyles.active};
+  }
+`;
+
+export const DivBtnClear = styled.div`
+  height: 100%;
+  width: 40px;
+  position: relative;
+`;
+
+export const BtnClear = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px;
+  border: none;
+  color: ${generalStyles.textWhite};
+  background-color: red;
+  letter-spacing: 1px;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
+
+  transition: all 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ddd;
   }
 `;
 

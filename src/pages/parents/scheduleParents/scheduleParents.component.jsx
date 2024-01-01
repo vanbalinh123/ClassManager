@@ -22,6 +22,7 @@ const ParentsSchedule = () => {
     (item) => item.usercode === userCode
   )?.student;
 
+
   // const events = [
   //   {
   //     title: "Sự kiện 1",
@@ -65,6 +66,8 @@ const ParentsSchedule = () => {
     };
   };
 
+  console.log(events)
+
   return (
     <Page>
       <Title style={{ paddingBottom: "30px" }}>Lịch học</Title>
@@ -74,7 +77,7 @@ const ParentsSchedule = () => {
         events={events}
         startAccessor="start"
         endAccessor="end"
-        defaultView="month"
+        defaultView="week"
         eventPropGetter={eventStyleGetter}
       />
     </Page>

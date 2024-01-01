@@ -2,66 +2,30 @@ import styled from "styled-components";
 
 import generalStyles from "../../../../../generalCss/general.styles";
 
-export const Div = styled.div` 
+
+export const DivTables = styled.div` 
     width: 100%;
     display: flex;
     flex-direction: column;
     height: auto;
+    gap: 50px;
 `;
 
-export const Title = styled.div` 
-    height: 50px;
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    font-size: 15px;
-    background-color: ${generalStyles.bgc};
-    color: #fff;
-    font-weight: bold;
-    border-top-right-radius: 7px;
-    border-top-left-radius: 7px;
-`;
-
-export const Content = styled.div` 
+export const DivTable = styled.div` 
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 20px 30px 30px 30px;
-    border: 1px solid ${generalStyles.border};
-    border-top: none;
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
+    gap: 20px;
 `;
 
-export const Info = styled.div` 
-    display: flex;
-`;
-
-export const Span = styled.span` 
-    flex: 1;
+export const TitleTb = styled.div` 
+    font-size: ${generalStyles.sizeTitle};
     font-weight: bold;
 `;
 
-export const Data = styled.span` 
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-`;
-
-export const TotalAbsent = styled.span` 
-    
-`;
-
-export const DetailAbsent = styled.div` 
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-`;
-
-export const DateAbsent = styled.span` 
-    padding-left: 10%;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+export const Img = styled.img`
+  width: 100px;
+  height: 100px;
+  /* border-radius: 150px; */
+  border: 1px solid ${generalStyles.border};
+  box-shadow: 0px 0px 5px ${generalStyles.border};
 `;

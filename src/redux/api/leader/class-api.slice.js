@@ -12,9 +12,11 @@ const classApi = apiSlice.injectEndpoints({
       }),
     }),
     classDetail: builder.query({
+      serializeQueryArgs: () => {
+        return undefined;
+      },
       query: (classcode) => ({
         url: `/api/class/${classcode}/`,
-        // params: data,
       }),
     }),
     createClass: builder.mutation({
@@ -39,11 +41,69 @@ const classApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    updateClass: builder.mutation({
+      query: ({ class_code, class_name, course, cost }) => ({
+        url: `api/class/${class_code}/`,
+        method: "PUT",
+        body: { class_code, class_name, course, cost },
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        console.log(data);
+        const action = apiSlice.util.updateQueryData(
+          "classDetail",
+          undefined,
+          (draft) => {
+            draft.class_code = data.class_code;
+            draft.class_name = data.class_name;
+            draft.course = data.course;
+            draft.cost = data.cost;
+          }
+        );
+
+        const patchResult = dispatch(action);
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+    }),
+    deleteClass: builder.mutation({
+      query: (classcode) => ({
+        url: `api/class/${classcode}/`,
+        method: "DELETE",
+      }),
+      async onQueryStarted(classcode, { dispatch, queryFulfilled }) {
+        const action = apiSlice.util.updateQueryData(
+          "listClass",
+          undefined,
+          (draft) => {
+            const index = draft.findIndex(
+              (item) => item.class_code === classcode
+            );
+            draft.map(item => console.log(item))
+           
+            if (index !== -1) {
+              draft.splice(index, 1);
+            }
+          }
+        );
+        const patchResult = dispatch(action);
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+    }),
+    
   }),
 });
 
-export const { 
-  useCreateClassMutation, 
+export const {
+  useCreateClassMutation,
   useListClassQuery,
-  useClassDetailQuery 
+  useClassDetailQuery,
+  useUpdateClassMutation,
+  useDeleteClassMutation,
 } = classApi;

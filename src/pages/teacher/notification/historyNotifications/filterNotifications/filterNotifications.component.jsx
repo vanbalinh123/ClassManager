@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { CiSearch } from "react-icons/ci";
+import { MdClear } from "react-icons/md";
+
 import {
   Filter,
   ItemSearch,
   DivBtnFilter,
   BtnFilter,
   Input,
+  DivBtnClear,
+  BtnClear,
 } from "../../../../../generalCss/shared.styles";
 
 import { SelectSearch, Option } from "./filterNotifications.styles";
@@ -46,17 +51,17 @@ const FilterNotifications = ({
         <Option value='received'>Đã nhận</Option>
       </SelectSearch>
       <DivBtnFilter>
-        <BtnFilter
-          onClick={() => handleSearch()}
-        >Tìm kiếm</BtnFilter>
-      </DivBtnFilter>
-      <DivBtnFilter>
-        <BtnFilter
-          onClick={() => handleClear()}
-        >
-          Xoá
+        <BtnFilter onClick={() => handleSearch()}>
+          <CiSearch size="20px" />
         </BtnFilter>
       </DivBtnFilter>
+      {checkValueSearch !== "" && (
+        <DivBtnClear>
+          <BtnClear onClick={() => handleClear()}>
+            <MdClear size="20px" />
+          </BtnClear>
+        </DivBtnClear>
+      )}
     </Filter>
   );
 };

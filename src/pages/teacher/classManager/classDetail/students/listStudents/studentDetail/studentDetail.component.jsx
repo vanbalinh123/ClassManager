@@ -1,4 +1,4 @@
-import { useListClassSessionQuery } from "../../../../../../../redux/api/leader/class-session.slice";
+import { RiUserForbidFill } from "react-icons/ri";
 
 import {
   Layout,
@@ -14,6 +14,8 @@ import {
   Value,
   Img,
   Btn,
+  Value2,
+  Div2
 } from "./studentDeteil.styles";
 
 const StudentDetail = ({
@@ -30,8 +32,6 @@ const StudentDetail = ({
   listLessonOfClass,
   listAttendance,
 }) => {
-  const { data: listClassSession } = useListClassSessionQuery();
-
   const handleCancelClick = () => {
     setDetail(false);
   };
@@ -65,7 +65,7 @@ const StudentDetail = ({
 
   const listScore = findListScoreOfSt(studentDetail?.usercode);
 
-  const findAbsent = (usercode) => {
+  const findAbsentDay = (usercode) => {
     let result = [];
     let arrID = [];
     listLessonOfClass?.forEach((item) => arrID.push(item.id));
@@ -75,14 +75,12 @@ const StudentDetail = ({
 
     listAttendanceOfClass?.forEach((item) => {
       if (item.student === usercode && item.is_present === "absent") {
-        result.push(item);
+        result.push(item.session_day);
       }
     });
 
     return result;
   };
-
-  console.log(findAbsent(studentDetail?.usercode));
 
   return (
     <Layout active={detail ? "active" : ""}>
@@ -109,14 +107,25 @@ const StudentDetail = ({
                 <Value>{item.score}</Value>
               </Div>
             ))}
+
             <Div>
               <Span>Tổng ngày vắng:</Span>
               <Value>{countAttendance(studentDetail?.usercode)}</Value>
             </Div>
-            <Div>
-              <Span>Ngày vắng chưa sửa</Span>
-              <Value>22/12/2023</Value>
-            </Div>
+            {countAttendance(studentDetail?.usercode) > 0 && (
+              <Div2>
+                <Span>Ngày vắng</Span>
+                {/* <Value>22/12/2023</Value> */}
+                <Value2>
+                  {findAbsentDay(studentDetail?.usercode).length > 0 &&
+                    findAbsentDay(studentDetail?.usercode).map((day, index) => (
+                      <span style={{ color: "red", display: 'flex', alignItems: 'center' }} key={index}>
+                        <RiUserForbidFill /> {day}
+                      </span>
+                    ))}
+                </Value2>
+              </Div2>
+            )}
           </Left>
           <Right>
             <Img src="/imgs/user-img.jpg" alt="avata" />

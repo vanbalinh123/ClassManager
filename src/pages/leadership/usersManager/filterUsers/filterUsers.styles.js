@@ -30,7 +30,7 @@ export const Select = styled.select`
   border-radius: 10px;
   border: none;
   border: 1px solid ${generalStyles.border};
-  box-shadow: none;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   transition: all 0.3s;
 
   &:focus {

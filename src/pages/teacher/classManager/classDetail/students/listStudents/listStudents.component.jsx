@@ -157,12 +157,21 @@ const ListStudents = () => {
                   <Td>{usercode}</Td>
                   <Td>{findStudent(usercode)?.full_name}</Td>
                   <Td style={{ flex: 0.5 }}>{countAttendance(usercode)}</Td>
-                  {listScore.length > 0 &&
-                    listScore?.map((item2, index2) => (
-                      <Td style={{ flex: 0.5 }} key={index2}>
-                        {item2.score}
+                  {listTestsOfThisClass?.map((test, testIndex) => {
+                    const score = listScore.find(
+                      (item) => item.test_and_quiz === test.id
+                    );
+
+                    return (
+                      <Td style={{ flex: 0.5 }} key={testIndex}>
+                        {score ? (
+                          score.score
+                        ) : (
+                          <span style={{ color: "red" }}>Chưa có điểm</span>
+                        )}
                       </Td>
-                    ))}
+                    );
+                  })}
                 </tr>
               );
             })}

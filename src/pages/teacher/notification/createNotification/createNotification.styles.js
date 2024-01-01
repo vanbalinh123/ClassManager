@@ -51,6 +51,7 @@ export const Select = styled.select`
   border: 1px solid ${generalStyles.border};
   border-radius: 5px;
   text-align: center;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
 `;
 
 export const Option = styled.option``;
@@ -61,6 +62,7 @@ export const TitleNoti = styled.div`
   width: 70%;
   margin: 0 auto;
   align-items: center;
+  
 `;
 
 export const ContentNoti = styled.div`
@@ -89,10 +91,11 @@ export const Input = styled.input`
   bottom: 0;
   padding-left: 15px;
   border-radius: 10px;
+
   border: none;
   border: 1px solid
     ${(props) => (props.hasError ? "red" : generalStyles.border)};
-  box-shadow: 0px 0px 5px ${(props) => (props.hasError ? "red" : "none")};
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   transition: all 0.3s;
 
   &:focus {
@@ -120,7 +123,7 @@ export const Textarea = styled.textarea`
   border: none;
   border: 1px solid
     ${(props) => (props.hasError ? "red" : generalStyles.border)};
-  box-shadow: 0px 0px 5px ${(props) => (props.hasError ? "red" : "none")};
+    box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   transition: all 0.3s;
 
   &:focus {
@@ -135,12 +138,15 @@ export const DivSend = styled.div`
   height: 50px;
   display: flex;
   justify-content: flex-end;
+  
   width: 70%;
   margin: 0 auto;
 `;
 
 export const BtnSend = styled.button`
   display: flex;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
+
   align-items: center;
   justify-content: center;
   gap: 2px;

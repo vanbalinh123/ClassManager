@@ -15,10 +15,12 @@ export const DivBtn = styled.div`
   display: flex;
   gap: 20px;
   margin: 20px 0px;
+  justify-content: center;
 `;
 
 export const Btn = styled.button`
   display: flex;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   align-items: center;
   justify-content: center;
   gap: 5px;
@@ -39,7 +41,7 @@ export const Btn = styled.button`
 
 export const DivInput = styled.div`
   position: relative;
-  width: 300px;
+  width: 400px;
 `;
 
 export const Input = styled.input`
@@ -52,7 +54,7 @@ export const Input = styled.input`
   border-radius: 10px;
   border: none;
   border: 1px solid ${generalStyles.border};
-  box-shadow: none;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   transition: all 0.3s;
 
   &:focus {
@@ -60,4 +62,21 @@ export const Input = styled.input`
     border-color:  ${generalStyles.active};
     box-shadow: 0px 0px 5px ${generalStyles.active}
   }
+`;
+
+export const Ctn = styled.div`
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const DivUploadXML = styled.div`
+  width: 100%;
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid ${generalStyles.border};
+  box-shadow: ${generalStyles.border} 0px 0px 15px;
+  margin-bottom: 20px;
 `;

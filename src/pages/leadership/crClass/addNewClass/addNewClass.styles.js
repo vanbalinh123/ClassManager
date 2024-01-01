@@ -55,6 +55,7 @@ export const Input = styled.input`
   bottom: 0;
   padding-left: 15px;
   border-radius: 10px;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
   border: none;
   border: 1px solid
     ${(props) => (props.hasError ? "red" : generalStyles.border)};
@@ -77,21 +78,40 @@ export const DivBtn = styled.div`
 `;
 
 export const Btn = styled.button`
-display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   gap: 2px;
   border-radius: 10px;
+  /* width: 100px;
+  height: 50px; */
+  padding: 10px;
   width: 100px;
   height: 50px;
   border: none;
   color: ${generalStyles.textWhite};
   background-color: ${generalStyles.bgc};
-  letter-spacing: 1px;
-  transition: all 0.3s;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
+  transition: all 0.2s;
 
   &:hover {
     cursor: pointer;
-    background-color: ${generalStyles.active};
+    background-color: ${generalStyles.bgrhv};
   }
 `;
+
+export const DivUploadXML = styled.div`
+  width: 100%;
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid ${generalStyles.border};
+  box-shadow: ${generalStyles.border} 0px 0px 15px;
+`;
+
+export const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+

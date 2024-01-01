@@ -2,35 +2,40 @@ import { useClassDetailQuery } from "../../../../../redux/api/leader/class-api.s
 import { useListAttendanceQuery } from "../../../../../redux/api/teacher/attendance-api.slice";
 import { useInforClassQuery } from "../../../../../redux/api/teacher/class-information-api";
 import { useListTestsQuery } from "../../../../../redux/api/teacher/test-api";
-import { BiUserX } from "react-icons/bi";
+import { useState } from "react";
+import DetailLessonContent from "../listLessonContent/detailLessonContent/detailLessonContent.component";
 
+import { DivTables, TitleTb, DivTable, Img } from "./infoClassDetail.styles";
 
 import {
-  Div,
-  Title,
-  Content,
-  Info,
-  Span,
-  Data,
-  TotalAbsent,
-  DetailAbsent,
-  DateAbsent,
-} from "./infoClassDetail.styles";
+  Table,
+  TableWrapper,
+  Th,
+  Td,
+} from "../../../../../generalCss/table.styles";
 
-const InforClassDetail = ({ classCode, detailStudent, thisLessonContent }) => {
+const InforClassDetail = ({
+  classCode,
+  detailStudent,
+  thisLessonContent,
+  detailTeacher,
+  thisSchedule
+}) => {
   const { data: classDetail } = useClassDetailQuery(classCode);
   const { data: listTests } = useListTestsQuery();
   const { data: classInfor } = useInforClassQuery(classCode);
   const findTuition = () => {
-    const tuition = classInfor?.payment.find(item => item.student === detailStudent?.usercode)
-    console.log(detailStudent)
-    if(tuition) {
-      return 'Đã thanh toán'
+    const tuition = classInfor?.payment.find(
+      (item) => item.student === detailStudent?.usercode
+    );
+    console.log(detailStudent);
+    if (tuition) {
+      return "Đã thanh toán";
     } else {
-      return 'Chưa thanh toán'
+      return "Chưa thanh toán";
     }
-  }
-  
+  };
+
   const listTestsOfThisClass = listTests?.filter(
     (item) => item.class_info === classCode
   );
@@ -93,63 +98,138 @@ const InforClassDetail = ({ classCode, detailStudent, thisLessonContent }) => {
     return count;
   };
 
-  console.log(findAbsentDay("ST00039"));
+  const thisLessonContentReverse = thisLessonContent?.reverse();
+  const [check, setCheck] = useState(false);
+  const [detail, setDetail] = useState(null);
+
+  const handleItemClick = (item) => {
+    setDetail(item);
+    setCheck(true);
+  };
+
   return (
-    <Div>
-      <Title>Kết quả học tập</Title>
-      <Content>
-        <Info>
-          <Span>Tên học sinh:</Span>
-          <Data>{detailStudent?.full_name}</Data>
-        </Info>
-        <Info>
-          <Span>Tên lớp học:</Span>
-          <Data>{classDetail?.class_name}</Data>
-        </Info>
-        <Info>
-          <Span>Mã lớp học:</Span>
-          <Data>{classDetail?.class_code}</Data>
-        </Info>
-        <Info>
-          <Span>Học phí:</Span>
-          <Data>{classDetail?.cost}</Data>
-        </Info>
-        <Info>
-          <Span>Trạng thái:</Span>
-          {findTuition() === 'Chưa thanh toán'
-            && <Data style={{color: 'red'}}>{findTuition()}</Data>
-            || <Data style={{color: '#1a9ca6'}}>{findTuition()}</Data>
-          }
-        </Info>
-        <Info>
-          <Span>Tổng số buổi vắng:</Span>
-          <Data>
-            <TotalAbsent>
-              {countAttendance(detailStudent?.usercode)}
-            </TotalAbsent>
-            <DetailAbsent>
+    <DivTables>
+      <DivTable>
+        <TitleTb>Thông tin lớp học</TitleTb>
+        <TableWrapper>
+          <Table>
+            <thead>
+              <tr>
+                <Th>Tên lớp</Th>
+                <Th>Mã lớp</Th>
+                <Th>Khoá</Th>
+                <Th>Tổng buổi</Th>
+                <Th>Học phí</Th>
+                <Th>Trạng thái</Th>
+                <Th>Tổng vắng</Th>
+                {findAbsentDay(detailStudent?.usercode).length > 0 &&
+                  findAbsentDay(detailStudent?.usercode).map((day, index) => (
+                    <Th key={index}></Th>
+                  ))}
+              </tr>
+            </thead>
+            <tbody>
+              <Td>{classDetail?.class_name}</Td>
+              <Td>{classDetail?.class_code}</Td>
+              <Td>{classDetail?.course}</Td>
+              <Td>{thisSchedule?.class_sessions_set?.length}</Td>
+              <Td>{classDetail?.cost}</Td>
+              {(findTuition() === "Chưa thanh toán" && (
+                <Td style={{ color: "red" }}>{findTuition()}</Td>
+              )) || <Td style={{ color: "#1a9ca6" }}>{findTuition()}</Td>}
+              <Td>{countAttendance(detailStudent?.usercode)}</Td>
               {findAbsentDay(detailStudent?.usercode).length > 0 &&
                 findAbsentDay(detailStudent?.usercode).map((day, index) => (
-                  <DateAbsent key={index}>
-                    <BiUserX color="red" />
+                  <Td style={{ color: "red" }} key={index}>
                     {day}
-                  </DateAbsent>
+                  </Td>
                 ))}
-            </DetailAbsent>
-          </Data>
-        </Info>
-        {listTestsOfThisClass?.map((item, index) => {
-          if (item.scores.length > 0) {
-            return (
-              <Info key={index}>
-                <Span>{item.quiz_name}</Span>
-                <Data>{countScore(item.id)}</Data>
-              </Info>
-            );
-          }
-        })}
-      </Content>
-    </Div>
+            </tbody>
+          </Table>
+        </TableWrapper>
+      </DivTable>
+      <DivTable>
+        <TitleTb>Bảng điểm</TitleTb>
+        <TableWrapper>
+          <Table>
+            <thead>
+              <tr>
+                {listTestsOfThisClass?.map((item, index) => {
+                  if (item.scores.length > 0) {
+                    return <Th key={index}>{item.quiz_name}</Th>;
+                  }
+                })}
+              </tr>
+            </thead>
+
+            {(listTestsOfThisClass?.length > 0 && (
+              <tbody>
+                {listTestsOfThisClass?.map((item, index) => {
+                  if (item.scores.length > 0) {
+                    return <Td key={index} style={{color: '#1a9ca6'}}>{countScore(item.id)}</Td>;
+                  }
+                })}
+              </tbody>
+            )) || (
+              <div style={{ color: "red" }}>Chưa có bài kiểm tra nào !!!</div>
+            )}
+          </Table>
+        </TableWrapper>
+      </DivTable>
+      <DivTable>
+        {check === true && (
+          <DetailLessonContent setCheck={setCheck} detail={detail} />
+        )}
+        <TitleTb>Nội dung bài học</TitleTb>
+        <TableWrapper>
+          <Table>
+            <thead>
+              <tr>
+                <Th>Buổi</Th>
+                <Th>Ngày</Th>
+                <Th>Nội dung</Th>
+              </tr>
+            </thead>
+            <tbody>
+              {thisLessonContentReverse?.reverse().map((item, index) => (
+                <tr key={index} onClick={() => handleItemClick(item)}>
+                  <Td>{index + 1}</Td>
+                  <Td>{item.session_day}</Td>
+                  <Td>{item.content}</Td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </TableWrapper>
+      </DivTable>
+      <DivTable>
+        <TitleTb>Thông tin giáo viên</TitleTb>
+        <TableWrapper>
+          <Table>
+            <thead>
+              <tr>
+                <Th>Hình ảnh</Th>
+                <Th>Mã giáo viên</Th>
+                <Th>Tên giáo viên</Th>
+                <Th>Email</Th>
+                <Th>SDT</Th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <Td>
+                  <Img src="/imgs/user-img.jpg" alt="avata" />
+                </Td>
+                <Td>{detailTeacher?.usercode}</Td>
+                <Td>{detailTeacher?.full_name}</Td>
+                <Td>{detailTeacher?.email}</Td>
+                <Td>{detailTeacher?.mobile}</Td>
+              </tr>
+            </tbody>
+          </Table>
+        </TableWrapper>
+      </DivTable>
+    </DivTables>
   );
 };
 

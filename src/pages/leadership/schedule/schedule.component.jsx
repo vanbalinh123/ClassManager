@@ -17,6 +17,7 @@ import { useCreateInfoClassMutation } from "../../../redux/api/teacher/class-inf
 import { Page, Title } from "../../../generalCss/shared.styles";
 import LeftLayout from "./leftLayout/leftLayout.component";
 import RightLayout from "./rightLayout/rightLayoout.component";
+import UploadScheduleXml from "./uploadScheduleXml/uploadScheduleXml.component";
 
 import { Form, Right, DivBtn, Btn } from "./schedule.styles";
 import { useEffect } from "react";
@@ -29,6 +30,7 @@ const CreateSchedule = () => {
     formState: { errors },
     setValue,
   } = useForm();
+  const navigate = useNavigate();
   const { classCode: classCodeParam } = useParams();
   const sessionsPerWeek = Math.min(watch("week", 0), 7);
   let daysOfWeek = [];
@@ -80,6 +82,12 @@ const CreateSchedule = () => {
           setValue(`date[${index}].day`, session.dayOfWeek);
         });
       }
+    } else {
+      setValue("teacherCode", "");
+      setValue("course", "");
+      setValue("week", "");
+      setValue("startDate", "");
+      setValue("room", "");
     }
   }, [classCodeParam]);
 
@@ -95,6 +103,10 @@ const CreateSchedule = () => {
       startTime: String(item.startTime),
       endTime: String(item.endTime),
     }));
+
+    data.date.map((item) => {
+      return console.log(item);
+    });
 
     console.log(daysOfWeek.sort());
 
@@ -124,20 +136,19 @@ const CreateSchedule = () => {
         Teachers: data.teacherCode,
         students: [],
       };
-      
+
       await createClassInfo(classInfo);
 
       if (response.data) {
-        toastSuccess(
-          `Create a teaching schedule for ${data.classCode} successful`
-        );
+        toastSuccess(`Tạo lịch dạy cho lớp ${data.classCode} thành công`);
         setValue("teacherCode", "");
         setValue("course", "");
         setValue("week", "");
         setValue("startDate", "");
         setValue("room", "");
+        navigate("/leader/class");
       } else {
-        toastError("Error");
+        toastError("Đã xảy ra lỗi!!");
       }
     } else {
       if (clCodeNew === "") {
@@ -162,6 +173,7 @@ const CreateSchedule = () => {
           setValue("week", "");
           setValue("startDate", "");
           setValue("room", "");
+          navigate("/leader/class");
         } else {
           toastError("Error");
         }
@@ -191,6 +203,7 @@ const CreateSchedule = () => {
           setValue("week", "");
           setValue("startDate", "");
           setValue("room", "");
+          navigate("/leader/class");
         } else {
           toastError("Error");
         }
@@ -201,9 +214,7 @@ const CreateSchedule = () => {
 
   return (
     <Page>
-      {(classCodeParam === "new" && (
-        <Title>TẠO LỊCH DẠY</Title>
-      )) ||
+      {(classCodeParam === "new" && <Title>TẠO LỊCH DẠY</Title>) ||
         (clCodeNew === "" && (
           <Title>CẬP NHẬT LỊCH DẠY {classCodeParam}</Title>
         )) || <Title>TẠO LỊCH DẠY</Title>}
@@ -244,6 +255,7 @@ const CreateSchedule = () => {
             )}
         </DivBtn>
       </Form>
+      {classCodeParam === "new" && <UploadScheduleXml />}
       <ToastCtn />
     </Page>
   );

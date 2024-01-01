@@ -50,10 +50,10 @@ const Infomations = ({ selectedValue }) => {
 
     if (selectedValue === "Admin") {
       console.log("ccc");
-      dulieu.classes = [];
+      // dulieu.classes = [];
       response = await createAdmin(dulieu);
     } else if (selectedValue === "Teacher") {
-      dulieu.classes = [];
+      // dulieu.classes = [];
       response = await createTeacher(dulieu);
     } else if (selectedValue === "Student") {
       // dulieu.address = "ABC";

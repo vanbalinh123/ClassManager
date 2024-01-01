@@ -77,8 +77,8 @@ const QuizDetail = () => {
   };
 
   const handleSubmitScores = async () => {
-    if (scores.length !== listStudentsCode.length)
-      return toastError("Not enough students have been enrolled!");
+    // if (scores.length !== listStudentsCode.length)
+    //   return toastError("Not enough students have been enrolled!");
 
     const invalidScores = scores?.find(
       (item) => Number(item.score) < 0 || Number(item.score) > 10
@@ -105,8 +105,8 @@ const QuizDetail = () => {
   };
 
   const handleUpdateScores = async () => {
-    if (scores.length !== listStudentsCode.length)
-      return toastError("Not enough students have been enrolled!");
+    // if (scores.length !== listStudentsCode.length)
+    //   return toastError("Not enough students have been enrolled!");
 
     const invalidScores = scores.find(
       (item) =>

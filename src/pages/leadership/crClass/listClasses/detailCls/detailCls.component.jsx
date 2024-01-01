@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
+import { FaAddressCard } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
+import { MdFileUpload } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { useListStudentsQuery } from "../../../../../redux/api/leader/list-users-api.slice";
 import { useInforClassQuery } from "../../../../../redux/api/teacher/class-information-api";
@@ -7,6 +10,8 @@ import { useUpdateInfoClassMutation } from "../../../../../redux/api/teacher/cla
 import { useListLessonContentsQuery } from "../../../../../redux/api/teacher/lesson-content-api.slice";
 import { useListAttendanceQuery } from "../../../../../redux/api/teacher/attendance-api.slice";
 import { useListTestsQuery } from "../../../../../redux/api/teacher/test-api";
+import UploadStudentXML from "./upLoadStudentXml/uploadStudentXml.component";
+import ChangeInfoClass from "./changeInfoClass/changeInfoClass.component";
 
 import {
   ToastCtn,
@@ -32,6 +37,8 @@ import {
   Btn,
   DivInput,
   Input,
+  Ctn,
+  DivUploadXML,
 } from "./detailCls.styles";
 
 const DetailCls = () => {
@@ -45,6 +52,7 @@ const DetailCls = () => {
   const { data: listTests } = useListTestsQuery();
   const { data: listLessonContent } = useListLessonContentsQuery();
   const { data: listAttendance } = useListAttendanceQuery();
+  const [open, setOpen] = useState(false);
 
   const listTestsOfThisClass = listTests?.filter(
     (item) => item.class_info === classCode
@@ -121,6 +129,10 @@ const DetailCls = () => {
     }
   };
 
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
   return (
     <Page>
       <StudentDetail
@@ -138,68 +150,95 @@ const DetailCls = () => {
         listAttendance={listAttendance}
       />
       <Title>Chi tiết lớp học {classCode}</Title>
-      <DivBtn>
-        <DivInput>
-          <Input
-            placeholder="Nhập mã học sinh..."
-            value={studentCode}
-            onChange={(e) => setStudentCode(e.target.value)}
-          />
-        </DivInput>
-        <Btn onClick={() => handleAddNewStudent()}>
-          <AiOutlineUserAdd size="15px" />
-          Thêm
-        </Btn>
-      </DivBtn>
-      <Div>
-        <TableWrapper>
-          <Table>
-            <thead>
-              <tr>
-                <Th style={{ flex: 0.5 }}>STT</Th>
-                <Th>Mã học sinh</Th>
-                <Th>Tên học sinh</Th>
-                <Th style={{ flex: 0.5 }}>Vắng mặt</Th>
-                {listTestsOfThisClass?.map((item, index) => {
-                  if (item.scores.length > 0) {
-                    return (
-                      <Th style={{ flex: 0.5 }} key={index}>
-                        {item.quiz_name}
-                      </Th>
-                    );
-                  }
-                })}
-              </tr>
-            </thead>
-            <tbody>
-              {infoClass?.students.map((usercode, index) => {
-                const listScore = findListScoreOfSt(usercode);
+      <Ctn>
+        <ChangeInfoClass />
+        <DivBtn>
+          <DivInput>
+            <Input
+              placeholder="Nhập mã học sinh..."
+              value={studentCode}
+              onChange={(e) => setStudentCode(e.target.value)}
+            />
+          </DivInput>
+          <Btn onClick={() => handleAddNewStudent()}>
+            <AiOutlineUserAdd size="15px" />
+            Thêm
+          </Btn>
+          {(open && (
+            <Btn onClick={handleOpen}>
+              <IoMdClose size="15px" />
+              Đóng
+            </Btn>
+          )) || (
+            <Btn onClick={handleOpen}>
+              <MdFileUpload size="15px" />
+              Tải lên
+            </Btn>
+          )}
+        </DivBtn>
+        {open && (
+          <DivUploadXML>
+            <UploadStudentXML />
+          </DivUploadXML>
+        )}
+        <Div>
+          <TableWrapper>
+            <Table>
+              <thead>
+                <tr>
+                  <Th style={{ flex: 0.5 }}>STT</Th>
+                  <Th>Mã học sinh</Th>
+                  <Th>Tên học sinh</Th>
+                  <Th style={{ flex: 0.5 }}>Vắng mặt</Th>
+                  {listTestsOfThisClass?.map((item, index) => {
+                    if (item.scores.length > 0) {
+                      return (
+                        <Th style={{ flex: 0.5 }} key={index}>
+                          {item.quiz_name}
+                        </Th>
+                      );
+                    }
+                  })}
+                  <Th>Chi tiết</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {infoClass?.students.map((usercode, index) => {
+                  const listScore = findListScoreOfSt(usercode);
 
-                return (
-                  <tr
-                    onClick={() => handleItemClick(usercode)}
-                    key={index}
-                  >
-                    <Td style={{ flex: 0.5 }}>{index + 1}</Td>
-                    <Td>{usercode}</Td>
-                    <Td>{findStudent(usercode)?.full_name}</Td>
-                    <Td style={{ flex: 0.5 }}>
-                      {countAttendance(usercode)}
-                    </Td>
-                    {listScore.length > 0 &&
-                      listScore?.map((item2, index2) => (
-                        <Td style={{ flex: 0.5 }} key={index2}>
-                          {item2.score}
-                        </Td>
-                      ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        </TableWrapper>
-        <ToastCtn />
-      </Div>
+                  return (
+                    <tr key={index}>
+                      <Td style={{ flex: 0.5 }}>{index + 1}</Td>
+                      <Td>{usercode}</Td>
+                      <Td>{findStudent(usercode)?.full_name}</Td>
+                      <Td style={{ flex: 0.5 }}>{countAttendance(usercode)}</Td>
+                      {listTestsOfThisClass?.map((test, testIndex) => {
+                        const score = listScore.find(
+                          (item) => item.test_and_quiz === test.id
+                        );
+
+                        return (
+                          <Td style={{ flex: 0.5 }} key={testIndex}>
+                            {score ? (
+                              score.score
+                            ) : (
+                              <span style={{ color: "red" }}>Chưa có điểm</span>
+                            )}
+                          </Td>
+                        );
+                      })}
+                      <Td onClick={() => handleItemClick(usercode)}>
+                        <FaAddressCard />
+                      </Td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </TableWrapper>
+          <ToastCtn />
+        </Div>
+      </Ctn>
     </Page>
   );
 };

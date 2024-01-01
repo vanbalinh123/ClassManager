@@ -102,11 +102,11 @@ const ListClassOfChild = ({ listClasses }) => {
         <Table>
           <thead>
             <tr>
-              <Th>Class Code</Th>
-              <Th>Class Name</Th>
-              <Th>Teacher Name</Th>
-              <Th>Course</Th>
-              <Th>Student</Th>
+              <Th>Mã lớp</Th>
+              <Th>Tên lớp</Th>
+              <Th>Tên giáo viên</Th>
+              <Th>Khoá</Th>
+              <Th>Học sinh</Th>
             </tr>
           </thead>
           <tbody>

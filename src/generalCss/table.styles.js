@@ -1,5 +1,5 @@
 import generalStyles from "./general.styles";
-import styled from "styled-components";
+import { styled, css } from "styled-components";
 
 export const TableWrapper = styled.div`
   width: 100%;
@@ -24,11 +24,18 @@ export const Th = styled.th`
 
 export const Td = styled.td`
   padding: 10px;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   overflow: hidden;
   max-width: 150px;
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis; */
   border: 1px solid #ddd;
+
+  ${(props) =>
+    props.nowrap ||
+    css`
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    `}
 
   &:hover {
     cursor: pointer;

@@ -38,7 +38,7 @@ export const Blur = styled.div`
 export const Detail = styled.div`
   position: absolute;
   border-radius: 10px;
-  width: 700px;
+  width: 800px;
   /* height: 500px; */
   z-index: 21;
   background-color: #ffffff;
@@ -80,6 +80,14 @@ export const Div = styled.div`
   align-items: center;
 `;
 
+export const Div2 = styled.div`
+  min-height: 130px;
+  display: flex;
+  padding-top: 4px;
+  /* align-items: center; */
+  /* border: 1px solid red; */
+`;
+
 export const Span = styled.span`
   flex: 1;
   font-weight: bold;
@@ -88,6 +96,14 @@ export const Span = styled.span`
 export const Value = styled.span`
   flex: 1;
   color: ${generalStyles.active};
+`;
+
+export const Value2 = styled.span`
+  flex: 1;
+  color: ${generalStyles.active};
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 
 export const Right = styled.div`

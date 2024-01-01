@@ -13,6 +13,7 @@ export const SelectSearch = styled.select`
   border: 1px solid ${generalStyles.border};
   box-shadow: none;
   transition: all 0.3s;
+  box-shadow: ${generalStyles.border} 0px 2px 8px 0px;
 
   &:focus {
     outline: none;

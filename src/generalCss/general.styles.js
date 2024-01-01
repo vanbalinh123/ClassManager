@@ -6,5 +6,6 @@ export default {
     border: '#e2e0e1',
     active: '#1a9ca6',
     textGrey: '#a7a7a7',
-    sizeTitle: '22px'
+    sizeTitle: '22px',
+    bgrhv: '#3498db'
 }

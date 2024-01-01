@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useListClassQuery } from "../../../redux/api/leader/class-api.slice";
+import { FaArrowDown } from "react-icons/fa";
+
 
 import { Page, Title } from "../../../generalCss/shared.styles";
 import ListClasses from "./listClasses/listClasses.component";
 import AddNewClass from "./addNewClass/addNewClass.component";
 import SearchContainer from "../../../components/search/search";
 
-import { Content } from "./classes.styles";
+import { Content, Div } from "./classes.styles";
 
 
 const CreateClasses = () => {
@@ -26,7 +28,10 @@ const CreateClasses = () => {
         type='text'
       />
       <Content>
-        <div onClick={() => setCheck(!check)}>tạo lớp</div>
+        <Div onClick={() => setCheck(!check)}>
+          Tạo lớp
+          <FaArrowDown size='15px'/>
+        </Div>
         {check === true
           && <AddNewClass />
         }
