@@ -2,16 +2,16 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const baseQuerys = fetchBaseQuery({
     baseUrl: 'http://localhost:8000/',
-    prepareHeaders: (headers) => {
-        // const token = JSON.parse(localStorage.getItem('accessToken'));
-        // console.log(token)
-        // if (token) {
-        //     headers.set('Authorization', `Bearer ${token}`);
-        //     headers.set('Content-Type', 'application/json');
-        // }
-        headers.set('Content-Type', 'application/json');
-        return headers;
-    }
+    // prepareHeaders: (headers) => {
+    //     const token = JSON.parse(localStorage.getItem('accessToken'));
+    //     console.log(token)
+    //     if (token) {
+    //         headers.set('Authorization', `Bearer ${token}`);
+    //         headers.set('Content-Type', 'application/json');
+    //     }
+    //     headers.set('Content-Type', 'application/json');
+    //     return headers;
+    // }
 });
 
 

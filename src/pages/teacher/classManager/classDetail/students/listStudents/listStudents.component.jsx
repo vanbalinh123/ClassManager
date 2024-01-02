@@ -78,39 +78,39 @@ const ListStudents = () => {
     setDetail(true);
   };
 
-  const handleAddNewStudent = async () => {
-    if (!studentCode) {
-      toastError("Please enter a student code.");
-      return;
-    }
+  // const handleAddNewStudent = async () => {
+  //   if (!studentCode) {
+  //     toastError("Please enter a student code.");
+  //     return;
+  //   }
 
-    const checkExist = infoClass.students.find((item) => item === studentCode);
+  //   const checkExist = infoClass.students.find((item) => item === studentCode);
 
-    if (checkExist) {
-      toastWarn("Students attended class!");
-      return;
-    }
+  //   if (checkExist) {
+  //     toastWarn("Students attended class!");
+  //     return;
+  //   }
 
-    const newListStudent = [...infoClass.students, studentCode];
+  //   const newListStudent = [...infoClass.students, studentCode];
 
-    const dataUpdate = {
-      class_info: infoClass.class_info,
-      Teachers: infoClass.Teachers,
-      students: newListStudent,
-    };
-    const response = await updateInfoClass(dataUpdate);
-    if (response.data) {
-      setStudentCode("");
-      findStudent(studentCode);
-      toastSuccess("The student has been successfully added to the class!!");
-      return;
-    }
+  //   const dataUpdate = {
+  //     class_info: infoClass.class_info,
+  //     Teachers: infoClass.Teachers,
+  //     students: newListStudent,
+  //   };
+  //   const response = await updateInfoClass(dataUpdate);
+  //   if (response.data) {
+  //     setStudentCode("");
+  //     findStudent(studentCode);
+  //     toastSuccess("The student has been successfully added to the class!!");
+  //     return;
+  //   }
 
-    if (response.error) {
-      toastError("Student code does not exist.");
-      return;
-    }
-  };
+  //   if (response.error) {
+  //     toastError("Student code does not exist.");
+  //     return;
+  //   }
+  // };
 
   return (
     <Div>
@@ -178,7 +178,7 @@ const ListStudents = () => {
           </tbody>
         </Table>
       </TableWrapper>
-      <DivBtn>
+      {/* <DivBtn>
         <DivInput>
           <Input
             placeholder="Nhập mã học sinh..."
@@ -190,7 +190,7 @@ const ListStudents = () => {
           <AiOutlineUserAdd size="15px" />
           Thêm
         </Btn>
-      </DivBtn>
+      </DivBtn> */}
       <ToastCtn />
     </Div>
   );

@@ -9,15 +9,15 @@ const updateUserApi = apiSlice.injectEndpoints({
                 body: {full_name, email, password, mobile, role, usercode}
             }),
         }),
-        // updateTeacher: builder.mutation({
-        //     query: (dataUpdate) => {
-        //         const usercode = dataUpdate.get('usercode');
-        //         return {
-        //             url: `/api/teacher/${usercode}/`,
-        //             method: 'PUT',
-        //             body: dataUpdate,
-        //         };
-        //     },
+        updateTeacher: builder.mutation({
+            query: (dataUpdate) => {
+                // const usercode = dataUpdate.get('usercode');
+                return {
+                    url: `/api/teacher/${dataUpdate.usercode}/`,
+                    method: 'PUT',
+                    body: dataUpdate,
+                };
+            },
         //     async onQueryStarted(data, { dispatch, queryFulfilled }) {
         //       const action = apiSlice.util.updateQueryData('listTeachers', undefined, draft => {
         //           console.log(draft)
@@ -31,7 +31,7 @@ const updateUserApi = apiSlice.injectEndpoints({
         //           patchResult.undo();
         //       }
         //   }
-        // }),
+        }),
         updateStudent: builder.mutation({
             query: ({full_name, email, password, mobile, role, usercode}) => ({
                 url: `/api/student/${usercode}/`,

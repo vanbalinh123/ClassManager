@@ -17,55 +17,111 @@ const LessonContent = () => {
   const [createLessonContent] = useCreateLessonContentMutation();
   const [updateLessonContent] = useUpdateLessonContentMutation();
   const { data: listLessonContent } = useListLessonContentsQuery();
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const lesson =
     listLessonContent
       ?.filter((item) => item.class_info === classCode)
       .find((item) => item.class_session === Number(idSession)) || null;
-  
-      useEffect(() => {
-        if (lesson !== null) {
-          data.current.value = lesson.content;
-        } else {
-          data.current.value = "";
-        }
-      }, [lesson]);
-    
-      
+
+      console.log(lesson)
+
+  useEffect(() => {
+    if (lesson !== null) {
+      data.current.value = lesson.content;
+      setSelectedFiles(lesson.File)
+    } else {
+      data.current.value = "";
+    }
+  }, [lesson]);
+
   const handleSave = async () => {
-    const dataPost = {
-      class_info: classCode,
-      content: data.current.value,
-      class_session: idSession,
-    };
+    const formData = new FormData();
+    formData.append("class_info", classCode);
+    formData.append("content", data.current.value);
+    formData.append("class_session", idSession);
+
+    selectedFiles.forEach((file, index) => {
+      formData.append(`files[${index}]`, file);
+    });
+
+    const values = [...formData.values()];
+    console.log(values);
+    const data2 = Object.fromEntries(formData);
+    console.log(data2);
 
     try {
-      const response = await createLessonContent(dataPost);
+      const response = await createLessonContent(formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response);
       toastSuccess("You have successfully added lesson content!");
-    } catch (err) {
+      setSelectedFiles([]);
+    } catch (error) {
       toastError("Error!!");
     }
   };
 
   const handleUpdate = async () => {
-    let lessonToday = listLessonContent?.find(item => item.class_session === Number(idSession));
-    // lessonToday.content = data.current.value;
-    const dataPut = {
-      class_info: lessonToday.class_info,
-      class_session: lessonToday.class_session,
-      content: data.current.value,
-      id: lessonToday.id,
-      Attendance_set: lessonToday.Attendance_set
-    }
-    
+    let lessonToday = listLessonContent?.find(
+      (item) => item.class_session === Number(idSession)
+    );
+
+    const formData = new FormData();
+    formData.append("class_info", lessonToday.class_info);
+    formData.append("content", data.current.value);
+    formData.append("class_session", lessonToday.class_session);
+    formData.append("id", lessonToday.id);
+    formData.append("Attendance_set", lessonToday.Attendance_set);
+
+    // Đối với mỗi file đã chọn, thêm vào FormData
+    selectedFiles.forEach((file, index) => {
+      formData.append(`files[${index}]`, file);
+    });
+
+
+    console.log('ccccccccc', selectedFiles)
+
     try {
-      const response = await updateLessonContent(dataPut);
+      const response = await updateLessonContent(formData,  {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const values = [...formData.values()];
+    console.log(values);
+    const data2 = Object.fromEntries(formData);
+    console.log(data2);
+      console.log(response)
       toastSuccess("You have successfully updated lesson content!");
+      setSelectedFiles([]); // Reset danh sách các file đã chọn sau khi cập nhật
     } catch (err) {
       toastError("Error!!");
     }
-  }
- 
+  };
+
+  const handleFileChange = (files) => {
+    setSelectedFiles((prevFiles) => [...prevFiles, ...Array.from(files)]);
+  };
+
+  const handleAddFile = () => {
+    const inputElement = document.createElement("input");
+    inputElement.type = "file";
+    inputElement.addEventListener("change", (e) =>
+      handleFileChange(e.target.files)
+    );
+    inputElement.click();
+  };
+
+  const handleRemoveFile = (index) => {
+    setSelectedFiles((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+  };
 
   return (
     <>
@@ -74,6 +130,24 @@ const LessonContent = () => {
         // onChange={(e) => setValue(e.target.value)}
         ref={data}
       />
+      <input type="file" onChange={(e) => handleFileChange(e.target.files)} />
+
+      <button onClick={handleAddFile}>Thêm File</button>
+      <div>
+        <strong>Selected Files:</strong>
+        <ul>
+          {selectedFiles.map((file, index) => (
+            <li key={index}>
+              {lesson !== null
+                && file.file
+                || file.name
+              }
+              {/* {file.name} */}
+              <button onClick={() => handleRemoveFile(index)}>Xóa</button>
+            </li>
+          ))}
+        </ul>
+      </div>
       {(lesson === null && (
         <DivBtn>
           <Btn onClick={handleSave}>
@@ -89,7 +163,6 @@ const LessonContent = () => {
           </Btn>
         </DivBtn>
       )}
-
       <ToastCtn />
     </>
   );

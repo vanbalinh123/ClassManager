@@ -71,7 +71,7 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
     dataUpdate.append("role", userRole.toLowerCase());
 
     if (selectedFile) {
-      dataUpdate.append("avatar", selectedFile, selectedFile.name);
+      dataUpdate.append("avatar", selectedFile);
     }
 
     let response = null;
@@ -83,6 +83,8 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
     } else if (userRole === "Student") {
       response = await updateStudent(dataUpdate);
     }
+
+    console.log(response)
 
     if (response.data) {
 

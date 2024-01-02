@@ -15,16 +15,23 @@ const lessonContentApi = apiSlice.injectEndpoints({
       query: (data) => ({
         url: `/api/lesson-content/`,
         method: 'POST',
-        body: data
+        body: data,
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
       })
     }),
     updateLessonContent: builder.mutation({
-      query: (data) => ({
-        url: `/api/lesson-content/${data.id}/`,
-        method: 'PUT',
-        body: data
-      })
+      query: (data) => {
+        const lessonId = data.get('id');
+        return {
+          url: `/api/lesson-content/${lessonId}/`,
+          method: 'PUT',
+          body: data
+        };
+      }
     })
+    
   }),
 });
 
