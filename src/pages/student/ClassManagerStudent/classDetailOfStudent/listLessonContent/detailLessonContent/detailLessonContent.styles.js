@@ -1,21 +1,33 @@
 import styled from "styled-components";
 import generalStyles from "../../../../../../generalCss/general.styles";
 
-export const DetailLesson = styled.span`
+export const Div = styled.span`
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 70;
+`;
+
+export const DetailLesson = styled.div`
   position: fixed;
   width: 55%;
-  height: 70%;
+  height: 80%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  background-color: #ffffff;
+  /* border: 1px solid ${generalStyles.border}; */
   border-radius: 7px;
   overflow: hidden;
-  background-color: ${generalStyles.border};
+  z-index: 80;
+  opacity: none;
+  
 `;
 
 export const Title = styled.div`
@@ -44,7 +56,7 @@ export const Date = styled.span`
 
 export const Content = styled.div`
   border: 1px solid ${generalStyles.border};
-  height: 100%;
+  height: 50%;
   margin: 20px 40px 10px 40px;
   padding: 15px;
   border-radius: 7px;
@@ -53,6 +65,10 @@ export const Content = styled.div`
 `;
 
 export const DivButton = styled.div`
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
   height: 100px;
   display: flex;
   align-items: center;
@@ -78,4 +94,13 @@ export const Btn = styled.button`
     cursor: pointer;
     background-color: ${generalStyles.active};
   }
+`;
+
+export const DivFile = styled.div`
+  padding: 10px 20px 1px 20px;
+`;
+
+export const Files = styled.div`
+  overflow-y: scroll;
+  padding-left: 10px;
 `;

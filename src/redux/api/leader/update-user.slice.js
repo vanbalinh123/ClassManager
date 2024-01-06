@@ -11,9 +11,9 @@ const updateUserApi = apiSlice.injectEndpoints({
         }),
         updateTeacher: builder.mutation({
             query: (dataUpdate) => {
-                // const usercode = dataUpdate.get('usercode');
+                const usercode = dataUpdate.get('usercode');
                 return {
-                    url: `/api/teacher/${dataUpdate.usercode}/`,
+                    url: `/api/teacher/${usercode}/`,
                     method: 'PUT',
                     body: dataUpdate,
                 };
@@ -39,6 +39,7 @@ const updateUserApi = apiSlice.injectEndpoints({
                 body: {full_name, email, password, mobile, role, usercode}
             }),
         }),
+        
     })
 })
 

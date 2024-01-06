@@ -39,7 +39,7 @@ const CreateNotification = () => {
   } = useForm();
   const [createNoti] = useCreateNotiAdminMutation();
 
-  const [selectedValue, setSelectedValue] = useState("All");
+  const [selectedValue, setSelectedValue] = useState("Teacher");
   const userCode = JSON.parse(localStorage.getItem("user_code"));
 
   const handleSelectChange = (event) => {
@@ -48,51 +48,51 @@ const CreateNotification = () => {
   };
 
   const onSubmit = async (data) => {
-    if (selectedValue === "All") {
-      const dataTeacher = {
-        usercode: userCode,
-        title: data.title,
-        content: data.content,
-        role: "teacher",
-      };
-      const dataStudent = {
-        usercode: userCode,
-        title: data.title,
-        content: data.content,
-        role: "student",
-      };
-      const dataParents = {
-        usercode: userCode,
-        title: data.title,
-        content: data.content,
-        role: "parent",
-      };
+    // if (selectedValue === "All") {
+    //   const dataTeacher = {
+    //     usercode: userCode,
+    //     title: data.title,
+    //     content: data.content,
+    //     role: "teacher",
+    //   };
+    //   const dataStudent = {
+    //     usercode: userCode,
+    //     title: data.title,
+    //     content: data.content,
+    //     role: "student",
+    //   };
+    //   const dataParents = {
+    //     usercode: userCode,
+    //     title: data.title,
+    //     content: data.content,
+    //     role: "parent",
+    //   };
 
-      await createNoti(dataTeacher);
-      await createNoti(dataStudent);
-      await createNoti(dataParents);
+    //   await createNoti(dataTeacher);
+    //   await createNoti(dataStudent);
+    //   await createNoti(dataParents);
+    //   setValue("title", "");
+    //   setValue("content", "");
+    //   setSelectedValue("All");
+    //   toastSuccess(`Gửi thông báo thành công`);
+    // } else {
+    // }
+    const dataRes = {
+      usercode: userCode,
+      title: data.title,
+      content: data.content,
+      role: selectedValue.toLowerCase(),
+    };
+
+    const response = await createNoti(dataRes);
+
+    if (response.data) {
       setValue("title", "");
       setValue("content", "");
-      setSelectedValue("All");
-      toastSuccess(`Create Notifications successful`);
+      setSelectedValue("Teacher");
+      toastSuccess(`Gửi thông báo thành công`);
     } else {
-      const dataRes = {
-        usercode: userCode,
-        title: data.title,
-        content: data.content,
-        role: selectedValue.toLowerCase(),
-      };
-
-      const response = await createNoti(dataRes);
-
-      if (response.data) {
-        setValue("title", "");
-        setValue("content", "");
-        setSelectedValue("All");
-        toastSuccess(`Create Notifications successful`);
-      } else {
-        toastError(`Create Notifications fail, try again!!`);
-      }
+      toastError(`Gửi thông báo thất bại, hãy thử lại!!`);
     }
   };
 
@@ -109,7 +109,7 @@ const CreateNotification = () => {
         <DivRole>
           Gửi đến:
           <Select value={selectedValue} onChange={handleSelectChange}>
-            <Option value="All">Tất cả</Option>
+            {/* <Option value="All">Tất cả</Option> */}
             <Option value="Teacher">Giáo viên</Option>
             <Option value="Student">Học sinh</Option>
             <Option value="Parent">Phụ huynh</Option>
@@ -120,10 +120,10 @@ const CreateNotification = () => {
           <DivInput>
             <Input
               type="text"
-              placeholder="Title..."
+              placeholder="Tiêu đê của thông báo..."
               hasError={!!errors.title}
               {...register("title", {
-                required: "Title is required!",
+                required: "Tiêu đề không được để trống!!",
               })}
             />
           </DivInput>
@@ -133,10 +133,10 @@ const CreateNotification = () => {
           <DivTextarea>
             <Textarea
               type="text"
-              placeholder="Content..."
+              placeholder="Nội dung của thông báo..."
               hasError={!!errors.content}
               {...register("content", {
-                required: "Content is required!",
+                required: "Nội dung không được để trống!!",
               })}
             />
           </DivTextarea>

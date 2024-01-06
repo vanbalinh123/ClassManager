@@ -1,16 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { List } from "./listNotificationsOfParents.styles";
 import Pagination from "../../../../../components/paginate/paginate";
 import DetailNotiST from "../../../../student/NotificationsOfStudent/HistoryNotificationsOfStudent/listNotificationsOfStudent/detailNotiST/detailNotiSt.component";
 
-import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-} from "../../../../../generalCss/shared.styles";
 
 import {
   TableWrapper,
@@ -26,6 +19,8 @@ const ListNotificationsOfParents = ({
 }) => {
   const [check, setCheck] = useState(false);
   const [value, setValue] = useState({});
+  const [localStorageData, setLocalStorageData] = useState({});
+  const userCode = JSON.parse(localStorage.getItem("user_code")) || "";
 
   let listNoti = [];
   if (roleNoti === "teacher") {
@@ -34,7 +29,43 @@ const ListNotificationsOfParents = ({
     listNoti = listAdminNotifications;
   }
 
-  console.log(listNoti);
+  useEffect(() => {
+    // Load the read status from Local Storage when the component mounts
+    const storedData =
+      JSON.parse(localStorage.getItem("notificationsReadStatus")) || {};
+
+    // Convert old data to the new format (set to true)
+    const convertedData = {};
+    Object.keys(storedData).forEach((key) => {
+      convertedData[key] = true;
+    });
+
+    setLocalStorageData(convertedData);
+  }, [userCode]);
+
+  const updateLocalStorage = (created_at) => {
+    // Update the Local Storage data for the clicked notification
+    setLocalStorageData((prevData) => ({
+      ...prevData,
+      [`${userCode}_${created_at}`]: true,
+    }));
+
+    // Save the updated data to Local Storage
+    localStorage.setItem(
+      "notificationsReadStatus",
+      JSON.stringify(localStorageData)
+    );
+  };
+
+  const handleItemClick = (item) => {
+    setCheck(true);
+    setValue(item);
+    // onNotificationClick();
+
+    // Mark the notification as read
+    item.isRead = true;
+    updateLocalStorage(item.created_at); // Update Local Storage for the clicked notification
+  };
 
   //paginate
   const itemsPerPage = 10;
@@ -46,16 +77,17 @@ const ListNotificationsOfParents = ({
     setCurrentPage(data.selected);
   };
 
-  const customList = listNoti?.slice(
+  const sortedListNoti = listNoti?.sort((a, b) => {
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
+
+
+  const customList = sortedListNoti?.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
   //paginate
 
-  const handleItemClick = (item) => {
-    setCheck(true);
-    setValue(item);
-  };
 
   return (
     <List>
@@ -77,7 +109,15 @@ const ListNotificationsOfParents = ({
           </thead>
           <tbody>
             {customList?.map((item, index) => (
-              <tr key={index} onClick={() => handleItemClick(item)}>
+              <tr 
+                key={index} 
+                onClick={() => handleItemClick(item)}
+                style={{
+                  color: localStorageData[`${userCode}_${item.created_at}`]
+                    ? "black"
+                    : "green",
+                }}
+              >
                 <Td>{item.title}</Td>
                 {(roleNoti === "teacher" && <Td>{item.message}</Td>) || (
                   <Td>{item.content}</Td>
@@ -91,7 +131,7 @@ const ListNotificationsOfParents = ({
                 </Td>
                 {(roleNoti === "teacher" && (
                   <Td>{item.class_code[0]}</Td>
-                )) || <Td>{item.usercode}sai</Td>}
+                )) || <Td>{item.usercode}</Td>}
               </tr>
             ))}
           </tbody>

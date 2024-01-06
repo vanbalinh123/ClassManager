@@ -10,6 +10,7 @@ import {
   Select,
   Option,
   DivBody,
+  Total,
 } from "./dbAsbsent.styles";
 
 const ChartAbsent = () => {
@@ -30,7 +31,8 @@ const ChartAbsent = () => {
   };
 
   const yearsList = calculateYears();
-  const [data, setData] = useState([]); 
+  const [data, setData] = useState([]);
+  const [totalStudents, setTotalStudents] = useState(0);
 
   useEffect(() => {
     const filteredData = listAttendance?.filter((item) => {
@@ -55,12 +57,12 @@ const ChartAbsent = () => {
       { absentCount: 0, presentCount: 0 }
     );
 
-  
+    const uniqueStudents = [...new Set(listAttendance?.map(item => item.student))];
+    setTotalStudents(uniqueStudents.length);
+
     const chartData = [
       {
-        // x: ["Absent", "Present"],
-        // y: [attendanceData?.absentCount, attendanceData?.presentCount],
-        labels: ["Absent", "Present"],
+        labels: ["Vắng mặt", "Hiện diện"],
         values: [attendanceData?.absentCount, attendanceData?.presentCount],
         type: "pie",
         marker: { color: ["#d85858", "#83D9EC"] },
@@ -79,16 +81,20 @@ const ChartAbsent = () => {
   return (
     <Div>
       <DivBody>
-        <BarChartAbsent chartData={data} layout={layout}/>
+        <BarChartAbsent chartData={data} layout={layout} />
       </DivBody>
       <DivHead>
+        <Total>
+          <span style={{ fontWeight: "bold" }}>Tổng số học sinh đã tham gia điểm danh:</span>
+          <span style={{ color: "#1a9ca6" }}>{totalStudents}</span>
+        </Total>
         <DivSelect>
-          <SpanName>Month:</SpanName>
+          <SpanName>Tháng:</SpanName>
           <Select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(Number(e.target.value))}
           >
-            <Option value="">All</Option>
+            <Option value="">Tất cả</Option>
             {months.map((item, index) => (
               <Option key={index} value={item}>
                 {item}
@@ -97,12 +103,12 @@ const ChartAbsent = () => {
           </Select>
         </DivSelect>
         <DivSelect>
-          <SpanName>Year:</SpanName>
+          <SpanName>Năm:</SpanName>
           <Select
             value={selectedYear}
             onChange={(e) => setSelectedYear(Number(e.target.value))}
           >
-            <Option value="">All</Option>
+            <Option value="">Tất cả</Option>
             {yearsList.map((item, index) => (
               <Option key={index} value={item}>
                 {item}

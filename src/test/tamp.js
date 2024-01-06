@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useInforClassQuery } from "../../../../../../../redux/api/teacher/class-information-api";
 import { useListStudentsQuery } from "../../../../../../../redux/api/leader/list-users-api.slice";
 import { useListLessonContentsQuery } from "../../../../../../../redux/api/teacher/lesson-content-api.slice";
-import { useUpdateLessonContent2Mutation } from "../../../../../../../redux/api/teacher/lesson-content-api.slice";
+import { useUpdateLessonContentMutation } from "../../../../../../../redux/api/teacher/lesson-content-api.slice";
 import {
   ToastCtn,
   toastSuccess,
@@ -18,7 +18,7 @@ import {
   Td,
 } from "../../../../../../../generalCss/table.styles";
 
-import { PageAttendance, Span, Input, DivBtn, Btn } from "./attendance.styles";
+import { PageAttendance, Input, DivBtn, Btn } from "./attendance.styles";
 
 const Attendance = () => {
   const { idSession, classCode } = useParams();
@@ -27,31 +27,13 @@ const Attendance = () => {
   const { data: infoClass } = useInforClassQuery(classCode);
   const { data: listStudent } = useListStudentsQuery();
   const { data: listLessonContent } = useListLessonContentsQuery();
-  const [updateLessonContent] = useUpdateLessonContent2Mutation();
+  const [updateLessonContent] = useUpdateLessonContentMutation();
 
   const lessonToday = listLessonContent?.find(
     (item) => item.class_session === Number(idSession)
   );
 
-  useEffect(() => {
-    if (lessonToday && lessonToday.Attendance_set.length !== 0) {
-      const initialAttendanceValues = lessonToday.Attendance_set.map(
-        (item) => ({
-          student: item.student,
-          is_present: item.is_present,
-          date: lessonToday.class_session,
-          lesson: lessonToday.id,
-        })
-      );
-      setAttendanceValues(initialAttendanceValues);
-    } else {
-      setAttendanceValues([]);
-    }
-  }, [lessonToday]);
-
-  const findStudent = (userCode) => {
-    return listStudent?.find((item) => item.usercode === userCode);
-  };
+  console.log("lesson TOday", lessonToday);
 
   const handleAttendanceChange = (usercode, value) => {
     setAttendanceValues((prevValues) => {
@@ -68,49 +50,118 @@ const Attendance = () => {
           student: usercode,
           is_present: value,
           date: lessonToday?.class_session,
-          lesson: lessonToday?.id,
+          // lesson: lessonToday?.id,
         });
       }
-
+      console.log("abc", newAttendanceValues);
       return newAttendanceValues;
     });
   };
 
+  useEffect(() => {
+    if (lessonToday && lessonToday.Attendance_set.length !== 0) {
+      const initialAttendanceValues = lessonToday.Attendance_set.map(
+        (item) => ({
+          student: item.student,
+          is_present: item.is_present,
+          date: lessonToday.class_session,
+          // lesson: lessonToday.id,
+        })
+      );
+      setAttendanceValues(initialAttendanceValues);
+    } else {
+      setAttendanceValues([]);
+    }
+  }, [lessonToday]);
+
+  const findStudent = (userCode) => {
+    return listStudent?.find((item) => item.usercode === userCode);
+  };
+
   const handleSubmitAttendance = async () => {
     if (attendanceValues.length !== infoClass?.students.length) {
-      return toastError("Vẫn còn dữ liệu trống!!");
+      return toastError("Không được để trống");
     }
+    
+    const formData = new FormData();
 
-    const data = {
-      class_info: lessonToday?.class_info,
-      class_session: lessonToday?.class_session,
-      content: lessonToday?.content,
-      id: lessonToday?.id,
-      Attendance_set: attendanceValues,
+    formData.append("class_info", lessonToday?.class_info);
+    formData.append("class_session", lessonToday?.class_session);
+    formData.append("content", lessonToday?.content);
+    formData.append("id", lessonToday?.id);
+
+    attendanceValues.forEach((item, index) => {
+      formData.append(`Attendance_set[${index}][student]`, item.student);
+      formData.append(`Attendance_set[${index}][is_present]`, item.is_present);
+      formData.append(`Attendance_set[${index}][date]`, item.date);
+      // formData.append(`Attendance_set[${index}][lesson]`, item.lesson);
+    });
+
+    formData.append("File", lessonToday?.File);
+
+    const convertToJSON = (formData) => {
+      const jsonData = [];
+      for (var pair of formData.entries()) {
+        const [key, value] = pair;
+        const match = key.match(/Attendance_set\[(\d+)\]\[([^\]]+)\]/);
+
+        if (match) {
+          const index = match[1];
+          const property = match[2];
+
+          if (!jsonData[index]) {
+            jsonData[index] = {};
+          }
+
+          jsonData[index][property] = value;
+        }
+      }
+      return jsonData;
     };
+    console.log("FormData as JSON: ", convertToJSON(formData));
 
     try {
-      const response = await updateLessonContent(data);
-      toastSuccess("Điểm danh thành công!");
+      const response = await updateLessonContent(formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("ádasd", response);
+      toastSuccess("Điểm danh thành công");
     } catch (err) {
       toastError("Điểm danh thất bại");
     }
   };
 
   const handleUpdateAttendance = async () => {
-    const data = {
-      class_info: lessonToday?.class_info,
-      class_session: lessonToday.class_session,
-      content: lessonToday?.content,
-      id: lessonToday?.id,
-      Attendance_set: attendanceValues,
-    };
+    const formData = new FormData();
+
+    formData.append("class_info", lessonToday?.class_info);
+    formData.append("class_session", lessonToday?.class_session);
+    formData.append("content", lessonToday?.content);
+    formData.append("id", lessonToday?.id);
+
+    attendanceValues.forEach((item, index) => {
+      formData.append(`Attendance_set[${index}][student]`, item.student);
+      formData.append(`Attendance_set[${index}][is_present]`, item.is_present);
+      formData.append(`Attendance_set[${index}][date]`, item.date);
+      formData.append(`Attendance_set[${index}][lesson]`, item.lesson);
+    });
+
+    lessonToday?.File.forEach((file, index) => {
+      formData.append(`File[${index}][file]`, file.file);
+      formData.append(`File[${index}][lesson]`, file.lesson);
+    });
 
     try {
-      const response = await updateLessonContent(data);
-      toastSuccess("Cập nhật thành công!");
+      const response = await updateLessonContent(formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      toastSuccess("Cập nhật thành công");
     } catch (err) {
-      toastError("Cập nhật thất bại!!");
+      toastError("Cập nhật thất bại");
     }
   };
 

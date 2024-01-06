@@ -8,6 +8,7 @@ import {
   Select,
   Option,
   DivBody,
+  Total
 } from "./dbClass.styles";
 import {
   useListAdminsQuery,
@@ -17,7 +18,6 @@ import {
 } from "../../../../redux/api/leader/list-users-api.slice";
 
 const ChartClass = () => {
-  const [quantity, setQuantity] = useState(8);
   const { data: listAdmin } = useListAdminsQuery();
   const { data: listTeacher } = useListTeachersQuery();
   const { data: listStudent } = useListStudentsQuery();
@@ -43,7 +43,7 @@ const ChartClass = () => {
   const getRoleCounts = (roleList) => {
     const filteredList = roleList?.filter((user) => {
       const createdAt = new Date(user.created_at);
-      const createdAtMonth = createdAt.getMonth() + 1; // getMonth trả về từ 0-11
+      const createdAtMonth = createdAt.getMonth() + 1;
       const createdAtYear = createdAt.getFullYear();
 
       return (
@@ -77,6 +77,14 @@ const ChartClass = () => {
   };
 
   const [chartData, setChartData] = useState([]);
+  
+  // Declare combinedCounts here
+  const [combinedCounts, setCombinedCounts] = useState({
+    admin: 0,
+    teacher: 0,
+    student: 0,
+    parent: 0,
+  });
 
   useEffect(() => {
     const adminCounts = getRoleCounts(listAdmin);
@@ -91,6 +99,8 @@ const ChartClass = () => {
       parent: parentCounts ? parentCounts["parent"] || 0 : 0,
     };
 
+    setCombinedCounts(combinedCounts);
+
     setChartData(getChartData(combinedCounts));
   }, [
     listAdmin,
@@ -100,6 +110,12 @@ const ChartClass = () => {
     selectedMonth,
     selectedYear,
   ]);
+
+  const totalAccounts =
+    combinedCounts.admin +
+    combinedCounts.teacher +
+    combinedCounts.student +
+    combinedCounts.parent;
 
   const layout = {
     title: "Tổng số tài khoản được tạo",
@@ -113,13 +129,17 @@ const ChartClass = () => {
         <BarChartClass chartData={chartData} layout={layout} />
       </DivBody>
       <DivHead>
+        <Total>
+          <span style={{ fontWeight: "bold" }}>Tổng số tài khoản</span>
+          <span style={{ color: "#1a9ca6" }}>{totalAccounts} tài khoản</span>
+        </Total>
         <DivSelect>
-          <SpanName>Month:</SpanName>
+          <SpanName>Tháng:</SpanName>
           <Select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
           >
-            <Option value="">All</Option>
+            <Option value="">Tất cả</Option>
             {months.map((item, index) => (
               <Option key={index} value={item}>
                 {item}
@@ -128,12 +148,12 @@ const ChartClass = () => {
           </Select>
         </DivSelect>
         <DivSelect>
-          <SpanName>Year:</SpanName>
+          <SpanName>Năm:</SpanName>
           <Select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
           >
-            <Option value="">All</Option>
+            <Option value="">Tất cả</Option>
             {yearsList.map((item, index) => (
               <Option key={index} value={item}>
                 {item}

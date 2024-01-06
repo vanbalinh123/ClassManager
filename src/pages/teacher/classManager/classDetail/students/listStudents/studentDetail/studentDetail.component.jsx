@@ -1,6 +1,13 @@
 import { RiUserForbidFill } from "react-icons/ri";
 
 import {
+  TableWrapper,
+  Table,
+  Th,
+  Td,
+} from "../../../../../../../generalCss/table.styles";
+
+import {
   Layout,
   Detail,
   Blur,
@@ -15,7 +22,8 @@ import {
   Img,
   Btn,
   Value2,
-  Div2
+  Div2,
+  DivTable,
 } from "./studentDeteil.styles";
 
 const StudentDetail = ({
@@ -36,8 +44,8 @@ const StudentDetail = ({
     setDetail(false);
   };
 
-  console.log(listLessonOfClass);
-
+  const userRole = JSON.parse(localStorage.getItem("userRole"));
+  console.log(userRole);
   const handleDeleteStudent = async () => {
     let newListStudents = infoClass?.students.filter(
       (item) => item !== studentDetail.usercode
@@ -53,12 +61,12 @@ const StudentDetail = ({
 
     if (response.data) {
       await setDetail(false);
-      toastSuccess("Student has been successfully removed from class!!");
+      toastSuccess("Học sinh đã được xoá khỏi lớp");
       return;
     }
 
     if (response.error) {
-      toastError("Error!!!.");
+      toastError("Đã xảy ra lỗi!!!");
       return;
     }
   };
@@ -101,13 +109,6 @@ const StudentDetail = ({
               <Span>Số điện thoại:</Span>
               <Value>{studentDetail?.mobile}</Value>
             </Div>
-            {listScore?.map((item, index) => (
-              <Div>
-                <Span>{listTestsOfThisClass[index].quiz_name}</Span>
-                <Value>{item.score}</Value>
-              </Div>
-            ))}
-
             <Div>
               <Span>Tổng ngày vắng:</Span>
               <Value>{countAttendance(studentDetail?.usercode)}</Value>
@@ -119,7 +120,14 @@ const StudentDetail = ({
                 <Value2>
                   {findAbsentDay(studentDetail?.usercode).length > 0 &&
                     findAbsentDay(studentDetail?.usercode).map((day, index) => (
-                      <span style={{ color: "red", display: 'flex', alignItems: 'center' }} key={index}>
+                      <span
+                        style={{
+                          color: "red",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                        key={index}
+                      >
                         <RiUserForbidFill /> {day}
                       </span>
                     ))}
@@ -128,11 +136,42 @@ const StudentDetail = ({
             )}
           </Left>
           <Right>
-            <Img src="/imgs/user-img.jpg" alt="avata" />
+            {(studentDetail?.avatar && (
+              <Img src={studentDetail?.avatar} alt="avata" />
+            )) || <Img src="/imgs/user-img.jpg" alt="avata" />}
           </Right>
         </Content>
+        <DivTable>
+          <TableWrapper>
+            <Table>
+              <thead>
+                <tr>
+                  {listScore?.map((item, index) => (
+                    <Th key={index}>{listTestsOfThisClass[index].quiz_name}</Th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {listScore?.map((item, index) => (
+                    <Td key={index}>{item.score}</Td>
+                  ))}
+                </tr>
+              </tbody>
+            </Table>
+          </TableWrapper>
+        </DivTable>
+
         <DivBtn>
-          <Btn onClick={() => handleDeleteStudent()}>Xoá</Btn>
+          {userRole === "Admin" && (
+            <Btn
+              style={{ backgroundColor: "red" }}
+              onClick={() => handleDeleteStudent()}
+            >
+              Xoá
+            </Btn>
+          )}
+
           <Btn onClick={() => handleCancelClick()}>Thoát</Btn>
         </DivBtn>
       </Detail>

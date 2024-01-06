@@ -43,10 +43,19 @@ export const Option = styled.option`
 
 `;
 
-
 export const DivBody = styled.div`
     flex: 2;
     border: 1px solid rgba(99, 99, 99, 0.2);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
 
+
+export const Total = styled.div`
+    border: 1px solid rgba(99, 99, 99, 0.2);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    text-align: center;
+`;

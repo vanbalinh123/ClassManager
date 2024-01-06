@@ -28,7 +28,7 @@ const Reschedule = () => {
 
   const handleSave = async () => {
     if(newDay === "" || newStartTime === "" || newEndTime === "" || newRoom === "") {
-      return toastWarn('Cannot be left blank!!')
+      return toastWarn('Không được để trống!!')
     }
     const data = {
       id: Number(idSession),
@@ -40,9 +40,9 @@ const Reschedule = () => {
 
     try {
       const response = updateClassSession(data);
-      toastSuccess('Success!!')
+      toastSuccess('Thành công!!')
     } catch(err) {
-      toastError('Error!!')
+      toastError('Đã xảy ra lỗi!!')
     }
   };
 

@@ -8,7 +8,11 @@ import { IoAdd } from "react-icons/io5";
 
 import { useInforClassQuery } from "../../../../../../redux/api/teacher/class-information-api";
 import { useUpdateInfoClassMutation } from "../../../../../../redux/api/teacher/class-information-api";
-import { toastSuccess, toastError, ToastCtn } from "../../../../../../components/toast/toast";
+import {
+  toastSuccess,
+  toastError,
+  ToastCtn,
+} from "../../../../../../components/toast/toast";
 import Pagination from "../../../../../../components/paginate/paginate";
 import {
   TableWrapper,
@@ -64,13 +68,13 @@ const UploadStudentXML = () => {
     const studentsArray = [];
     const errorArray = [];
     const encounteredStudents = new Set(detailClassInfo.students);
-  
+
     for (const item of excelData || []) {
       if (item.class_info === classCode) {
         const studentsInRow = item.students
           .split(",")
           .map((student) => student.trim());
-  
+
         // Lọc ra những sinh viên chưa có tài khoản
         const nonExistentStudents = studentsInRow.filter(
           (student) =>
@@ -78,7 +82,7 @@ const UploadStudentXML = () => {
               (existingStudent) => existingStudent.usercode === student
             )
         );
-  
+
         if (nonExistentStudents.length > 0) {
           errorArray.push({
             message: nonExistentStudents
@@ -100,7 +104,7 @@ const UploadStudentXML = () => {
               encounteredStudents.add(student);
             }
           }
-  
+
           studentsArray.push(...studentsInRow);
         }
       } else {
@@ -112,32 +116,29 @@ const UploadStudentXML = () => {
         });
       }
     }
-  
+
     if (errorArray.length > 0) {
-      // Hiển thị thông báo lỗi (nếu có)
       setErrorStudents(errorArray);
-      toastError('Một số dữ liệu chưa đúng !!!');
+      toastError("Một số dữ liệu chưa đúng !!!");
     } else {
-      // Chỉ khi không có lỗi thì thực hiện cập nhật dữ liệu
       await refetchDetailClassInfo();
-  
+
       const updatedDetailClassInfo = {
         Teachers: detailClassInfo.Teachers,
         class_info: detailClassInfo.class_info,
-        students: Array.from(encounteredStudents), // Convert set back to array
+        students: Array.from(encounteredStudents), 
       };
-  
+
       try {
         let response = await updateInfoClass(updatedDetailClassInfo);
-  
-        toastSuccess('Dữ liệu thêm thành công !!');
+
+        toastSuccess("Dữ liệu thêm thành công !!");
       } catch (error) {
         toastError(error);
-        toastError('Bạn gặp sự cố!!');
+        toastError("Bạn gặp sự cố!!");
       }
     }
   };
-  
 
   useEffect(() => {
     refetchDetailClassInfo();
@@ -176,18 +177,6 @@ const UploadStudentXML = () => {
             Dữ liệu từ Excel: {excelData.length} lớp học
           </div>
         )) || <ErrorAlert>Không có file nào được chọn!!</ErrorAlert>}
-        {errorStudents.length > 0 && (
-          <div style={{color: 'red'}}>
-            Có lỗi xảy ra:
-            <ul>
-              {errorStudents.map((error, index) => (
-                <li key={index} >
-                  {error.message} - Học sinh: {error.students} !!!
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
         {excelData && (
           <TableWrapper>
             <Table>
@@ -209,7 +198,6 @@ const UploadStudentXML = () => {
             </Table>
           </TableWrapper>
         )}
-
         {excelData && (
           <Pagination
             totalPages={totalPages}
@@ -217,6 +205,18 @@ const UploadStudentXML = () => {
           />
         )}
       </FormContainer>
+      {errorStudents.length > 0 && (
+        <div style={{ color: "red" }}>
+          Có lỗi xảy ra:
+          <ul>
+            {errorStudents.map((error, index) => (
+              <li key={index}>
+                {error.message} - Học sinh: {error.students} !!!
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {excelData && (
         <UploadButton onClick={importListStudent}>
           <IoAdd />

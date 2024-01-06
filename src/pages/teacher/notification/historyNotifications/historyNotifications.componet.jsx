@@ -12,30 +12,60 @@ import { Page, Title } from "../../../../generalCss/shared.styles";
 
 import { DivBtn, Btn } from "./historyNotifications.styles";
 
+const fetchNotifications = async (role, search) => {
+  const response = await fetch(
+    `http://127.0.0.1:8000/api/${role}/notifications/?search=${search}`
+  );
+  const data = await response.json();
+  return data;
+};
+
 const HistoryNotificationTeacher = () => {
   const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState("sent");
   const [valueSearch, setValueSearch] = useState("");
   const userCode = JSON.parse(localStorage.getItem("user_code"));
   const { data: listNotiTeacher } = useListNotiTeacherQuery({search: `${valueSearch}`});
-  const { data: listNotiAdmin } = useListNotiAdminQuery({search: `${valueSearch}`})
+  // const { data: listNotiAdmin } = useListNotiAdminQuery({search: `${valueSearch}`})
   const { data: listSchedule } = useListSchedulesQuery();
+  const [listNotiAdmin, setListNotiAdmin] = useState([]);
+
 
   let listTeacherSchedules = listSchedule?.filter(
     (item) => item.teacher_code === userCode
   );
   
-  // Lọc danh sách thông báo theo lớp học của giáo viên
   let listTeacherNotifications = listNotiTeacher?.filter((notification) =>
     listTeacherSchedules?.some((schedule) =>
       schedule.class_code.includes(notification.class_code[0])
     )
   );
 
-  let listAdminNotifications = listNotiAdmin?.filter(item => item.role === 'teacher');
-  
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const adminNotifications = await fetchNotifications(
+          "admin",
+          valueSearch
+        );
 
+        const isNewNotification =
+          adminNotifications?.length !== listNotiAdmin?.length;
+
+        setListNotiAdmin(adminNotifications);
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+
+    fetchData();
+
+    const intervalId = setInterval(fetchData, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [valueSearch, listNotiTeacher?.length, listNotiAdmin?.length]);
+
+  let listAdminNotifications = listNotiAdmin?.filter(item => item.role === 'teacher');
   return (
     <Page>
       <Title>Lịch sử thông báo</Title>

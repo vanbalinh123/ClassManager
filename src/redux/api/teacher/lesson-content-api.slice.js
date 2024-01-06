@@ -26,7 +26,16 @@ const lessonContentApi = apiSlice.injectEndpoints({
         const lessonId = data.get('id');
         return {
           url: `/api/lesson-content/${lessonId}/`,
-          method: 'PUT',
+          method: 'PATCH',
+          body: data
+        };
+      }
+    }),
+    updateLessonContent2: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/api/lesson-content/${data.id}/`,
+          method: 'PATCH',
           body: data
         };
       }
@@ -38,5 +47,6 @@ const lessonContentApi = apiSlice.injectEndpoints({
 export const { 
   useListLessonContentsQuery,
   useCreateLessonContentMutation,
-  useUpdateLessonContentMutation
+  useUpdateLessonContentMutation,
+  useUpdateLessonContent2Mutation
 } = lessonContentApi;

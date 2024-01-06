@@ -7,6 +7,7 @@ import { useLoginTeacherMutation } from "../../redux/api/login/teacher-login-api
 import { useLoginAdminMutation } from "../../redux/api/login/teacher-login-api.slice";
 import { useLoginStudentMutation } from "../../redux/api/login/teacher-login-api.slice";
 import { useLoginParentMutation } from "../../redux/api/login/teacher-login-api.slice";
+import { ToastCtn, toastError, toastSuccess } from "../../components/toast/toast";
 
 import {
   Left,
@@ -26,9 +27,6 @@ import {
   DivInput2,
   Input2,
   MessageErorrs,
-  // Select,
-  // DivSelect,
-  // Option,
   DivSelect,
   Value,
   SelectButton,
@@ -38,8 +36,6 @@ import {
 } from "./login.styles";
 
 const Login = () => {
-  // const userRole = JSON.parse(localStorage.getItem("userRole"));
-  // console.log(userRole);
   const navigate = useNavigate();
   const {
     register,
@@ -68,7 +64,6 @@ const Login = () => {
     setShowOptions(false);
   };
 
-  //select option
 
   const [loginTeacher] = useLoginTeacherMutation();
   const [loginAdmin] = useLoginAdminMutation();
@@ -76,7 +71,6 @@ const Login = () => {
   const [loginParent] = useLoginParentMutation();
 
   const onSubmit = async (data) => {
-    console.log(data);
     const email = data.email;
     const password = data.password;
     const userRole = selectedOption;
@@ -85,8 +79,6 @@ const Login = () => {
       email: email,
       password: password,
     };
-
-    console.log(data);
 
     let response = null;
 
@@ -100,8 +92,6 @@ const Login = () => {
       response = await loginParent(data)
     }
 
-    console.log(response.data)
-
     try {
       if (response.data.bool === true) {
         localStorage.setItem("userRole", JSON.stringify(userRole));
@@ -112,33 +102,33 @@ const Login = () => {
             "user_code",
             JSON.stringify(response.data.admin_usercode)
           );
-          navigate("/leader");
+          navigate("/leader/dashboard");
         } else if (userRole === "Teacher") {
           localStorage.setItem(
             "user_code",
             JSON.stringify(response.data.teacher_usercode)
           );
-          navigate("/teacher");
+          navigate("/teacher/schedule");
         } else if (userRole === "Student") {
           localStorage.setItem(
             "user_code",
             JSON.stringify(response.data.student_usercode)
           );
-          navigate("/student");
+          navigate("/student/schedule");
         } else if (userRole === "Parents") {
           localStorage.setItem(
             "user_code",
             JSON.stringify(response.data.parent_usercode)
           );
-          navigate("/parents");
+          navigate("/parents/schedule");
         }
 
         // window.location.reload();
       } else {
-        alert("Đăng nhập không thành công");
+        toastError("Đã xảy ra lỗi, hãy thử lạI!!");
       }
     } catch (error) {
-      alert("Error Server");
+      toastError("Đã xảy ra lỗi, hãy thử lạI!!");
     }
   };
 
@@ -148,18 +138,18 @@ const Login = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Logo src="/imgs/logo-login.png" />
           <Content>
-            <Text>Login</Text>
+            <Text>Đăng nhập</Text>
             <DivInputs>
               <DivInput>
                 <Input
                   type="text"
-                  placeholder="Your Email..."
+                  placeholder="Nhập email..."
                   hasError={!!errors.email}
                   {...register("email", {
-                    required: "Email is required!",
+                    required: "Email không được để trống!!",
                     pattern: {
                       value: /^\S+@\S+$/i,
-                      message: "Please enter a valid email address",
+                      message: "Không đúng định dạng",
                     },
                   })}
                 />
@@ -170,10 +160,10 @@ const Login = () => {
               <DivInput2>
                 <Input2
                   type="password"
-                  placeholder="Your Password..."
+                  placeholder="Nhập mật khẩu..."
                   hasError={!!errors.password}
                   {...register("password", {
-                    required: "Password is required!",
+                    required: "Mật khẩu không được để trống",
                   })}
                 />
               </DivInput2>
@@ -199,15 +189,16 @@ const Login = () => {
               </OptionsContainer>
             </DivSelect>
             <DivBtn>
-              <Btn>Login</Btn>
+              <Btn>Đăng nhập</Btn>
             </DivBtn>
-            <ForgetPass>Forgot your password ?</ForgetPass>
+            {/* <ForgetPass>Forgot your password ?</ForgetPass> */}
           </Content>
         </Form>
       </Left>
       <Right>
         <Img src="/imgs/banner-login.png" />
       </Right>
+      <ToastCtn />
     </Page>
   );
 };

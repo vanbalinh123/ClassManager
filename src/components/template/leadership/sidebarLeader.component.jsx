@@ -1,11 +1,16 @@
 import { useState } from "react";
 
-import { AiOutlineDashboard } from "react-icons/ai";
+import { FaChartBar } from "react-icons/fa";
 import { BsPersonAdd } from "react-icons/bs";
 import { BsCalendar3 } from "react-icons/bs";
 import { BsCalendarPlus } from "react-icons/bs";
 import { PiUsersThree } from "react-icons/pi";
 import { LuBellPlus } from "react-icons/lu";
+import { SiGoogleclassroom } from "react-icons/si";
+import { LiaMoneyCheckAltSolid } from "react-icons/lia";
+import { MdHistory } from "react-icons/md";
+import { RiMailSendLine } from "react-icons/ri";
+
 
 import {
   Sidebar,
@@ -26,7 +31,7 @@ const SidebarLeader = () => {
     <Sidebar>
       <FlexNavLink to="/leader/dashboard">
         <Item>
-          <AiOutlineDashboard size="20px" />
+          <FaChartBar  size="20px" />
           <ItemName>Tổng quát</ItemName>
         </Item>
       </FlexNavLink>
@@ -61,7 +66,7 @@ const SidebarLeader = () => {
               to="/leader/class"
             >
               <ItemPopup>
-                <LuBellPlus size="20px" />
+                <SiGoogleclassroom size="20px" />
                 <ItemName>Lớp học</ItemName>
               </ItemPopup>
             </NavlinkChild>
@@ -70,7 +75,7 @@ const SidebarLeader = () => {
               to="/leader/tuition"
             >
               <ItemPopup>
-                <LuBellPlus size="20px" />
+                <LiaMoneyCheckAltSolid  lPlus size="20px" />
                 <ItemName>Học phí</ItemName>
               </ItemPopup>
             </NavlinkChild>
@@ -104,7 +109,7 @@ const SidebarLeader = () => {
             to="/leader/historyNotifications"
           >
             <ItemPopup>
-              <LuBellPlus size="20px" />
+              <MdHistory size="20px" />
               <ItemName>Lịch sử</ItemName>
             </ItemPopup>
           </NavlinkChild>
@@ -113,7 +118,7 @@ const SidebarLeader = () => {
             to="/leader/createNotification"
           >
             <ItemPopup>
-              <LuBellPlus size="20px" />
+              <RiMailSendLine  size="20px" />
               <ItemName>Gửi</ItemName>
             </ItemPopup>
           </NavlinkChild>

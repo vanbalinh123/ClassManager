@@ -15,7 +15,6 @@ import {
 const ListLesson = () => {
   const navigate = useNavigate();
   const { classCode } = useParams();
-  console.log(classCode);
   const { data: listScheduleApi } = useListSchedulesQuery();
   const { data: listLessonContentApi } = useListLessonContentsQuery();
 
@@ -24,43 +23,41 @@ const ListLesson = () => {
   );
 
   const findLessContent = (id) => {
-    console.log(id);
     let ls = listLessonContent?.find((item) => item.class_session === id);
     if (ls) {
       return ls.content;
     } else {
-      return "Chưa có nội dung bài học!!";
+      return <span style={{color: 'red'}}>Chưa có nội dung bài học!!</span>;
     }
   };
-
-  console.log(listLessonContent);
 
   const listSchedule = listScheduleApi?.find(
     (item) => item.class_code === classCode
   );
 
   const handleItemClick = (item) => {
-    console.log(item);
-    navigate(`lesson/attendance/${item.id}`);
+    navigate(`lesson/lessonContent/${item.id}`);
+  };
+
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
   };
 
   //paginate
   const itemsPerPage = 10;
   const totalItems = listSchedule?.class_sessions_set.length;
-  console.log(totalItems);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(0);
-
-  const handlePageClick = (data) => {
-    setCurrentPage(data.selected);
-  };
 
   const customList = listSchedule?.class_sessions_set.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
 
+  const startIndex = currentPage * itemsPerPage + 1;
+
   //paginate
+
 
   return (
     <>
@@ -76,7 +73,7 @@ const ListLesson = () => {
           <tbody>
             {customList?.map((item, index) => (
               <tr key={index} onClick={() => handleItemClick(item)}>
-                <Td>{item.id}</Td>
+                <Td>{startIndex + index}</Td>
                 <Td>{findLessContent(item.id)}</Td>
                 <Td>{item.day}</Td>
               </tr>

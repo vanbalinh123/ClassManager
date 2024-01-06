@@ -137,7 +137,6 @@ const UploadScheduleXml = () => {
     reader.readAsBinaryString(file);
   };
 
-  console.log(excelData);
 
   useEffect(() => {
     if (excelData !== null) {
@@ -205,7 +204,7 @@ const UploadScheduleXml = () => {
         onChange={handleFileChange}
         id="fileInput" // Liên kết id với label
       />
-      <FileInputLabel htmlFor="fileInput">Choose File</FileInputLabel>
+      <FileInputLabel htmlFor="fileInput">Chọn File</FileInputLabel>
       <FormContainer>
         {(excelData && (
           <div style={{ fontWeight: "bold" }}>

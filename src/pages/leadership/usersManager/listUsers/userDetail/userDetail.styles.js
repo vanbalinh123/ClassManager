@@ -32,6 +32,7 @@ export const Img = styled.img`
   border-radius: 150px;
   border: 1px solid ${generalStyles.border};
   box-shadow: 0px 0px 5px ${generalStyles.border};
+  object-fit: cover;
 `;
 
 export const DivInfors = styled.div`

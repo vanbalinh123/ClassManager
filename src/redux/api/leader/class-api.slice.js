@@ -48,7 +48,6 @@ const classApi = apiSlice.injectEndpoints({
         body: { class_code, class_name, course, cost },
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
-        console.log(data);
         const action = apiSlice.util.updateQueryData(
           "classDetail",
           undefined,
@@ -81,7 +80,6 @@ const classApi = apiSlice.injectEndpoints({
             const index = draft.findIndex(
               (item) => item.class_code === classcode
             );
-            draft.map(item => console.log(item))
            
             if (index !== -1) {
               draft.splice(index, 1);

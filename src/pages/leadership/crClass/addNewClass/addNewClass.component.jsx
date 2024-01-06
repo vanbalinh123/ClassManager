@@ -47,13 +47,13 @@ const AddNewClass = () => {
     const response = await creatClass(newClass);
 
     if (response.data) {
-      toastSuccess(`Create class ${class_code} successful`);
+      toastSuccess(`Tạp lớp ${class_code} thành công`);
       setValue("classCode", "");
       setValue("className", "");
       setValue("course", "");
       setValue("tution", "");
     } else {
-      toastError(`Create class fail, try again!!`);
+      toastError(`Tạo lớp thất bại, hãy thử lại!!`);
     }
   };
 
@@ -67,10 +67,10 @@ const AddNewClass = () => {
             <DivInput>
               <Input
                 type="text"
-                placeholder="Class code..."
+                placeholder="Mã lớp..."
                 hasError={!!errors.classCode}
                 {...register("classCode", {
-                  required: "Class Code is required!",
+                  required: "Mã lớp không được để trống!",
                 })}
               />
             </DivInput>
@@ -80,10 +80,10 @@ const AddNewClass = () => {
             <DivInput>
               <Input
                 type="text"
-                placeholder="Class Name..."
+                placeholder="Tên lớp..."
                 hasError={!!errors.className}
                 {...register("className", {
-                  required: "Class Name is required!",
+                  required: "Tên lớp không được để trống!",
                 })}
               />
             </DivInput>
@@ -93,10 +93,10 @@ const AddNewClass = () => {
             <DivInput>
               <Input
                 type="text"
-                placeholder="Course..."
+                placeholder="Khoá..."
                 hasError={!!errors.course}
                 {...register("course", {
-                  required: "Course is required!",
+                  required: "Khoá không được dể trống!",
                 })}
               />
             </DivInput>
@@ -106,10 +106,10 @@ const AddNewClass = () => {
             <DivInput>
               <Input
                 type="text"
-                placeholder="Tution..."
+                placeholder="Học phí..."
                 hasError={!!errors.course}
                 {...register("tution", {
-                  required: "Tution is required!",
+                  required: "Học phí không được để trống",
                 })}
               />
             </DivInput>

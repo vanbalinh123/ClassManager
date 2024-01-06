@@ -1,18 +1,13 @@
 import { useState, useEffect } from "react";
 import { CiSaveUp2 } from "react-icons/ci";
 import { useParams } from "react-router-dom";
+
 import { useDetailTestQuery } from "../../../../../../../redux/api/teacher/test-api";
 import { useInforClassQuery } from "../../../../../../../redux/api/teacher/class-information-api";
 import { useListStudentsQuery } from "../../../../../../../redux/api/leader/list-users-api.slice";
 import { useUpdateTestMutation } from "../../../../../../../redux/api/teacher/test-api";
 
-import {
-  Div,
-  Span,
-  Input,
-  DivBtn,
-  Btn,
-} from "./quizDetail.styles";
+import { Div, Span, Input, DivBtn, Btn } from "./quizDetail.styles";
 
 import {
   TableWrapper,
@@ -35,6 +30,8 @@ const QuizDetail = () => {
   const { data: classInfor } = useInforClassQuery(classCode);
   const { data: listStudent } = useListStudentsQuery();
   const [updateTest] = useUpdateTestMutation();
+
+
   const listStudentsCode = classInfor?.students;
 
   useEffect(() => {
@@ -85,7 +82,7 @@ const QuizDetail = () => {
     );
 
     if (invalidScores) {
-      toastWarn("Scores must be greater than 0 and less than 10!");
+      toastWarn("Số điểm phải nằm trong khoảng từ 0 đến 10");
       return;
     }
 
@@ -98,9 +95,9 @@ const QuizDetail = () => {
 
     try {
       const response = await updateTest(data);
-      toastSuccess("Add score successfully!!");
+      toastSuccess("Thành công!!");
     } catch (err) {
-      toastError("Error");
+      toastError("Đã xảy ra lỗi!!");
     }
   };
 
@@ -116,7 +113,7 @@ const QuizDetail = () => {
     );
 
     if (invalidScores) {
-      toastWarn("Scores must be valid numbers between 0 and 10!");
+      toastWarn("Số điểm phải nằm trong khoảng từ 0 đến 10");
       return;
     }
 
@@ -129,15 +126,18 @@ const QuizDetail = () => {
 
     try {
       const response = await updateTest(data);
-      toastSuccess("Score update successful!!");
+      toastSuccess("Cập nhật thành công!!!");
     } catch (err) {
-      toastError("Error");
+      toastError("Đã xảy ra lỗi!!");
     }
   };
 
   return (
     <Div>
-      <Span>{detailTest?.quiz_name}</Span>
+      <Span>
+        {detailTest?.quiz_name}
+      </Span>
+
       <TableWrapper>
         <Table>
           <thead>

@@ -3,13 +3,13 @@ import { Outlet } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
 import { useParams } from "react-router-dom";
 
-import { 
+import {
   Header,
   TitleList,
   FlexNavLink,
   Section,
   Page,
-  BtnBack
+  BtnBack,
 } from "./onLesson.styles";
 
 const OneLesson = () => {
@@ -19,11 +19,11 @@ const OneLesson = () => {
   return (
     <Page>
       <Header>
-        <FlexNavLink to={`attendance/${idSession}`}>
-          <TitleList>Điểm danh</TitleList>
-        </FlexNavLink>
         <FlexNavLink to={`lessonContent/${idSession}`}>
           <TitleList>Nội dung bài học</TitleList>
+        </FlexNavLink>
+        <FlexNavLink to={`attendance/${idSession}`}>
+          <TitleList>Điểm danh</TitleList>
         </FlexNavLink>
         <FlexNavLink to={`reschedule/${idSession}`}>
           <TitleList>Đổi lịch</TitleList>
@@ -33,7 +33,9 @@ const OneLesson = () => {
         <Outlet />
       </Section>
       <BtnBack
-        onClick={() => navigate(`/teacher/listClasses/classDetail/${classCode}/listLesson`)}
+        onClick={() =>
+          navigate(`/teacher/listClasses/classDetail/${classCode}/listLesson`)
+        }
       >
         <IoMdArrowBack size="15px" />
         Quay lại

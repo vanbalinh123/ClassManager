@@ -1,21 +1,28 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { IoAdd } from "react-icons/io5";
-
+import {
+  useListAdminsQuery,
+  useListTeachersQuery,
+  useListStudentsQuery,
+  useListParentsQuery,
+} from "../../../../redux/api/leader/list-users-api.slice.js";
 import { useCreateAdminMutation } from "../../../../redux/api/leader/createAccount.slice";
 import { useCreateTeacherMutation } from "../../../../redux/api/leader/createAccount.slice";
 import { useCreateStudentMutation } from "../../../../redux/api/leader/createAccount.slice";
 import { useCreateParentsMutation } from "../../../../redux/api/leader/createAccount.slice";
-
+import {
+  ToastCtn,
+  toastError,
+  toastSuccess,
+} from "../../../../components/toast/toast";
 import Pagination from "../../../../components/paginate/paginate";
-
 import {
   Table,
   TableWrapper,
   Th,
   Td,
 } from "../../../../generalCss/table.styles";
-
 import {
   Div,
   Title,
@@ -28,10 +35,21 @@ import {
 
 const UploadListUserXML = () => {
   const [excelData, setExcelData] = useState(null);
+  const { data: listAdmins } = useListAdminsQuery();
+  const { data: listTeachers } = useListTeachersQuery();
+  const { data: listStudents } = useListStudentsQuery();
+  const { data: listParents } = useListParentsQuery();
+
   const [createAdmin] = useCreateAdminMutation();
   const [createTeacher] = useCreateTeacherMutation();
   const [createStudent] = useCreateStudentMutation();
   const [createParent] = useCreateParentsMutation();
+
+  const [errorFields, setErrorFields] = useState([]);
+
+  const checkParent = (excelData) => {
+    return excelData?.some((item) => item.role === "parent");
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -57,14 +75,19 @@ const UploadListUserXML = () => {
     reader.readAsBinaryString(file);
   };
 
-  console.log(excelData);
+  useEffect(() => {
+    setErrorFields([]);
+  }, [excelData]);
 
-  const importListUSer = async () => {
+  const importListUser = async () => {
     let successCount = 0;
     let allRequestsSuccess = true;
-    let failedEmail = null; // Thêm biến để theo dõi email gây lỗi
+    let failedEmail = null;
 
     for (const item of excelData || []) {
+      if (item.role === undefined) {
+        return toastError("File dữ liệu không đúng!!");
+      }
       const dulieu = {
         full_name: item.full_name,
         email: item.email,
@@ -77,51 +100,46 @@ const UploadListUserXML = () => {
             : undefined,
       };
 
-      let response = null;
+      const isEmailExist =
+        listAdmins?.some((admin) => admin.email === item.email) ||
+        listTeachers?.some((teacher) => teacher.email === item.email) ||
+        listStudents?.some((student) => student.email === item.email) ||
+        listParents?.some((parent) => parent.email === item.email);
 
-      try {
-        if (item.role === "admin") {
-          response = await createAdmin(dulieu);
-        } else if (item.role === "teacher") {
-          response = await createTeacher(dulieu);
-        } else if (item.role === "student") {
-          response = await createStudent(dulieu);
-        } else if (item.role === "parent") {
-          console.log(dulieu);
-          response = await createParent(dulieu);
+      if (isEmailExist) {
+        setErrorFields((prevErrors) => [...prevErrors, item]);
+        allRequestsSuccess = false;
+      } else {
+        let response = null;
+
+        try {
+          if (item.role === "admin") {
+            response = await createAdmin(dulieu);
+          } else if (item.role === "teacher") {
+            response = await createTeacher(dulieu);
+          } else if (item.role === "student") {
+            response = await createStudent(dulieu);
+          } else if (item.role === "parent") {
+            response = await createParent(dulieu);
+          }
+
+          if (response) {
+            const responseData = response.data;
+            successCount++;
+          }
+        } catch (error) {
+          failedEmail = dulieu.email;
+          setErrorFields((prevErrors) => [...prevErrors, item]);
+          allRequestsSuccess = false;
         }
-
-        if (response) {
-          const responseData = response.data;
-          console.log(response);
-          successCount++;
-        }
-      } catch (error) {
-        // Xử lý lỗi nếu cần
-        console.error("Error:", error);
-
-        // Gán email đang gây lỗi
-        failedEmail = dulieu.email;
-
-        allRequestsSuccess = false; // Đánh dấu là có ít nhất một yêu cầu thất bại
-        break; // Dừng vòng lặp khi gặp lỗi
       }
     }
 
     if (allRequestsSuccess) {
-      // Hiển thị alert thành công
-      alert("All requests were successful!");
+      toastSuccess("Tất cả dữ liệu đã được thêm thành công!!");
     } else {
-      // Hiển thị alert thất bại và email gây lỗi
-      alert(
-        `Some requests failed. Please check the data and try again. Failed email: ${failedEmail}`
-      );
+      toastError(`Đã xảy ra lỗi. Hãy kiểm tra dữ liệu`);
     }
-  };
-  console.log(excelData);
-
-  const checkParent = (excelData) => {
-    return excelData?.some((item) => item.role === "parent");
   };
 
   //paginate
@@ -140,19 +158,21 @@ const UploadListUserXML = () => {
   );
   //paginate
 
-  console.log(checkParent())
+  errorFields.map((item) => {
+    console.log(item);
+  });
 
   return (
     <Div>
-      <Title>Tải lên file Execl</Title>
+      <Title>Tải lên file Excel</Title>
       <FileInput
         type="file"
         accept=".xlsx, .xls"
         onChange={handleFileChange}
         id="fileInput" // Liên kết id với label
       />
+
       <FileInputLabel htmlFor="fileInput">Chọn file</FileInputLabel>
-      {/* <button onClick={importListUSer}>Upload</button> */}
       <FormContainer>
         {(excelData && (
           <div style={{ fontWeight: "bold" }}>
@@ -168,8 +188,8 @@ const UploadListUserXML = () => {
                   <Th>Email</Th>
                   <Th>Mật khẩu</Th>
                   <Th>Sđt</Th>
-                  <Th>Vai trò</Th>  
-                  {checkParent(excelData) && <Th>Học sinh</Th>}            
+                  <Th>Vai trò</Th>
+                  {checkParent(excelData) && <Th>Học sinh</Th>}
                 </tr>
               </thead>
               <tbody>
@@ -195,12 +215,28 @@ const UploadListUserXML = () => {
           />
         )}
       </FormContainer>
+      {errorFields.length > 0 && (
+        <div style={{ color: "red", marginTop: "10px" }}>
+          <p style={{ fontWeight: "bold" }}>Có lỗi xảy ra:</p>
+          <ul>
+            {errorFields.map((errorField, index) => (
+              <li key={index}>
+                <p>
+                  Email không đúng định dạng hoặc đã bị trùng:{" "}
+                  {errorField.email}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {excelData && (
-        <UploadButton onClick={importListUSer}>
+        <UploadButton onClick={importListUser}>
           <IoAdd />
           Lưu
         </UploadButton>
       )}
+      <ToastCtn />
     </Div>
   );
 };

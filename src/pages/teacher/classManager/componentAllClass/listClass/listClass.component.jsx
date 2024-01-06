@@ -14,14 +14,12 @@ const ListClassOfTeacher = ({ listClass }) => {
   const navigate = useNavigate();
 
   const handleItemClick = (item) => {
-    console.log(item);
     navigate(`/teacher/listClasses/classDetail/${item.class_code}`);
   };
 
   //paginate
   const itemsPerPage = 10;
   const totalItems = listClass?.length;
-  console.log(listClass);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -29,12 +27,16 @@ const ListClassOfTeacher = ({ listClass }) => {
     setCurrentPage(data.selected);
   };
 
-  const customListClasses = listClass?.slice(
+  
+  const sortedListUser = Array.isArray(listClass)
+  ? [...listClass].reverse()
+  : [];
+
+
+  const customListClasses = sortedListUser?.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
-
-  console.log(customListClasses);
   //paginate
 
   return (

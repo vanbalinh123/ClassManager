@@ -21,7 +21,7 @@ const CreateAccount = () => {
       <TypeUser>
         Vai trò:
         <Select value={selectedValue} onChange={handleSelectChange}>
-          <Option value="Admin">Quản lý</Option>
+          <Option value="Admin">Admin</Option>
           <Option value="Teacher">Giáo viên</Option>
           <Option value="Student">Học sinh</Option>
           <Option value="Parent">Phụ huynh</Option>

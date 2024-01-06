@@ -5,7 +5,6 @@ import {Chart as ChartJS} from 'chart.js/auto'
 import Plot from "react-plotly.js";
 
 const BarChartAbsent = ({chartData, layout}) => {
-    console.log(chartData)
     return <Plot data={chartData} layout={layout}/>
 }
 

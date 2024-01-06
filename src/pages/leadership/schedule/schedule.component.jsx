@@ -68,13 +68,12 @@ const CreateSchedule = () => {
       setValue("room", findSchedule?.class_sessions_set[0].room);
       if (clCodeNew === "") {
         const scheduleDetails = findSchedule?.class_sessions_set;
-        console.log(scheduleDetails);
         const totalSessionsPerWeek = findSchedule?.num_sessions_per_week;
         const listDayOfWeekToUpdate = filterDays(
           scheduleDetails,
           totalSessionsPerWeek
         );
-        console.log(listDayOfWeekToUpdate);
+        
         listDayOfWeekToUpdate?.forEach((session, index) => {
           setValue(`date[${index}].room`, session.room);
           setValue(`date[${index}].startTime`, session.startTime);
@@ -104,11 +103,6 @@ const CreateSchedule = () => {
       endTime: String(item.endTime),
     }));
 
-    data.date.map((item) => {
-      return console.log(item);
-    });
-
-    console.log(daysOfWeek.sort());
 
     const classSessions = await calculateClassSchedule(
       data.startDate,
@@ -119,7 +113,6 @@ const CreateSchedule = () => {
       data.room
     );
 
-    console.log(classSessions);
 
     if (classCodeParam === "new") {
       const dataSchedule = {
@@ -146,7 +139,10 @@ const CreateSchedule = () => {
         setValue("week", "");
         setValue("startDate", "");
         setValue("room", "");
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
         navigate("/leader/class");
+        
       } else {
         toastError("Đã xảy ra lỗi!!");
       }
@@ -166,16 +162,17 @@ const CreateSchedule = () => {
 
         if (response.data) {
           toastSuccess(
-            `Update a teaching schedule for ${data.classCode} successful`
+            `Cập nhật lịch học ${data.classCode} thành công`
           );
           setValue("teacherCode", "");
           setValue("course", "");
           setValue("week", "");
           setValue("startDate", "");
           setValue("room", "");
+          await new Promise(resolve => setTimeout(resolve, 1000));
           navigate("/leader/class");
         } else {
-          toastError("Error");
+          toastError("Đã xảy ra lỗi khi cập nhật lịch dạy");
         }
       } else {
         const dataSchedule = {
@@ -195,17 +192,16 @@ const CreateSchedule = () => {
         await createClassInfo(classInfo);
 
         if (response.data) {
-          toastSuccess(
-            `Create a teaching schedule for ${data.classCode} successful`
-          );
+          toastSuccess(`Tạo lịch dạy cho lớp ${data.classCode} thành công`);
           setValue("teacherCode", "");
           setValue("course", "");
           setValue("week", "");
           setValue("startDate", "");
           setValue("room", "");
+          await new Promise(resolve => setTimeout(resolve, 1000));
           navigate("/leader/class");
         } else {
-          toastError("Error");
+          toastError("Đã xảy ra lỗi khi tạo lịch dạy");
         }
       }
     }

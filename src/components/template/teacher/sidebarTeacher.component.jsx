@@ -2,6 +2,9 @@ import { useState } from "react";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { FaRegClipboard } from "react-icons/fa";
 import { LuBell } from "react-icons/lu";
+import { RiMailSendLine } from "react-icons/ri";
+import { LuHistory } from "react-icons/lu";
+
 
 import { Sidebar, Item, ItemName, FlexNavLink, Div, DivPopup, ItemPopup, NavlinkChild } from "../sidebar.styles";
 
@@ -43,7 +46,7 @@ const SidebarTeacher = () => {
             to="/teacher/historyNotifications"
           >
             <ItemPopup>
-              <LuBell size="20px" />
+              <LuHistory size="20px" />
               <ItemName>Lịch sử</ItemName>
             </ItemPopup>
           </NavlinkChild>
@@ -52,8 +55,8 @@ const SidebarTeacher = () => {
             to="/teacher/createNotification"
           >
             <ItemPopup>
-              <LuBell size="20px" />
-              <ItemName>Tạo</ItemName>
+              <RiMailSendLine  size="20px" />
+              <ItemName>Gửi</ItemName>
             </ItemPopup>
           </NavlinkChild>
         </DivPopup>

@@ -17,7 +17,11 @@ export const Table = styled.table`
 export const Th = styled.th`
   /* background-color: #f2f2f2; */
   background-color: ${generalStyles.bgc};
+  overflow: hidden;
+  max-width: 150px;
   text-align: left;
+  white-space: nowrap;
+      text-overflow: ellipsis;
   padding: 10px;
 
 `;

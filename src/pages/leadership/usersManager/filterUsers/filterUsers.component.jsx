@@ -68,7 +68,7 @@ const FilterUsers = ({
       </ItemSearch> */}
       <DivSelect>
         <Select value={selectedValue} onChange={handleSelectChange}>
-          <Option value="Admin">Quản lý</Option>
+          <Option value="Admin">Admin</Option>
           <Option value="Teacher">Giáo viên</Option>
           <Option value="Student">Học sinh</Option>
           <Option value="Parents">Phụ huynh</Option>

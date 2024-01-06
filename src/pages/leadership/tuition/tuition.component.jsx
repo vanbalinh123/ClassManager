@@ -31,7 +31,11 @@ const Tuition = () => {
     setCurrentPage(data.selected);
   };
 
-  const customListClasses = listClasses?.slice(
+  const sortedListUser = Array.isArray(listClasses)
+  ? [...listClasses].reverse()
+  : [];
+
+  const customListClasses = sortedListUser?.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
@@ -56,7 +60,7 @@ const Tuition = () => {
               </tr>
             </thead>
             <tbody>
-              {customListClasses?.reverse()?.map((item, index) => (
+              {customListClasses?.map((item, index) => (
                 <tr onClick={() => handleClick(item.class_code)} key={index}>
                   <Td>{item.class_code}</Td>
                   <Td>{item.class_name}</Td>

@@ -25,10 +25,10 @@ const RightLayout = ({
         <Date {...register(`${date}.day`)}>
           <Option value={1}>Thứ hai</Option>
           <Option value={2}>Thứ ba</Option>
-          <Option value={3}>Thứ 4</Option>
-          <Option value={4}>Thứ 5</Option>
-          <Option value={5}>Thứ 6</Option>
-          <Option value={6}>Thứ 7</Option>
+          <Option value={3}>Thứ tư</Option>
+          <Option value={4}>Thứ năm</Option>
+          <Option value={5}>Thứ sáu</Option>
+          <Option value={6}>Thứ bảy</Option>
           <Option value={0}>Chủ nhật</Option>
         </Date>
         <DivTime>

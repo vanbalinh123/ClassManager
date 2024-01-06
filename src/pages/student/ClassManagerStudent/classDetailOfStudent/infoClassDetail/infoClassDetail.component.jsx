@@ -3,6 +3,7 @@ import { useListAttendanceQuery } from "../../../../../redux/api/teacher/attenda
 import { useInforClassQuery } from "../../../../../redux/api/teacher/class-information-api";
 import { useListTestsQuery } from "../../../../../redux/api/teacher/test-api";
 import { useState } from "react";
+import { FiAlignJustify } from "react-icons/fi";
 import DetailLessonContent from "../listLessonContent/detailLessonContent/detailLessonContent.component";
 
 import { DivTables, TitleTb, DivTable, Img } from "./infoClassDetail.styles";
@@ -19,7 +20,7 @@ const InforClassDetail = ({
   detailStudent,
   thisLessonContent,
   detailTeacher,
-  thisSchedule
+  thisSchedule,
 }) => {
   const { data: classDetail } = useClassDetailQuery(classCode);
   const { data: listTests } = useListTestsQuery();
@@ -28,7 +29,6 @@ const InforClassDetail = ({
     const tuition = classInfor?.payment.find(
       (item) => item.student === detailStudent?.usercode
     );
-    console.log(detailStudent);
     if (tuition) {
       return "Đã thanh toán";
     } else {
@@ -166,7 +166,11 @@ const InforClassDetail = ({
               <tbody>
                 {listTestsOfThisClass?.map((item, index) => {
                   if (item.scores.length > 0) {
-                    return <Td key={index} style={{color: '#1a9ca6'}}>{countScore(item.id)}</Td>;
+                    return (
+                      <Td key={index} style={{ color: "#1a9ca6" }}>
+                        {countScore(item.id)}
+                      </Td>
+                    );
                   }
                 })}
               </tbody>
@@ -188,14 +192,38 @@ const InforClassDetail = ({
                 <Th>Buổi</Th>
                 <Th>Ngày</Th>
                 <Th>Nội dung</Th>
+                <Th>Tệp</Th>
+                <Th>Chi tiết</Th>
               </tr>
             </thead>
             <tbody>
               {thisLessonContentReverse?.reverse().map((item, index) => (
-                <tr key={index} onClick={() => handleItemClick(item)}>
+                <tr>
                   <Td>{index + 1}</Td>
                   <Td>{item.session_day}</Td>
                   <Td>{item.content}</Td>
+                  {item.File.length > 0 && item.File.some(item2 => item2.file) ? (
+                    <Td>
+                      {item.File.map(
+                        (item2) =>
+                          // Kiểm tra nếu item2.file không null hoặc undefined
+                          item2.file && (
+                            <a
+                              href={item2.file}
+                              download={item2.file}
+                              style={{ display: "block" }}
+                            >
+                              {item2.file.slice(33)}
+                            </a>
+                          )
+                      )}
+                    </Td>
+                  ) : (
+                    <Td>Không có tệp nào được đính kèm</Td>
+                  )}
+                  <Td key={index} onClick={() => handleItemClick(item)}>
+                    <FiAlignJustify />
+                  </Td>
                 </tr>
               ))}
             </tbody>
@@ -218,7 +246,11 @@ const InforClassDetail = ({
             <tbody>
               <tr>
                 <Td>
-                  <Img src="/imgs/user-img.jpg" alt="avata" />
+                  {detailTeacher?.avatar 
+                    && <Img src={detailTeacher?.avatar } alt="avata" />
+                    || <Img src="/imgs/user-img.jpg" alt="avata" />
+                  }
+                  
                 </Td>
                 <Td>{detailTeacher?.usercode}</Td>
                 <Td>{detailTeacher?.full_name}</Td>

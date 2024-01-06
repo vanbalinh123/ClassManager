@@ -4,10 +4,12 @@ import generalStyles from "../../../../../../../generalCss/general.styles";
 
 export const Layout = styled.div`
   position: fixed;
-  top: 70px;
+  /* top: 70px; */
   right: 0;
   bottom: 0;
-  left: 345px;
+  /* left: 345px; */
+  left: 0;
+  top: 0;
   z-index: 20;
   display: flex;
   justify-content: center;
@@ -39,7 +41,7 @@ export const Detail = styled.div`
   position: absolute;
   border-radius: 10px;
   width: 800px;
-  /* height: 500px; */
+  min-height: 500px;
   z-index: 21;
   background-color: #ffffff;
   border: 1px solid ${generalStyles.border};
@@ -50,28 +52,30 @@ export const Detail = styled.div`
 
 export const Title = styled.span`
   width: 100%;
-  height: 50px;
   display: flex;
+  border-bottom: 3px solid ${generalStyles.border};
+
+  padding: 20px;
   align-items: center;
-  padding-left: 10px;
   font-weight: bold;
   color: ${generalStyles.active};
   font-size: ${generalStyles.sizeTitle};
 `;
 
 export const Content = styled.div`
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
   display: flex;
-  padding: 20px 30px 0px 30px;
+  margin: 20px 30px 0px 30px;
+  min-height: 200px;
 `;
 
 export const Left = styled.div`
-  flex: 2;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 `;
 
 export const Div = styled.div`
@@ -81,7 +85,9 @@ export const Div = styled.div`
 `;
 
 export const Div2 = styled.div`
-  min-height: 130px;
+  min-height: 20px;
+  max-height: 100px;
+  overflow-y: scroll;
   display: flex;
   padding-top: 4px;
   /* align-items: center; */
@@ -124,13 +130,12 @@ export const DivBtn = styled.div`
   /* position: absolute;
   bottom: 0; */
   width: 100%;
-  height: 70px;
+  height: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
-  padding-right: 10px;
-  padding-bottom: 20px;
+    padding: 30px;
 `;
 
 export const Btn = styled.button`
@@ -151,4 +156,8 @@ export const Btn = styled.button`
     cursor: pointer;
     background-color: ${generalStyles.active};
   }
+`;
+
+export const DivTable = styled.div`
+  padding: 20px;
 `;

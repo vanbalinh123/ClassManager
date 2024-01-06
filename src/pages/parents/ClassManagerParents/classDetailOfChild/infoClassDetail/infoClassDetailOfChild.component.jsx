@@ -22,7 +22,7 @@ const InforClassDetailOfChild = ({
   detailStudent,
   thisLessonContent,
   detailTeacher,
-  thisSchedule
+  thisSchedule,
 }) => {
   const { data: classDetail } = useClassDetailQuery(classCode);
   const { data: listTests } = useListTestsQuery();
@@ -31,7 +31,6 @@ const InforClassDetailOfChild = ({
     const tuition = classInfor?.payment.find(
       (item) => item.student === detailStudent?.usercode
     );
-    console.log(detailStudent);
     if (tuition) {
       return "Đã thanh toán";
     } else {
@@ -101,8 +100,6 @@ const InforClassDetailOfChild = ({
     return count;
   };
 
-  console.log(classDetail)
-
   return (
     <DivTables>
       <DivTable>
@@ -121,7 +118,9 @@ const InforClassDetailOfChild = ({
             <tbody>
               <tr>
                 <Td>
-                  <Img src="/imgs/user-img.jpg" alt="avata" />
+                {(detailStudent?.avatar && (
+                    <Img src={detailStudent?.avatar} alt="avata" />
+                  )) || <Img src="/imgs/user-img.jpg" alt="avata" />}
                 </Td>
                 <Td>{detailStudent?.usercode}</Td>
                 <Td>{detailStudent?.full_name}</Td>
@@ -189,11 +188,17 @@ const InforClassDetailOfChild = ({
               <tbody>
                 {listTestsOfThisClass?.map((item, index) => {
                   if (item.scores.length > 0) {
-                    return <Td key={index} style={{color: '#1a9ca6'}}>{countScore(item.id)}</Td>;
+                    return (
+                      <Td key={index} style={{ color: "#1a9ca6" }}>
+                        {countScore(item.id)}
+                      </Td>
+                    );
                   }
                 })}
               </tbody>
-            )) || <div style={{color: 'red'}}>Chưa có bài kiểm tra nào !!!</div>}
+            )) || (
+              <div style={{ color: "red" }}>Chưa có bài kiểm tra nào !!!</div>
+            )}
           </Table>
         </TableWrapper>
       </DivTable>
@@ -213,7 +218,9 @@ const InforClassDetailOfChild = ({
             <tbody>
               <tr>
                 <Td>
-                  <Img src="/imgs/user-img.jpg" alt="avata" />
+                  {(detailTeacher?.avatar && (
+                    <Img src={detailTeacher?.avatar} alt="avata" />
+                  )) || <Img src="/imgs/user-img.jpg" alt="avata" />}
                 </Td>
                 <Td>{detailTeacher?.usercode}</Td>
                 <Td>{detailTeacher?.full_name}</Td>

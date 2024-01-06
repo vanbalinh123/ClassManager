@@ -17,6 +17,7 @@ import { IoChevronBack } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 
 import { Page, Title } from "../../../../../generalCss/shared.styles";
+import { ToastCtn, toastError, toastSuccess } from "../../../../../components/toast/toast";
 
 import {
   Content,
@@ -125,8 +126,6 @@ const UserDetail = () => {
     return st;
   };
 
-  console.log(findStudents("CMU AIS"));
-
   const findTeacher = (teacherCode) => {
     return (
       listTeachers?.find((item) => item.usercode === teacherCode)?.full_name ||
@@ -136,7 +135,7 @@ const UserDetail = () => {
 
   const handleDeleteUser = async (usercode) => {
     const isConfirmed = window.confirm(
-      `Do you want to delete account '${usercode.toUpperCase()}' or not?`
+      `Bạn có muốn xoá người dùng'${usercode.toUpperCase()}'?`
     );
     if (isConfirmed) {
       try {
@@ -149,17 +148,20 @@ const UserDetail = () => {
         } else if (role === "Parents") {
           await deleteParentAccount(usercode);
         }
-
+        toastError('Thành công!!')
+        await new Promise(resolve => setTimeout(resolve, 1000));
         navigate("/leader/listUsers");
       } catch (error) {
         if (error.data) {
-          alert(error.data.message);
+          toastError(error.data.message);
         } else {
-          alert("error");
+          toastError("Đã xảy ra lỗi");
         }
       }
     }
   };
+
+  console.log(user)
 
   return (
     <Page>
@@ -167,7 +169,11 @@ const UserDetail = () => {
       <Content>
         <Infors>
           <DivImg>
-            <Img src="/imgs/user-img.jpg" />
+            {user?.avatar
+              && <Img src={user?.avatar}/>
+              || <Img src="/imgs/user-img.jpg" />
+            }
+            
           </DivImg>
           <DivInfors>
             <Child>
@@ -304,6 +310,7 @@ const UserDetail = () => {
           </Btn>
         </DivBtns>
       </Content>
+      <ToastCtn />
     </Page>
   );
 };

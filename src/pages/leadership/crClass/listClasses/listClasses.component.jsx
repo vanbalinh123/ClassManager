@@ -14,6 +14,9 @@ import {
   toastError,
   ToastCtn,
 } from "../../../../components/toast/toast";
+
+import { DivTotal, SpanTotal } from "../../../../generalCss/shared.styles";
+
 import {
   TableWrapper,
   Table,
@@ -68,10 +71,9 @@ const ListClasses = ({ listClasses }) => {
     if (isConfirmed) {
       try {
         const response = await deleteClass(classcode);
-        console.log(response)
         toastSuccess(`Bạn đã xoá lớp ${classcode} thành công`);
       } catch (error) {
-        toastSuccess(`Bạn đã xoá lớp ${classcode} thất bại`);
+        toastError(`Bạn đã xoá lớp ${classcode} thất bại`);
       }
     }
   };
@@ -86,7 +88,12 @@ const ListClasses = ({ listClasses }) => {
     setCurrentPage(data.selected);
   };
 
-  const customListClasses = listClasses?.slice(
+  const sortedListUser = Array.isArray(listClasses)
+  ? [...listClasses].reverse()
+  : [];
+
+
+  const customListClasses = sortedListUser?.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
@@ -94,6 +101,10 @@ const ListClasses = ({ listClasses }) => {
 
   return (
     <ListClass>
+      <DivTotal>
+        <SpanTotal>Tổng số lớp học:</SpanTotal>
+        <SpanTotal>{listClasses?.length}</SpanTotal>
+      </DivTotal>
       <TableWrapper>
         <Table>
           <thead>
@@ -124,7 +135,10 @@ const ListClasses = ({ listClasses }) => {
                 <Td onClick={() => handleDetailCls(item.class_code)}>
                   <FiAlignJustify />
                 </Td>
-                <Td onClick={() => handleDelete(item.class_code)}>
+                <Td 
+                  onClick={() => handleDelete(item.class_code)}
+                  style={{color: 'red'}}
+                >
                   <MdDeleteForever />
                 </Td>
               </tr>

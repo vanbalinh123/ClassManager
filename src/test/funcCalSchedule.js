@@ -42,5 +42,4 @@ function calculateClassSchedule(startDate, totalSessions, sessionsPerWeek, daysO
   const endTime = { hour: 11, minute: 0 }; // Giờ kết thúc (11:00 AM)
   
   const classSchedule = calculateClassSchedule(startDate, totalSessions, sessionsPerWeek, daysOfWeek, startTime, endTime);
-  console.log(classSchedule);
   

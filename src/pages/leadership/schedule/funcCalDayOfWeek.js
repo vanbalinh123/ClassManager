@@ -14,7 +14,6 @@ export function filterDays(scheduleDetails, totalSessionsPerWeek) {
     
     // Nếu ngày trong tuần chưa được thêm vào mảng
     if (!selectedDays.some(day => day.dayOfWeek === dayOfWeek)) {
-      console.log(item)
       selectedDays.push({
         dayOfWeek,
         startTime: item.start_time,
@@ -42,4 +41,3 @@ export function filterDays(scheduleDetails, totalSessionsPerWeek) {
 // const totalSessionsPerWeek = 2; 
 
 // const result = filterDays(scheduleDetails, totalSessionsPerWeek);
-// console.log(result);

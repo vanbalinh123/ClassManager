@@ -46,9 +46,7 @@ const RightLayout = () => {
   const currentUser = usersData[userRole]?.find(
     (item) => item.usercode === userCode
   );
-
-  console.log(currentUser)
-
+  
   const handleImgClick = () => {
     return setCheck(!check);
   };
@@ -90,11 +88,11 @@ const RightLayout = () => {
             <Other>
               <Span onClick={() => handleToProfile()}>
                 <RiProfileLine size="15px" />
-                Your Profile
+                Hồ sơ
               </Span>
               <Span onClick={() => handleLogout()}>
                 <BiLogOut size="15px" />
-                Logout
+                Đăng xuất
               </Span>
             </Other>
           )}

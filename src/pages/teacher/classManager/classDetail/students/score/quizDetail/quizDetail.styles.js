@@ -17,6 +17,8 @@ export const Span = styled.span`
     font-weight: bold;
     color: ${generalStyles.active};
     font-size: ${generalStyles.sizeTitle};
+    display: flex;
+    gap: 20px;
 `;
 
 export const Header = styled.header`

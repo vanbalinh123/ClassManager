@@ -28,8 +28,6 @@ const ChangeInforClass = () => {
   const [newCourse, setNewCourse] = useState(classDetail?.course);
   const [newCost, setNewCost] = useState(classDetail?.cost);
 
-  console.log(classDetail)
-
   const handleChange = () => {
     setChange(!change);
     setNewClassName(classDetail?.class_name);

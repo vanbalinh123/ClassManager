@@ -36,7 +36,6 @@ const Infomations = ({ selectedValue }) => {
   const [createParent] = useCreateParentsMutation();
 
   const onSubmit = async (data) => {
-    console.log(selectedValue);
     const dulieu = {
       full_name: data.name,
       email: data.email,
@@ -46,11 +45,8 @@ const Infomations = ({ selectedValue }) => {
     };
 
     let response = null;
-    console.log(dulieu);
 
     if (selectedValue === "Admin") {
-      console.log("ccc");
-      // dulieu.classes = [];
       response = await createAdmin(dulieu);
     } else if (selectedValue === "Teacher") {
       // dulieu.classes = [];
@@ -62,22 +58,19 @@ const Infomations = ({ selectedValue }) => {
       dulieu.student = [data.student.toUpperCase()];
       response = await createParent(dulieu)
     }
-    console.log(response)
     try {
       if (response.data !== undefined) {
-        console.log(response.data);
-        // alert('Successful')
-        toastSuccess("Create Account Successfull");
+        toastSuccess("Tạo tài khoản thành công");
         setValue("name", "");
         setValue("email", "");
         setValue("password", "");
         setValue("phone", "");
         setValue("student", "")
       } else {
-        toastError("Create Account Fail");
+        toastError("Tạo tài khoản thất bại");
       }
     } catch (error) {
-      console.log("Error Server");
+      toastError("Lỗi server!!")
     }
   };
 
@@ -89,10 +82,10 @@ const Infomations = ({ selectedValue }) => {
           <DivInput>
             <Input
               type="text"
-              placeholder="User Name..."
+              placeholder="Nhập tên ..."
               hasError={!!errors.name}
               {...register("name", {
-                required: "Name is required!",
+                required: "Tên không được để trống!",
               })}
             />
           </DivInput>
@@ -104,10 +97,10 @@ const Infomations = ({ selectedValue }) => {
             <DivInput>
               <Input
                 type="text"
-                placeholder="student..."
+                placeholder="Mã học sinh..."
                 hasError={!!errors.student}
                 {...register("student", {
-                  required: "Student code is required!",
+                  required: "Mã học sinh không được để trống!",
                 })}
               />
             </DivInput>
@@ -122,13 +115,13 @@ const Infomations = ({ selectedValue }) => {
           <DivInput>
             <Input
               type="text"
-              placeholder="Email..."
+              placeholder="Nhập Email ..."
               hasError={!!errors.email}
               {...register("email", {
-                required: "Email is required!",
+                required: "Email không được để trống",
                 pattern: {
                   value: /^\S+@\S+$/i,
-                  message: "Please enter a valid email address",
+                  message: "Chưa đúng định dạng",
                 },
               })}
             />
@@ -140,10 +133,10 @@ const Infomations = ({ selectedValue }) => {
           <DivInput>
             <Input
               type="password"
-              placeholder="Password..."
+              placeholder="Nhập mật khẩu ..."
               hasError={!!errors.password}
               {...register("password", {
-                required: "Password is required!",
+                required: "Mật khẩu không được để trống",
               })}
             />
           </DivInput>
@@ -156,10 +149,10 @@ const Infomations = ({ selectedValue }) => {
           <DivInput>
             <Input
               type="number"
-              placeholder="Phone..."
+              placeholder="Nhập số điện thoại ..."
               hasError={!!errors.phone}
               {...register("phone", {
-                required: "Phone is required!",
+                required: "Số điện thoại không được để trống",
               })}
             />
           </DivInput>

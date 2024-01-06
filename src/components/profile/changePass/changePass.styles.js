@@ -5,10 +5,12 @@ import generalStyles from "../../../generalCss/general.styles";
 export const DivLayoutChangePass = styled.div`
   z-index: 20;
   position: fixed;
-  top: 69px;
-  left: 348px;
-  bottom: 0;
+  /* top: 69px;
+  left: 348px; */
+  top: 0;
   right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   border: 1px solid ${generalStyles.border};
   transform: translateX(100%);

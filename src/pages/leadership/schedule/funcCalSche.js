@@ -1,5 +1,4 @@
 export function calculateClassSchedule(startDate, totalSessions, sessionsPerWeek, daysOfWeek, sessionDetails, room) {
-  //console.log(startDate, totalSessions, sessionsPerWeek, daysOfWeek, sessionDetails, room);
 
   const currentDate = new Date(startDate);
   const currentThu = currentDate.getDay();

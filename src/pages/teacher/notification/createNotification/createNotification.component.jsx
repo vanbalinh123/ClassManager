@@ -65,7 +65,7 @@ const CreateNotificationTeacher = () => {
 
   const onSubmit = async (data) => {
     if (classToSend === "") {
-      return toastError(`The 'class' field cannot be left blank`);
+      return toastError(`Lớp học không được để trống`);
     }
 
     const noti = {
@@ -76,11 +76,11 @@ const CreateNotificationTeacher = () => {
 
     const response = await createNoti(noti);
     if(response.data) {
-       return toastSuccess(`Create Notifications for ${classToSend} successful!!`);
+       return toastSuccess(`Gửi thông báo đến lớp ${classToSend} thành công!!`);
     }
 
     if(response.error) {
-        return toastError(`Create Notifications for ${classToSend} fail!!`);
+        return toastError(`Gửi thông báo đến lớp ${classToSend} thất bại!!`);
     }
   };
 
@@ -108,10 +108,10 @@ const CreateNotificationTeacher = () => {
           <DivInput>
             <Input
               type="text"
-              placeholder="Title..."
+              placeholder="Tiêu đề của thông báo..."
               hasError={!!errors.title}
               {...register("title", {
-                required: "Title is required!",
+                required: "Tiêu đề không được để trống!!",
               })}
             />
           </DivInput>
@@ -121,10 +121,10 @@ const CreateNotificationTeacher = () => {
           <DivTextarea>
             <Textarea
               type="text"
-              placeholder="Content..."
+              placeholder="Nội dung của thông báo..."
               hasError={!!errors.content}
               {...register("content", {
-                required: "Content is required!",
+                required: "Nội dung không được để trống!!",
               })}
             />
           </DivTextarea>

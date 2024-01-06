@@ -43,17 +43,23 @@ const ListNotifications = ({ listNotificationsAdmin }) => {
     );
   };
 
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
+
+
   //paginate
   const itemsPerPage = 10;
   const totalItems = listNotificationsAdmin?.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const handlePageClick = (data) => {
-    setCurrentPage(data.selected);
-  };
 
-  const customListNoti = listNotificationsAdmin?.slice(
+  const sortedListNoti = listNotificationsAdmin?.sort((a, b) => {
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
+
+  const customListNoti = sortedListNoti?.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
@@ -78,6 +84,7 @@ const ListNotifications = ({ listNotificationsAdmin }) => {
               <Th>Thời gian</Th>
               <Th>Tiêu đề</Th>
               <Th>Nội dung</Th>
+              <Th>Người gửi</Th>
               <Th>Người nhận</Th>
             </tr>
           </thead>
@@ -93,6 +100,7 @@ const ListNotifications = ({ listNotificationsAdmin }) => {
                   </Td>
                   <Td>{item.title}</Td>
                   <Td>{item.content}</Td>
+                  <Td>{item.usercode}</Td>
                   <Td>{item.role}</Td>
                 </tr>
               );

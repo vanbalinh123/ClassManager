@@ -171,3 +171,17 @@ export const Item = styled.td`
   transition: all 0.3s;
 `;
 
+//
+export const DivTotal = styled.div`
+display: flex;
+gap: 10px;
+margin: 0 auto;
+justify-content: center;
+padding: 10px 0px;
+`;
+
+export const SpanTotal = styled.span`
+  font-size: ${generalStyles.sizeTitle};
+  font-weight: bold;
+  color: ${generalStyles.active};
+`;

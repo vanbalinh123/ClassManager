@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import React from "react";
 import { useState } from "react";
 import { useListInforClassQuery } from "../../../../../redux/api/teacher/class-information-api.js";
 import { useListSchedulesQuery } from "../../../../../redux/api/leader/schedule-api.slice.js";
@@ -55,28 +56,48 @@ const ListClassOfChild = ({ listClasses }) => {
     return foundTeacher ? foundTeacher.full_name : null;
   };
 
-  const findStudentInClass = (classCode) => {
+  // const findStudentInClass = (classCode) => {
+  //   const listStdInCls = listClassInfo?.find(
+  //     (item) => item.class_info === classCode
+  //   )?.students;
+  //   const student = listStdInCls?.find((item) => userCodes?.includes(item));
+  //   const studentName = listStudents?.find(
+  //     (item) => item.usercode === student
+  //   )?.full_name;
+
+  //   return studentName;
+  // };
+
+  const findStudentsInClass = (classCode) => {
     const listStdInCls = listClassInfo?.find(
       (item) => item.class_info === classCode
     )?.students;
-    const student = listStdInCls?.find((item) => userCodes?.includes(item));
-    const studentName = listStudents?.find(
-      (item) => item.usercode === student
-    )?.full_name;
 
-    return studentName;
+    if (!listStdInCls || listStdInCls.length === 0) {
+      return [];
+    }
+
+    const students = listStudents
+      ?.filter(
+        (item) =>
+          userCodes.includes(item.usercode) &&
+          listStdInCls.includes(item.usercode)
+      )
+      .map((student) => student.full_name);
+
+    return students || [];
   };
 
   const findStudentCodeInClass = (classCode) => {
     const listStdInCls = listClassInfo?.find(
       (item) => item.class_info === classCode
     )?.students;
-    const student = listStdInCls?.find((item) => userCodes?.includes(item));
+    const student = listStdInCls?.filter((item) => userCodes?.includes(item));
     return student;
   };
 
-  const handleItemClick = (classCode) => {
-    const studentCode = findStudentCodeInClass(classCode);
+  const handleItemClick = (classCode, studentCode) => {
+    // const studentCode = findStudentCodeInClass(classCode);
     navigate(`/parents/listClassesOfChild/${studentCode}/${classCode}`);
   };
 
@@ -90,7 +111,11 @@ const ListClassOfChild = ({ listClasses }) => {
     setCurrentPage(data.selected);
   };
 
-  const customListClasses = listClassOfStudent?.slice(
+  const sortedListUser = Array.isArray(listClassOfStudent)
+    ? [...listClassOfStudent].reverse()
+    : [];
+
+  const customListClasses = sortedListUser?.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
@@ -110,15 +135,33 @@ const ListClassOfChild = ({ listClasses }) => {
             </tr>
           </thead>
           <tbody>
-            {customListClasses?.map((item, index) => (
-              <tr onClick={() => handleItemClick(item.class_code)} key={index}>
-                <Td>{item.class_code}</Td>
-                <Td>{item.class_name}</Td>
-                <Td>{findTeacherName(teacherMap[item.class_code])}</Td>
-                <Td>{item.course}</Td>
-                <Td>{findStudentInClass(item.class_code)}</Td>
-              </tr>
-            ))}
+            {customListClasses?.map((item, index) => {
+              const studentsInClass = findStudentsInClass(item.class_code);
+
+              return (
+                <React.Fragment key={index}>
+                  {studentsInClass.map((studentName, studentIndex) => (
+                    <tr
+                      key={`${index}_${studentIndex}`}
+                      onClick={() =>
+                        handleItemClick(
+                          item.class_code,
+                          findStudentCodeInClass(item.class_code)[studentIndex]
+                        )
+                      }
+                    >
+                      <>
+                        <Td>{item.class_code}</Td>
+                        <Td>{item.class_name}</Td>
+                        <Td>{findTeacherName(teacherMap[item.class_code])}</Td>
+                        <Td>{item.course}</Td>
+                        <Td>{studentName}</Td>
+                      </>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              );
+            })}
           </tbody>
         </Table>
       </TableWrapper>

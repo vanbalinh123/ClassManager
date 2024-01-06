@@ -24,6 +24,7 @@ import {
   Th,
   Td,
 } from "../../../../../../generalCss/table.styles";
+import * as XLSX from "xlsx";
 
 const ListStudents = () => {
   const [detail, setDetail] = useState(false);
@@ -78,39 +79,34 @@ const ListStudents = () => {
     setDetail(true);
   };
 
-  // const handleAddNewStudent = async () => {
-  //   if (!studentCode) {
-  //     toastError("Please enter a student code.");
-  //     return;
-  //   }
+  const handleExportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(
+      infoClass.students.map((usercode, index) => {
+        const listScore = findListScoreOfSt(usercode);
 
-  //   const checkExist = infoClass.students.find((item) => item === studentCode);
+        const row = {
+          "STT": index + 1,
+          "Mã lớp": classCode, 
+          "Mã học sinh": usercode,
+          "Tên học sinh": findStudent(usercode)?.full_name,
+          "Vắng mặt": countAttendance(usercode),
+        };
 
-  //   if (checkExist) {
-  //     toastWarn("Students attended class!");
-  //     return;
-  //   }
+        listTestsOfThisClass?.forEach((test, testIndex) => {
+          const score = listScore.find(
+            (item) => item.test_and_quiz === test.id
+          );
+          row[test.quiz_name] = score ? score.score : "#";
+        });
 
-  //   const newListStudent = [...infoClass.students, studentCode];
+        return row;
+      })
+    );
 
-  //   const dataUpdate = {
-  //     class_info: infoClass.class_info,
-  //     Teachers: infoClass.Teachers,
-  //     students: newListStudent,
-  //   };
-  //   const response = await updateInfoClass(dataUpdate);
-  //   if (response.data) {
-  //     setStudentCode("");
-  //     findStudent(studentCode);
-  //     toastSuccess("The student has been successfully added to the class!!");
-  //     return;
-  //   }
-
-  //   if (response.error) {
-  //     toastError("Student code does not exist.");
-  //     return;
-  //   }
-  // };
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, worksheet, "Students");
+    XLSX.writeFile(wb, `Kết quả học tập lớp ${classCode}.xlsx`);
+  };
 
   return (
     <Div>
@@ -136,15 +132,11 @@ const ListStudents = () => {
               <Th>Mã học sinh</Th>
               <Th>Tên học sinh</Th>
               <Th style={{ flex: 0.5 }}>Vắng mặt</Th>
-              {listTestsOfThisClass?.map((item, index) => {
-                if (item.scores.length > 0) {
-                  return (
-                    <Th style={{ flex: 0.5 }} key={index}>
-                      {item.quiz_name}
-                    </Th>
-                  );
-                }
-              })}
+              {listTestsOfThisClass?.map((item, index) => (
+                <Th style={{ flex: 0.5 }} key={index}>
+                  {item.quiz_name}
+                </Th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -167,7 +159,7 @@ const ListStudents = () => {
                         {score ? (
                           score.score
                         ) : (
-                          <span style={{ color: "red" }}>Chưa có điểm</span>
+                          <span style={{ color: "red" }}>#</span>
                         )}
                       </Td>
                     );
@@ -178,19 +170,11 @@ const ListStudents = () => {
           </tbody>
         </Table>
       </TableWrapper>
-      {/* <DivBtn>
-        <DivInput>
-          <Input
-            placeholder="Nhập mã học sinh..."
-            value={studentCode}
-            onChange={(e) => setStudentCode(e.target.value)}
-          />
-        </DivInput>
-        <Btn onClick={() => handleAddNewStudent()}>
-          <AiOutlineUserAdd size="15px" />
-          Thêm
+      <DivBtn>
+        <Btn onClick={handleExportToExcel}>
+          Xuất Excel
         </Btn>
-      </DivBtn> */}
+      </DivBtn>
       <ToastCtn />
     </Div>
   );

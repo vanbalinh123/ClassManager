@@ -9,13 +9,8 @@ import { useListStudentsQuery } from "../../../../redux/api/leader/list-users-ap
 import Pagination from "../../../../components/paginate/paginate";
 
 import { List } from "./listUsers.styles";
-import {
-  Header,
-  TitleList,
-  Section,
-  DivItem,
-  Item,
-} from "../../../../generalCss/shared.styles";
+import { DivTotal, SpanTotal } from "../../../../generalCss/shared.styles";
+
 import {
   TableWrapper,
   Table,
@@ -49,8 +44,6 @@ const ListUsers = ({ selectedValue, valueSearch }) => {
 
   const handleClickUserDetail = (id) => {
     navigate(`/leader/listUsers/userDetail/${selectedValue}/${id}`);
-    console.log(id);
-    console.log(selectedValue);
   };
 
   //paginate
@@ -63,19 +56,27 @@ const ListUsers = ({ selectedValue, valueSearch }) => {
     setCurrentPage(data.selected);
   };
 
-  const customListUsers = listUsers?.slice(
+  const sortedListUser = Array.isArray(listUsers)
+    ? [...listUsers].reverse()
+    : [];
+
+  const customListUsers = sortedListUser?.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
+
   //paginate
 
   return (
     <List>
+      <DivTotal>
+        <SpanTotal>Tổng số tài khoản: </SpanTotal>
+        <SpanTotal>{listUsers?.length}</SpanTotal>
+      </DivTotal>
       <TableWrapper>
         <Table>
           <thead>
             <tr>
-              <Th>STT</Th>
               <Th>Mã người dùng</Th>
               <Th>Tên người dùng</Th>
               <Th>Email</Th>
@@ -88,7 +89,6 @@ const ListUsers = ({ selectedValue, valueSearch }) => {
                 key={index}
                 onClick={() => handleClickUserDetail(item.usercode)}
               >
-                <Td>{index + 1}</Td>
                 <Td>{item.usercode}</Td>
                 <Td>{item.full_name}</Td>
                 <Td>{item.email}</Td>

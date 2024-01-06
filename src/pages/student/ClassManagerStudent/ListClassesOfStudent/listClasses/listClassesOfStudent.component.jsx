@@ -57,7 +57,11 @@ const ListClassOfStudent = ({ listClasses }) => {
     setCurrentPage(data.selected);
   };
 
-  const customListClasses = listClassOfStudent?.slice(
+  const sortedListUser = Array.isArray(listClassOfStudent)
+  ? [...listClassOfStudent].reverse()
+  : [];
+
+  const customListClasses = sortedListUser?.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );

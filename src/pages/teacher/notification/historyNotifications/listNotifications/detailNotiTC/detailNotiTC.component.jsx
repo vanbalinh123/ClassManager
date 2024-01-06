@@ -62,7 +62,7 @@ const DetailNotiTC = ({ setCheck, value, setValue, selectedValue }) => {
           </DivContent>
         </DivBody>
         <DivBtn>
-          <Btn onClick={() => handleClose()}>Exist</Btn>
+          <Btn onClick={() => handleClose()}>Thoát</Btn>
         </DivBtn>
       </Div>
     </>

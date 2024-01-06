@@ -28,7 +28,20 @@ const StudentSchedule = () => {
 
   const events = mySchedule?.reduce((allEvents, schedule) => {
     const classEvents = schedule.class_sessions_set.map((session) => ({
-      title: `Class Code: ${schedule.class_code} - ${session.room}`,
+      title: (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            height: "100%",
+          }}
+        >
+          Mã lớp: {schedule.class_code}
+          <br />
+          Phòng: {session.room}
+        </div>
+      ),
       start: new Date(session.day + " " + session.start_time),
       end: new Date(session.day + " " + session.end_time),
     }));
@@ -55,6 +68,11 @@ const StudentSchedule = () => {
         border: "none",
         padding: "10px",
         gap: "10px",
+        margin: "0 auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: "20px",
       },
     };
   };

@@ -13,6 +13,8 @@ import { useListTestsQuery } from "../../../../../redux/api/teacher/test-api";
 import UploadStudentXML from "./upLoadStudentXml/uploadStudentXml.component";
 import ChangeInfoClass from "./changeInfoClass/changeInfoClass.component";
 
+import * as XLSX from "xlsx";
+
 import {
   ToastCtn,
   toastError,
@@ -97,14 +99,14 @@ const DetailCls = () => {
 
   const handleAddNewStudent = async () => {
     if (!studentCode) {
-      toastError("Please enter a student code.");
+      toastError("Hãy nhập mã học sinh");
       return;
     }
 
     const checkExist = infoClass.students.find((item) => item === studentCode);
 
     if (checkExist) {
-      toastWarn("Students attended class!");
+      toastWarn("Học sinh đã tồn tại trong lớp");
       return;
     }
 
@@ -119,18 +121,52 @@ const DetailCls = () => {
     if (response.data) {
       setStudentCode("");
       findStudent(studentCode);
-      toastSuccess("The student has been successfully added to the class!!");
+      toastSuccess("Học sinh đã được thêm vào lớp");
       return;
     }
 
     if (response.error) {
-      toastError("Student code does not exist.");
+      toastError("Mã học sinh không tồn tại!!");
       return;
     }
   };
 
   const handleOpen = () => {
     setOpen(!open);
+  };
+
+  const handleExportToExcel = () => {
+    const wb = XLSX.utils.book_new();
+
+    // Tạo sheet cho danh sách sinh viên
+    const studentSheet = XLSX.utils.json_to_sheet(
+      infoClass.students.map((usercode, index) => {
+        const listScore = findListScoreOfSt(usercode);
+
+        const row = {
+          STT: index + 1,
+          "Mã lớp": classCode,
+          "Mã học sinh": usercode,
+          "Tên học sinh": findStudent(usercode)?.full_name,
+          "Vắng mặt": countAttendance(usercode),
+        };
+
+        listTestsOfThisClass?.forEach((test, testIndex) => {
+          const score = listScore.find(
+            (item) => item.test_and_quiz === test.id
+          );
+          row[test.quiz_name] = score ? score.score : "#";
+        });
+
+        return row;
+      })
+    );
+
+    // Thêm sheet sinh viên vào workbook
+    XLSX.utils.book_append_sheet(wb, studentSheet, "Students");
+
+    // Lưu workbook ra file Excel
+    XLSX.writeFile(wb, `Kết quả học tập lớp ${classCode}.xlsx`);
   };
 
   return (
@@ -186,18 +222,14 @@ const DetailCls = () => {
             <Table>
               <thead>
                 <tr>
-                  <Th style={{ flex: 0.5 }}>STT</Th>
+                  <Th>STT</Th>
                   <Th>Mã học sinh</Th>
                   <Th>Tên học sinh</Th>
-                  <Th style={{ flex: 0.5 }}>Vắng mặt</Th>
+                  <Th>Vắng mặt</Th>
                   {listTestsOfThisClass?.map((item, index) => {
-                    if (item.scores.length > 0) {
-                      return (
-                        <Th style={{ flex: 0.5 }} key={index}>
-                          {item.quiz_name}
-                        </Th>
-                      );
-                    }
+                    // if (item.scores.length > 0) {
+                      return <Th key={index}>{item.quiz_name}</Th>;
+                    // }
                   })}
                   <Th>Chi tiết</Th>
                 </tr>
@@ -208,21 +240,21 @@ const DetailCls = () => {
 
                   return (
                     <tr key={index}>
-                      <Td style={{ flex: 0.5 }}>{index + 1}</Td>
+                      <Td>{index + 1}</Td>
                       <Td>{usercode}</Td>
                       <Td>{findStudent(usercode)?.full_name}</Td>
-                      <Td style={{ flex: 0.5 }}>{countAttendance(usercode)}</Td>
+                      <Td>{countAttendance(usercode)}</Td>
                       {listTestsOfThisClass?.map((test, testIndex) => {
                         const score = listScore.find(
                           (item) => item.test_and_quiz === test.id
                         );
 
                         return (
-                          <Td style={{ flex: 0.5 }} key={testIndex}>
+                          <Td key={testIndex}>
                             {score ? (
                               score.score
                             ) : (
-                              <span style={{ color: "red" }}>Chưa có điểm</span>
+                              <span style={{ color: "red" }}>#</span>
                             )}
                           </Td>
                         );
@@ -236,6 +268,9 @@ const DetailCls = () => {
               </tbody>
             </Table>
           </TableWrapper>
+          <DivBtn>
+            <Btn onClick={handleExportToExcel}>Xuất Excel</Btn>
+          </DivBtn>
           <ToastCtn />
         </Div>
       </Ctn>

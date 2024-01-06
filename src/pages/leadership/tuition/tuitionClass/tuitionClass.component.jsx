@@ -60,7 +60,6 @@ const TuitionClass = () => {
           payment: paymentInfo ? paymentInfo.Payment : false,
         };
       });
-      console.log(initialPaymentData);
       setPaymentData(initialPaymentData);
     } else {
       setPaymentData([]);
@@ -72,7 +71,6 @@ const TuitionClass = () => {
     setPaymentData((prevPaymentData) => {
       const updatedPaymentData = [...prevPaymentData];
       const student = infoClass?.students?.[index];
-      console.log(student);
       if (student) {
         // Find the payment information, default to an object with Payment: false
         const existingPayment = infoClass?.payment?.find(

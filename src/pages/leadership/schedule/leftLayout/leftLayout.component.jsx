@@ -58,10 +58,10 @@ const LeftLayout = ({
           <DivInput>
             <Input
               type="text"
-              placeholder="Teacher code..."
+              placeholder="Mã giáo viên..."
               hasError={!!errors.teacherCode}
               {...register("teacherCode", {
-                required: "Teacher's Code is required!",
+                required: "Mã giáo viên không được để trống!",
               })}
             />
           </DivInput>
@@ -108,10 +108,10 @@ const LeftLayout = ({
           <DivInput>
             <Input
               type="number"
-              placeholder="Number of sessions/courses..."
+              placeholder="Tổng số buổi/khoá..."
               hasError={!!errors.course}
               {...register("course", {
-                required: "Course is required!",
+                required: "Tổng số buổi/khoá không được để trống!",
               })}
             />
           </DivInput>
@@ -124,10 +124,10 @@ const LeftLayout = ({
           <DivInput>
             <Input
               type="number"
-              placeholder="Number of sessions/week..."
+              placeholder="Tổng số buổi/tuần..."
               hasError={!!errors.week}
               {...register("week", {
-                required: "Week is required!",
+                required: "Tổng số buổi/tuần không được để trống!",
               })}
             />
           </DivInput>
@@ -138,10 +138,10 @@ const LeftLayout = ({
           <DivInput>
             <Input
               type="date"
-              placeholder="Start day..."
+              placeholder="Ngày bắt đầu..."
               hasError={!!errors.startDate}
               {...register("startDate", {
-                required: "Start date is required!",
+                required: "Ngày bắt đầu không được để trống!",
               })}
             />
           </DivInput>
@@ -154,10 +154,10 @@ const LeftLayout = ({
           <DivInput>
             <Input
               type="text"
-              placeholder="Room..."
+              placeholder="Phòng học..."
               hasError={!!errors.room}
               {...register("room", {
-                required: "Room is required!",
+                required: "Phòng học không được để trống!",
               })}
             />
           </DivInput>

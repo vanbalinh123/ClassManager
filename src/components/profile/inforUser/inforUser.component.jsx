@@ -34,12 +34,11 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
   const [updateUserName, setUpdateUserName] = useState(currentUser?.full_name);
   const [updateEmail, setUpdateEmail] = useState(currentUser?.email);
   const [updatePhone, setUpdatePhone] = useState(currentUser?.mobile);
-  const [avatar, setAvatar] = useState(currentUser?.avatar)
+  const [avatar, setAvatar] = useState(currentUser?.avatar);
 
   const [updateAdmin] = useUpdateAdminMutation();
   const [updateTeacher] = useUpdateTeacherMutation();
   const [updateStudent] = useUpdateStudentMutation();
-  
 
   const handleToUpdate = () => {
     setUpdate(true);
@@ -50,16 +49,12 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
     setSelectedFile(file);
   };
 
-  console.log(currentUser)
-
   useEffect(() => {
-    setUpdateUserName(currentUser?.full_name)
-    setUpdateEmail(currentUser?.email)
-    setUpdatePhone(currentUser?.mobile)
-    setAvatar(currentUser?.avatar)
-  }, [currentUser])
-
-  console.log(selectedFile)
+    setUpdateUserName(currentUser?.full_name);
+    setUpdateEmail(currentUser?.email);
+    setUpdatePhone(currentUser?.mobile);
+    setAvatar(currentUser?.avatar);
+  }, [currentUser]);
 
   const handleUpdate = async () => {
     const dataUpdate = new FormData();
@@ -79,20 +74,22 @@ const InforUser = ({ setChangePass, currentUser, userRole }) => {
     if (userRole === "Admin") {
       response = await updateAdmin(dataUpdate);
     } else if (userRole === "Teacher") {
-      response = await updateTeacher(dataUpdate);
+      response = await updateTeacher(dataUpdate, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response)
     } else if (userRole === "Student") {
       response = await updateStudent(dataUpdate);
     }
 
-    console.log(response)
-
     if (response.data) {
-
-      toastSuccess('Update Successful!!!');
+      toastSuccess("Cập nhật thành công!!!");
       // window.location.reload();
       handleCancel();
     } else {
-      toastError('Update fail!!!')
+      toastError("Cập nhật thất bại!!!");
       return;
     }
   };

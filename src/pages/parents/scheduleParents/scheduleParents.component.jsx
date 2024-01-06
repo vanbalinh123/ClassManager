@@ -22,7 +22,6 @@ const ParentsSchedule = () => {
     (item) => item.usercode === userCode
   )?.student;
 
-
   // const events = [
   //   {
   //     title: "Sự kiện 1",
@@ -38,7 +37,9 @@ const ParentsSchedule = () => {
 
   const listClassofStudent =
     listInfoClass
-      ?.filter((item) => userCodes?.some((code) => item.students.includes(code)))
+      ?.filter((item) =>
+        userCodes?.some((code) => item.students.includes(code))
+      )
       .map((item) => item.class_info) || [];
 
   const mySchedule =
@@ -48,7 +49,21 @@ const ParentsSchedule = () => {
 
   const events = mySchedule?.reduce((allEvents, schedule) => {
     const classEvents = schedule.class_sessions_set.map((session) => ({
-      title: `Class Code: ${schedule.class_code} - ${session.room}`,
+      // title: `Mã lớp: ${schedule.class_code} - Phòng ${session.room}`,
+      title: (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            height: "100%",
+          }}
+        >
+          Mã lớp: {schedule.class_code}
+          <br />
+          Phòng: {session.room}
+        </div>
+      ),
       start: new Date(session.day + " " + session.start_time),
       end: new Date(session.day + " " + session.end_time),
     }));
@@ -62,11 +77,14 @@ const ParentsSchedule = () => {
         border: "none",
         padding: "10px",
         gap: "10px",
+        margin: "0 auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: "20px",
       },
     };
   };
-
-  console.log(events)
 
   return (
     <Page>
